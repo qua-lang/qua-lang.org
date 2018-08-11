@@ -1,0 +1,8 @@
+{
+    "name": "qua-lang.org",
+    "description": "Website for the Qua Lisp implementation",
+    "author": "Manuel Simoni",
+    "dependencies": {
+        "escape-html": "^1.0.3"
+    }
+}
