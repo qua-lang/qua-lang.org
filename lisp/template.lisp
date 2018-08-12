@@ -1,2 +1,2 @@
-(deftemplate qua-lang-main-template
+(deftemplate main-template
   (h1 (attribute 'title)))
