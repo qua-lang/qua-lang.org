@@ -29,6 +29,7 @@
        names))
 
 (define-html-tags
+  a
   body
   div
   em
