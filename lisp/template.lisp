@@ -1,2 +1,10 @@
-(deftemplate main-template
-  (h1 (attribute 'title)))
+(defun main-template (target)
+  (div ()
+   (h1 () (attribute target 'title))
+   (div ()
+    (attribute target 'child #'medium-template))))
+
+(defun medium-template (target)
+  (div ()
+   (h3 () (node-link target))
+   (p () (attribute target 'byline))))

@@ -3,51 +3,45 @@
 ;;; The NPM package "escape-html" consists of a single function that
 ;;; escapes characters unsafe for HTML.  Using #' we bind it in the
 ;;; function namespace.
-(def #'escape-html (node-require "escape-html"))
+(def #'escape-html (node:require "escape-html"))
 
 ;;;; Nodes
 
 (defstruct doqu-node
   id
-  rel
-  rev)
+  attrs)
 
-(defun doqu-make-node (id rel rev)
+(defun doqu-make-node (id attrs)
   (the string id)
-  (the js-object rel)
-  (the js-object rev)
-  (make-instance 'doqu-node :id id :rel rel :rev rev))
+  (the js-object attrs)
+  (make-instance 'doqu-node :id id :attrs attrs))
 
-(deffexpr doqu-define-node (id rel . opt-rev) env
+(deffexpr doqu-define-node (id . attrs-list) env
   (let ((node (doqu-make-node (symbol-name id)
-                              (doqu-parse-attributes rel)
-                              (if (nil? opt-rev)
-                                  (js-object)
-                                (doqu-parse-attributes (car opt-rev))))))
+                              (doqu-parse-attributes attrs-list))))
     (eval (list #'def id node) env)))
 
-(defun doqu-parse-attributes (rel-or-rev . lists)
+(defun doqu-parse-attributes (attrs-list)
   (let ((dict (js-object)))
     (for-each (lambda ((attr-name . attr-values))
                 (js-set dict (symbol-name attr-name) attr-values))
-              lists)
+              attrs-list)
     dict))
-
-;;;; Templates
-
-(deffexpr doqu-define-template (name expr) env
-  )
 
 ;;;; Rendering
 
-(defgeneric doqu-render (obj))
+(defgeneric doqu-render (fob))
+(defmethod doqu-render ((fob string))
+  (escape-html fob))
+(defmethod doqu-render ((fob nil))
+  "")
+(defmethod doqu-render ((fob cons))
+  (@join (list-to-array (map #'doqu-render fob)) ""))
 
-(defmethod doqu-render ((obj string))
-  string)
+;;;; Misc
 
-(defun doqu-render-attribute (link-relation-type))
+(defun doqu-attribute #ign
+  "ATTR")
 
-;;; The node currently being rendered.
-(defdynamic *doqu-node*)
-
-(defun doqu-render-site (site))
+(defun doqu-node-link (node)
+  "LINK")

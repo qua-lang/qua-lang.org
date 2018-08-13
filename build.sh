@@ -1,2 +1,1 @@
-cd lisp
-qua-run load.lisp
+qua-run lisp/load.lisp
