@@ -3,6 +3,7 @@
 (def #'defnode #'doqu-define-node)
 (def #'node-link #'doqu-node-link)
 (def #'attribute #'doqu-attribute)
+(def #'file #'doqu-file)
 (load "lisp/content.lisp")
 (load "lisp/template.lisp")
 (load "lisp/site.lisp")

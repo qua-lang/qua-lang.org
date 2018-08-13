@@ -4,6 +4,12 @@
    (div ()
     (attribute target 'child #'medium-template))))
 
+(defun page-template (target)
+  (div ()
+   (h1 () (a (:href "index.html") "Qua") " / " (attribute target 'title))
+   (div ()
+    (attribute target 'child #'medium-template))))
+
 (defun medium-template (target)
   (div ()
    (h3 () (node-link target))

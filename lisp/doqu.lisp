@@ -64,6 +64,20 @@
                         attr-values)))
       ""))
 
-(defun doqu-node-link (node)
+(defun find-attr (node attr default)
+  (if (own-property? (.attrs node) (symbol-name attr))
+      (js-get (.attrs node) (symbol-name attr))
+    default))
+
+(defun doqu-node-href (node)
   (the doqu-node node)
-  (a () (.id node)))
+  (+ (.id node) ".html"))
+
+(defun doqu-node-link (node)
+  (let* ((id (.id node))
+         (title (find-attr node 'title id)))
+    (a (:href (doqu-node-href node)) title)))
+
+(defun/env doqu-file (name #'template) env
+  (node:write-file-sync (+ "docs/" (symbol-name name) ".html")
+                        (doqu-render (template (eval name env)))))

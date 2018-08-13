@@ -1,2 +1,5 @@
-(print (doqu-render (main-template index)))
-;(node:write-file-sync "docs/index.html" (doqu-render (main-template index)))
+(file 'index #'main-template)
+(file 'intro #'page-template)
+(file 'manual #'page-template)
+(file 'tools #'page-template)
+(file 'sample #'page-template)
