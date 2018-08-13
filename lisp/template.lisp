@@ -14,3 +14,18 @@
   (div ()
    (h3 () (node-link target))
    (p () (attribute target 'byline))))
+
+(defun manual-template (target)
+  (div ()
+       (center () (h1 () (a (:href "index.html") "Qua") " Language Manual"))
+       (div ()
+            (attribute target 'child #'section-template))))
+
+(defun section-template (target)
+  (div ()
+   (h2 () (node-link target))
+   (attribute target 'child #'item-template)))
+
+(defun item-template (target)
+  (h3 () (node-link target)))
+
