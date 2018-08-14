@@ -3,6 +3,7 @@
 (def #'deftemplate #'def)
 (def #'node-link #'duq-node-link)
 (def #'attribute #'duq-attribute)
+(def #'node #'duq-node)
 (def #'file #'duq-render-file)
 (load "lisp/content.lisp")
 (load "lisp/template.lisp")

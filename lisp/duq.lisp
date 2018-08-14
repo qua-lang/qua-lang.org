@@ -15,6 +15,9 @@
 (defun duq-make-node (id attributes)
   (make-instance 'duq-node :id id :attributes attributes))
 
+(deffexpr duq-node attributes-list env
+  (duq-make-node "anon" (duq-parse-attributes attributes-list env)))
+
 (deffexpr duq-define-node (id . attributes-list) env
   (eval (list #'def id
               (duq-make-node (symbol-name id)
@@ -126,12 +129,12 @@
   (let ((attrs (.attributes node))
         (name (symbol-name attr)))
     (if (own-property? attrs name)
-        (js-get attrs name)
+        (car (js-get attrs name))
       default)))
 
 (defstruct duq-node-title)
 (defmethod duq-render-template ((title duq-node-title) node output)
-  (duq-out output (.id node)))
+  (duq-out output (duq-find-attr node 'title (.id node))))
 (defun duq-node-title () (make-instance 'duq-node-title))
 
 (defconstant +duq-node-link+ (a (:href (duq-node-href))
@@ -159,6 +162,10 @@
                                 (symbol
                                  (duq-render-template (eval attr-template (the-environment))
                                                       (eval val (the-environment))
+                                                      output))
+                                (duq-node
+                                 (duq-render-template (eval attr-template (the-environment))
+                                                      val
                                                       output))))
                     attr-values))
       (duq-out output ""))))

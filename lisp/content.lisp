@@ -43,9 +43,10 @@
   (:title "VAU")
   (:type +special+)
   (:syntax "(vau operand-tree environment-parameter form*) => fexpr")
-  (:description "Creates a new " (gloref "fexpr") " with the
-  given " (gloref "operand tree") ", " (gloref "environment
-  parameter") ", and body forms."))
+  (:description
+   (node (:content "Creates a new " (gloref "fexpr") " with the
+    given " (gloref "operand tree") ", " (gloref "environment
+    parameter") ", and body forms."))))
 
 (defnode op-wrap
   (:title "WRAP")

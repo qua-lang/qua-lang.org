@@ -32,5 +32,7 @@
    (h4 () "Syntax")
    (tt () (attribute 'syntax))
    (h4 () "Description")
-   (p () (attribute 'description))))
+   (div () (attribute 'description 'para-template))))
 
+(deftemplate para-template
+  (p () (attribute 'content)))
