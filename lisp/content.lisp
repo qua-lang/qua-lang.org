@@ -1,11 +1,19 @@
-(defconstant +special+ "Special Operator")
+(defconstant +special+ "Special")
+(defconstant +function+ "Function")
 
 (defnode index
   (:title "Qua: Ultralight Lisp for the Web")
-  (:child 'intro
+  (:child 'alpha
+          'intro
           'manual
           'tools
           'sample))
+
+(defnode alpha
+  (:title "Hackers wanted")
+  (:byline "For alpha testing Qua, constant language changes, abysmal
+  performance, undocumented code, long sessions of debugging, random
+  crashes, fun and glorious hacks in case of success."))
 
 (defnode intro
   (:title "Introduction to the Qua Project")
@@ -32,37 +40,51 @@
           'op-funcall
           'op-quote))
 
+(defun gloref (foo)
+  (a (:href "") (em () foo)))
+
 (defnode op-vau
   (:title "VAU")
-  (:type +special+))
+  (:type +special+)
+  (:syntax "(vau operand-tree environment-parameter form*) => fexpr")
+  (:description "Creates a new " (gloref "fexpr") " with the
+  given " (gloref "operand tree") ", " (gloref "environment
+  parameter") ", and body forms."))
 
 (defnode op-wrap
   (:title "WRAP")
-  (:type +special+))
+  (:type +function+)
+  (:syntax "(wrap fexpr) => function"))
 
 (defnode op-unwrap
   (:title "UNWRAP")
-  (:type +special+))
+  (:type +function+)
+  (:syntax "(unwrap function) => fexpr"))
 
 (defnode op-lambda
   (:title "LAMBDA")
-  (:type +special+))
+  (:type +special+)
+  (:syntax "(lambda parameter-tree form*) => function"))
 
 (defnode op-eval
   (:title "EVAL")
-  (:type +special+))
+  (:type +function+)
+  (:syntax "(eval form environment) => result"))
 
 (defnode op-apply
   (:title "APPLY")
-  (:type +special+))
+  (:type +function+)
+  (:syntax "(apply function arguments) => result"))
 
 (defnode op-funcall
   (:title "FUNCALL")
-  (:type +special+))
+  (:type +function+)
+  (:syntax "(funcall function argument*) => result"))
 
 (defnode op-quote
   (:title "QUOTE")
-  (:type +special+))
+  (:type +special+)
+  (:syntax "(quote form) => form"))
 
 (defnode sec-bindings
   (:title "Bindings and Environments")
@@ -143,7 +165,7 @@
 
 (defnode tools
   (:title "Qua Tools Guide")
-  (:byline "How to use Qua in web pages and Node."))
+  (:byline "How to use Qua in HTML pages, web apps, and Node."))
 
 (defnode sample
   (:title "Qua Demos and Sample Code")

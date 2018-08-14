@@ -1,62 +1,154 @@
-<div ><center ><h1 ><a href="index.html">Qua</a>
+<div style="font-family: serif"><center ><h1 ><a href="index.html">Qua</a>
  Language Manual</h1>
 </center>
 <div ><div ><h2 ><a href="sec-evaluation.html">Evaluation</a>
 </h2>
-<h3 ><a href="op-vau.html">VAU</a>
-</h3>
-<h3 ><a href="op-wrap.html">WRAP</a>
-</h3>
-<h3 ><a href="op-unwrap.html">UNWRAP</a>
-</h3>
-<h3 ><a href="op-lambda.html">LAMBDA</a>
-</h3>
-<h3 ><a href="op-eval.html">EVAL</a>
-</h3>
-<h3 ><a href="op-apply.html">APPLY</a>
-</h3>
-<h3 ><a href="op-funcall.html">FUNCALL</a>
-</h3>
-<h3 ><a href="op-quote.html">QUOTE</a>
-</h3>
+<div ><h3 >VAU [Special]</h3>
+<h4 >Syntax</h4>
+<tt >(vau operand-tree environment-parameter form*) =&gt; fexpr</tt>
+<h4 >Description</h4>
+<p >Creates a new <a href=""><em >fexpr</em>
+</a>
+ with the
+  given <a href=""><em >operand tree</em>
+</a>
+, <a href=""><em >environment
+  parameter</em>
+</a>
+, and body forms.</p>
+</div>
+<div ><h3 >WRAP [Function]</h3>
+<h4 >Syntax</h4>
+<tt >(wrap fexpr) =&gt; function</tt>
+<h4 >Description</h4>
+<p ></p>
+</div>
+<div ><h3 >UNWRAP [Function]</h3>
+<h4 >Syntax</h4>
+<tt >(unwrap function) =&gt; fexpr</tt>
+<h4 >Description</h4>
+<p ></p>
+</div>
+<div ><h3 >LAMBDA [Special]</h3>
+<h4 >Syntax</h4>
+<tt >(lambda parameter-tree form*) =&gt; function</tt>
+<h4 >Description</h4>
+<p ></p>
+</div>
+<div ><h3 >EVAL [Function]</h3>
+<h4 >Syntax</h4>
+<tt >(eval form environment) =&gt; result</tt>
+<h4 >Description</h4>
+<p ></p>
+</div>
+<div ><h3 >APPLY [Function]</h3>
+<h4 >Syntax</h4>
+<tt >(apply function arguments) =&gt; result</tt>
+<h4 >Description</h4>
+<p ></p>
+</div>
+<div ><h3 >FUNCALL [Function]</h3>
+<h4 >Syntax</h4>
+<tt >(funcall function argument*) =&gt; result</tt>
+<h4 >Description</h4>
+<p ></p>
+</div>
+<div ><h3 >QUOTE [Special]</h3>
+<h4 >Syntax</h4>
+<tt >(quote form) =&gt; form</tt>
+<h4 >Description</h4>
+<p ></p>
+</div>
 </div>
 <div ><h2 ><a href="sec-bindings.html">Bindings and Environments</a>
 </h2>
-<h3 ><a href="op-make-environment.html">MAKE-ENVIRONMENT</a>
-</h3>
-<h3 ><a href="op-the-environment.html">THE-ENVIRONMENT</a>
-</h3>
-<h3 ><a href="op-def.html">DEF</a>
-</h3>
-<h3 ><a href="op-defconstant.html">DEFCONSTANT</a>
-</h3>
+<div ><h3 >MAKE-ENVIRONMENT [Special]</h3>
+<h4 >Syntax</h4>
+<tt ></tt>
+<h4 >Description</h4>
+<p ></p>
+</div>
+<div ><h3 >THE-ENVIRONMENT [Special]</h3>
+<h4 >Syntax</h4>
+<tt ></tt>
+<h4 >Description</h4>
+<p ></p>
+</div>
+<div ><h3 >DEF [Special]</h3>
+<h4 >Syntax</h4>
+<tt ></tt>
+<h4 >Description</h4>
+<p ></p>
+</div>
+<div ><h3 >DEFCONSTANT [Special]</h3>
+<h4 >Syntax</h4>
+<tt ></tt>
+<h4 >Description</h4>
+<p ></p>
+</div>
 </div>
 <div ><h2 ><a href="sec-places.html">Places</a>
 </h2>
-<h3 ><a href="op-setq.html">SETQ</a>
-</h3>
-<h3 ><a href="op-setf.html">SETF</a>
-</h3>
-<h3 ><a href="op-defsetf.html">DEFSETF</a>
-</h3>
+<div ><h3 >SETQ [Special]</h3>
+<h4 >Syntax</h4>
+<tt ></tt>
+<h4 >Description</h4>
+<p ></p>
+</div>
+<div ><h3 >SETF [Special]</h3>
+<h4 >Syntax</h4>
+<tt ></tt>
+<h4 >Description</h4>
+<p ></p>
+</div>
+<div ><h3 >DEFSETF [Special]</h3>
+<h4 >Syntax</h4>
+<tt ></tt>
+<h4 >Description</h4>
+<p ></p>
+</div>
 </div>
 <div ><h2 ><a href="sec-simple-control.html">Simple Control</a>
 </h2>
-<h3 ><a href="op-progn.html">PROGN</a>
-</h3>
-<h3 ><a href="op-loop.html">LOOP</a>
-</h3>
+<div ><h3 >PROGN [Special]</h3>
+<h4 >Syntax</h4>
+<tt ></tt>
+<h4 >Description</h4>
+<p ></p>
+</div>
+<div ><h3 >LOOP [Special]</h3>
+<h4 >Syntax</h4>
+<tt ></tt>
+<h4 >Description</h4>
+<p ></p>
+</div>
 </div>
 <div ><h2 ><a href="sec-delimited-control.html">Delimited Control</a>
 </h2>
-<h3 ><a href="op-push-prompt.html">PUSH-PROMPT</a>
-</h3>
-<h3 ><a href="op-take-subcont.html">TAKE-SUBCONT</a>
-</h3>
-<h3 ><a href="op-push-subcont.html">PUSH-SUBCONT</a>
-</h3>
-<h3 ><a href="op-push-prompt-subcont.html">PUSH-PROMPT-SUBCONT</a>
-</h3>
+<div ><h3 >PUSH-PROMPT [Special]</h3>
+<h4 >Syntax</h4>
+<tt ></tt>
+<h4 >Description</h4>
+<p ></p>
+</div>
+<div ><h3 >TAKE-SUBCONT [Special]</h3>
+<h4 >Syntax</h4>
+<tt ></tt>
+<h4 >Description</h4>
+<p ></p>
+</div>
+<div ><h3 >PUSH-SUBCONT [Special]</h3>
+<h4 >Syntax</h4>
+<tt ></tt>
+<h4 >Description</h4>
+<p ></p>
+</div>
+<div ><h3 >PUSH-PROMPT-SUBCONT [Special]</h3>
+<h4 >Syntax</h4>
+<tt ></tt>
+<h4 >Description</h4>
+<p ></p>
+</div>
 </div>
 </div>
 </div>

@@ -16,7 +16,7 @@
    (p () (attribute target 'byline))))
 
 (defun manual-template (target)
-  (div ()
+  (div (:style "font-family: serif")
        (center () (h1 () (a (:href "index.html") "Qua") " Language Manual"))
        (div ()
             (attribute target 'child #'section-template))))
@@ -27,5 +27,11 @@
    (attribute target 'child #'item-template)))
 
 (defun item-template (target)
-  (h3 () (node-link target)))
+  (div ()
+   (h3 () (attribute target 'title) " [" (attribute target 'type) "]")
+   (h4 () "Syntax")
+   (tt () (attribute target 'syntax))
+   (h4 () "Description")
+   (p () (attribute target 'description))))
+
 

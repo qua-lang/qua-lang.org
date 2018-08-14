@@ -43,6 +43,7 @@
   a
   body
   center
+  code
   div
   em
   h1
@@ -55,5 +56,7 @@
   head
   html
   p
+  pre
   span
-  strong)
+  strong
+  tt)
