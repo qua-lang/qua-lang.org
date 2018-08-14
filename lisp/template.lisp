@@ -1,37 +1,36 @@
-(defun main-template (target)
+(deftemplate main-template
   (div ()
-   (h1 () (attribute target 'title))
+   (h1 () (attribute 'title))
    (div ()
-    (attribute target 'child #'medium-template))))
+    (attribute 'child 'medium-template))))
 
-(defun page-template (target)
+(deftemplate page-template
   (div ()
-   (h1 () (a (:href "index.html") "Qua") " / " (attribute target 'title))
+   (h1 () (a (:href "index.html") "Qua") " / " (attribute 'title))
    (div ()
-    (attribute target 'child #'medium-template))))
+    (attribute 'child 'medium-template))))
 
-(defun medium-template (target)
+(deftemplate medium-template
   (div ()
-   (h3 () (node-link target))
-   (p () (attribute target 'byline))))
+   (h3 () (node-link))
+   (p () (attribute 'byline))))
 
-(defun manual-template (target)
+(deftemplate manual-template
   (div (:style "font-family: serif")
        (center () (h1 () (a (:href "index.html") "Qua") " Language Manual"))
        (div ()
-            (attribute target 'child #'section-template))))
+            (attribute 'child 'section-template))))
 
-(defun section-template (target)
+(deftemplate section-template
   (div ()
-   (h2 () (node-link target))
-   (attribute target 'child #'item-template)))
+   (h2 () (node-link))
+   (attribute 'child 'item-template)))
 
-(defun item-template (target)
+(deftemplate item-template
   (div ()
-   (h3 () (attribute target 'title) " [" (attribute target 'type) "]")
+   (h3 () (attribute 'title) " [" (attribute 'type) "]")
    (h4 () "Syntax")
-   (tt () (attribute target 'syntax))
+   (tt () (attribute 'syntax))
    (h4 () "Description")
-   (p () (attribute target 'description))))
-
+   (p () (attribute 'description))))
 

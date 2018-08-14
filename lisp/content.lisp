@@ -3,11 +3,7 @@
 
 (defnode index
   (:title "Qua: Ultralight Lisp for the Web")
-  (:child 'alpha
-          'intro
-          'manual
-          'tools
-          'sample))
+  (:child 'alpha 'intro 'manual 'tools 'sample))
 
 (defnode alpha
   (:title "Hackers wanted")
@@ -40,8 +36,8 @@
           'op-funcall
           'op-quote))
 
-(defun gloref (foo)
-  (a (:href "") (em () foo)))
+(deffexpr gloref (foo) #ign
+  foo)
 
 (defnode op-vau
   (:title "VAU")
