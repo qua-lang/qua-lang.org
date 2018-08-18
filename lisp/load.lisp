@@ -1,3 +1,4 @@
+(print (node:require "./js/tmplcmpl.js"))
 (load "lisp/duq.lisp")
 (def #'defnode #'duq-define-node)
 (def #'deftemplate #'def)
