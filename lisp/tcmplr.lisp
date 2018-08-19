@@ -108,6 +108,6 @@
            node
            template))
 
-(defun tcmplr-write-file (node template)
-  (node:write-file-sync (+ "docs/" (.id node) ".html")
+(defun tcmplr-write-file (name node template)
+  (node:write-file-sync (+ "docs/" name)
                         (tcmplr-render node template)))

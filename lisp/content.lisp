@@ -9,11 +9,7 @@
 (defnode qua-hub-index +qua-hub-main-page+
   (:title "Qua: Ultralight Lisp for the Web")
   (:child
-   (hyper 'qua-hub-alpha)
-   (hyper 'qua-hub-intro)
-   (hyper 'qua-hub-manual)
-   (hyper 'qua-hub-tools)
-   (hyper 'qua-hub-sample)))
+   (hyper 'qua-hub-manual)))
 
 (defnode qua-hub-alpha +qua-hub-page+
   (:title "Hackers wanted")

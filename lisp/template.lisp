@@ -30,13 +30,13 @@
 
 
 
-(deftemplate qua-hub-main-template
+(deftemplate qua-hub-template-large
   (div ()
        (h1 () (node-field 'title))
        (div ()
             (node-field 'child 'medium))))
 
-(associate-template +qua-hub-main-page+ 'large qua-hub-main-template)
+(associate-template +qua-hub-main-page+ 'large qua-hub-template-large)
 
 (deftemplate qua-hub-page-template-large
   (div ()
