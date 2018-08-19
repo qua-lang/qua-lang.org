@@ -8,7 +8,7 @@
 
 (deftemplate qua-hub-section-template-medium
   (div ()
-       (h2 () "LINK")
+       (h2 () "SECTION")
        (node-field 'child 'default)))
 
 (associate-template +qua-hub-section+ 'default qua-hub-section-template-medium)
@@ -46,9 +46,12 @@
 
 (associate-template +qua-hub-page+ 'large qua-hub-page-template-large)
 
+(defun page-link ()
+  (a (:href (node-field 'page-name)) (node-field 'title)))
+
 (deftemplate qua-hub-page-template-medium
   (div ()
-       (h3 () "LINK")
+       (h3 () (page-link))
        (p () (node-field 'byline))))
 
 (associate-template +qua-hub-page+ 'medium qua-hub-page-template-medium)

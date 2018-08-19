@@ -23,6 +23,7 @@
 
 (defnode qua-hub-manual +qua-hub-manual-page+
   (:title "Qua Language Manual")
+  (:page-name "manual.html")
   (:byline "Reference for the Lisp dialect implemented by Qua.")
   (:child
    (hyper 'sec-evaluation)))
