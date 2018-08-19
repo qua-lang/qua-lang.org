@@ -83,7 +83,7 @@ lib.TagTemplate.prototype.compile_template = function(out) {
     this.compile_attributes(out);
     out(">");
     this.compile_children(out);
-    out("</" + this.tag_name + ">\n");
+    out("</" + this.tag_name + ">");
 };
 
 lib.TagTemplate.prototype.compile_attributes = function(out) {

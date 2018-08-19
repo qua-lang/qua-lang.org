@@ -1,6 +1,6 @@
 (deftemplate qua-hub-manual-template-large
-  (div (:style "font-family: serif")
-       (center () (h1 () (a (:href "index.html") "Qua") " Language Manual"))
+  (div ()
+       (center () (h1 () (a (:href "index.html") "Qua") " Lisp Manual"))
        (div ()
             (node-field 'child 'default))))
 
@@ -8,16 +8,16 @@
 
 (deftemplate qua-hub-section-template-medium
   (div ()
-       (h2 () "SECTION")
+       (h2 () (node-field 'title))
        (node-field 'child 'default)))
 
 (associate-template +qua-hub-section+ 'default qua-hub-section-template-medium)
 
 (deftemplate qua-hub-manual-operator-template-medium
   (div ()
-       (h3 () (node-field 'title) " [" (node-field 'type) "]")
+       (h3 () (node-field 'title) (node-field 'type-name))
        (h4 () "Syntax")
-       (tt () (node-field 'syntax))
+       (em () (node-field 'syntax))
        (h4 () "Description")
        (div () (node-field 'description 'default))))
 
@@ -27,8 +27,6 @@
   (p () (node-field 'content)))
 
 (associate-template +qua-hub-paragraph+ 'default qua-hub-paragraph-template-medium)
-
-
 
 (deftemplate qua-hub-template-large
   (div ()
