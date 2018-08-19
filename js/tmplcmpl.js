@@ -2,7 +2,6 @@
 
 var lib = module.exports;
 
-
 ///// Nodes
 
 lib.make_node_type = function(supertype) {
@@ -167,7 +166,7 @@ lib.compile = function(template) {
     var instructions = lib.template_to_instructions(template);
     var js_code = lib.instructions_to_js_function(instructions);
     console.log(js_code);
-    return eval("(" + js_code + ")");
+    return eval(js_code);
 };
 
 lib.template_to_instructions = function(template) {
@@ -199,14 +198,14 @@ lib.template_to_instructions = function(template) {
     return instructions;
 }
 
-lib.FUNCTION_DEFINITION = "function(rt,env,anchor,node){";
+lib.FUNCTION_DEFINITION = "(function(rt,env,anchor,node){";
 
 lib.instructions_to_js_function = function(instructions) {
     return lib.FUNCTION_DEFINITION + "return " +
         (instructions.map(function(instruction) {
             return instruction.compile_instruction();
         }).join("+"))
-        + "; }";
+        + "; })";
 };
 
 ///// Runtime
@@ -223,7 +222,11 @@ lib.rt.node_field = function(env, anchor, node, field_name, template_name) {
                 str += field_value;
             } else if (field_value instanceof lib.Anchor) {
                 var node = field_value.resolve_anchor(env);
-                return node[template_name](lib.rt, env, anchor, node);
+                var template = node[template_name];
+                if (!template) {
+                    throw "template not found: " + template_name;
+                }
+                return template(lib.rt, env, anchor, node);
             } else {
                 throw "not a field value: " + field_value;
             }
