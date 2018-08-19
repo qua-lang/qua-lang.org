@@ -7,6 +7,14 @@
 (def #'associate-template #'tcmplr-associate-template)
 (def #'node-field #'tcmplr-make-node-field-template)
 (def #'file #'tcmplr-write-file)
-(load "lisp/content.lisp")
+
+(define-node-type +qua-hub-page+)
+(define-node-type +qua-hub-section+)
+(define-node-type +qua-hub-item+)
+(define-node-type +qua-hub-paragraph+)
+(define-node-type +qua-hub-main-page+ +qua-hub-page+)
+(define-node-type +qua-hub-manual-page+ +qua-hub-page+)
+(define-node-type +qua-hub-manual-operator+ +qua-hub-item+)
+
 (load "lisp/template.lisp")
 (load "lisp/site.lisp")
