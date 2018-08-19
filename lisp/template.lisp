@@ -1,38 +1,55 @@
-(deftemplate main-template
-  (div ()
-   (h1 () (attribute 'title))
-   (div ()
-    (attribute 'child 'medium-template))))
-
-(deftemplate page-template
-  (div ()
-   (h1 () (a (:href "index.html") "Qua") " / " (attribute 'title))
-   (div ()
-    (attribute 'child 'medium-template))))
-
-(deftemplate medium-template
-  (div ()
-   (h3 () (node-link))
-   (p () (attribute 'byline))))
-
-(deftemplate manual-template
+(deftemplate qua-hub-manual-template-large
   (div (:style "font-family: serif")
        (center () (h1 () (a (:href "index.html") "Qua") " Language Manual"))
        (div ()
-            (attribute 'child 'section-template))))
+            (node-field 'child 'default))))
 
-(deftemplate section-template
+(associate-template +qua-hub-manual-page+ 'default qua-hub-manual-template-large)
+
+(deftemplate qua-hub-section-template-medium
   (div ()
-   (h2 () (node-link))
-   (attribute 'child 'item-template)))
+       (h2 () "LINK")
+       (node-field 'child 'default)))
 
-(deftemplate item-template
+(associate-template +qua-hub-section+ 'default qua-hub-section-template-medium)
+
+(deftemplate qua-hub-manual-operator-template-medium
   (div ()
-   (h3 () (attribute 'title) " [" (attribute 'type) "]")
-   (h4 () "Syntax")
-   (tt () (attribute 'syntax))
-   (h4 () "Description")
-   (div () (attribute 'description 'para-template))))
+       (h3 () (node-field 'title) " [" (node-field 'type) "]")
+       (h4 () "Syntax")
+       (tt () (node-field 'syntax))
+       (h4 () "Description")
+       (div () (node-field 'description 'default))))
 
-(deftemplate para-template
-  (p () (attribute 'content)))
+(associate-template +qua-hub-manual-operator+ 'default qua-hub-manual-operator-template-medium)
+
+(deftemplate qua-hub-paragraph-template-medium
+  (p () (node-field 'content)))
+
+(associate-template +qua-hub-paragraph+ 'default qua-hub-paragraph-template-medium)
+
+
+
+(deftemplate qua-hub-main-template
+  (div ()
+       (h1 () (node-field 'title))
+       (div ()
+            (node-field 'child 'medium))))
+
+(associate-template +qua-hub-main-page+ 'large qua-hub-main-template)
+
+(deftemplate qua-hub-page-template-large
+  (div ()
+       (h1 () (a (:href "index.html") "Qua") " / " (node-field 'title))
+       (div ()
+            (node-field 'child 'medium))))
+
+(associate-template +qua-hub-page+ 'large qua-hub-page-template-large)
+
+(deftemplate qua-hub-page-template-medium
+  (div ()
+       (h3 () "LINK")
+       (p () (node-field 'byline))))
+
+(associate-template +qua-hub-page+ 'medium qua-hub-page-template-medium)
+

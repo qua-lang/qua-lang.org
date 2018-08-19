@@ -1,170 +1,76 @@
-(defconstant +special+ "Special")
-(defconstant +function+ "Function")
+(define-node-type +qua-hub-page+)
+(define-node-type +qua-hub-section+)
+(define-node-type +qua-hub-item+)
+(define-node-type +qua-hub-paragraph+)
+(define-node-type +qua-hub-main-page+ +qua-hub-page+)
+(define-node-type +qua-hub-manual-page+ +qua-hub-page+)
+(define-node-type +qua-hub-manual-operator+ +qua-hub-item+)
 
-(defnode index
+(defnode qua-hub-index +qua-hub-main-page+
   (:title "Qua: Ultralight Lisp for the Web")
-  (:child 'alpha 'intro 'manual 'tools 'sample))
+  (:child
+   (hyper 'qua-hub-alpha)
+   (hyper 'qua-hub-intro)
+   (hyper 'qua-hub-manual)
+   (hyper 'qua-hub-tools)
+   (hyper 'qua-hub-sample)))
 
-(defnode alpha
+(defnode qua-hub-alpha +qua-hub-page+
   (:title "Hackers wanted")
   (:byline "For alpha testing Qua, constant language changes, abysmal
   performance, undocumented code, long sessions of debugging, random
   crashes, fun and glorious hacks in case of success."))
 
-(defnode intro
+(defnode qua-hub-intro +qua-hub-page+
   (:title "Introduction to the Qua Project")
   (:byline "Start here if you are new to Qua."))
 
-(defnode manual
+(defnode qua-hub-manual +qua-hub-manual-page+
   (:title "Qua Language Manual")
   (:byline "Reference for the Lisp dialect implemented by Qua.")
   (:child
-   'sec-evaluation
-   'sec-bindings
-   'sec-places
-   'sec-simple-control
-   'sec-delimited-control))
+   (hyper 'sec-evaluation)))
 
-(defnode sec-evaluation
+(defnode sec-evaluation +qua-hub-section+
   (:title "Evaluation")
-  (:child 'op-vau
-          'op-wrap
-          'op-unwrap
-          'op-lambda
-          'op-eval
-          'op-apply
-          'op-funcall
-          'op-quote))
+  (:child
+   (hyper 'op-vau)
+   (hyper 'op-wrap)
+   (hyper 'op-unwrap)
+   (hyper 'op-lambda)
+   (hyper 'op-eval)
+   (hyper 'op-apply)
+   (hyper 'op-funcall)
+   (hyper 'op-quote)))
 
-(deffexpr gloref (foo) #ign
-  foo)
-
-(defnode op-vau
+(defnode op-vau +qua-hub-manual-operator+
   (:title "VAU")
-  (:type +special+)
-  (:syntax "(vau operand-tree environment-parameter form*) => fexpr")
-  (:description
-   (node (:content "Creates a new " (gloref "fexpr") " with the
-    given " (gloref "operand tree") ", " (gloref "environment
-    parameter") ", and body forms."))))
+  (:syntax "(vau operand-tree environment-parameter form*) => fexpr"))
 
-(defnode op-wrap
+(defnode op-wrap +qua-hub-manual-operator+
   (:title "WRAP")
-  (:type +function+)
   (:syntax "(wrap fexpr) => function"))
 
-(defnode op-unwrap
+(defnode op-unwrap +qua-hub-manual-operator+
   (:title "UNWRAP")
-  (:type +function+)
   (:syntax "(unwrap function) => fexpr"))
 
-(defnode op-lambda
+(defnode op-lambda +qua-hub-manual-operator+
   (:title "LAMBDA")
-  (:type +special+)
   (:syntax "(lambda parameter-tree form*) => function"))
 
-(defnode op-eval
+(defnode op-eval +qua-hub-manual-operator+
   (:title "EVAL")
-  (:type +function+)
   (:syntax "(eval form environment) => result"))
 
-(defnode op-apply
+(defnode op-apply +qua-hub-manual-operator+
   (:title "APPLY")
-  (:type +function+)
   (:syntax "(apply function arguments) => result"))
 
-(defnode op-funcall
+(defnode op-funcall +qua-hub-manual-operator+
   (:title "FUNCALL")
-  (:type +function+)
   (:syntax "(funcall function argument*) => result"))
 
-(defnode op-quote
+(defnode op-quote +qua-hub-manual-operator+
   (:title "QUOTE")
-  (:type +special+)
   (:syntax "(quote form) => form"))
-
-(defnode sec-bindings
-  (:title "Bindings and Environments")
-  (:child 'op-make-environment
-          'op-the-environment
-          'op-def
-          'op-defconstant))
-
-(defnode op-def
-  (:title "DEF")
-  (:type +special+))
-
-(defnode op-defconstant
-  (:title "DEFCONSTANT")
-  (:type +special+))
-
-(defnode sec-places
-  (:title "Places")
-  (:child 'op-setq
-          'op-setf
-          'op-defsetf))
-
-(defnode op-setq
-  (:title "SETQ")
-  (:type +special+))
-
-(defnode op-setf
-  (:title "SETF")
-  (:type +special+))
-
-(defnode op-defsetf
-  (:title "DEFSETF")
-  (:type +special+))
-
-(defnode op-make-environment
-  (:title "MAKE-ENVIRONMENT")
-  (:type +special+))
-
-(defnode op-the-environment
-  (:title "THE-ENVIRONMENT")
-  (:type +special+))
-
-(defnode sec-simple-control
-  (:title "Simple Control")
-  (:child 'op-progn
-          'op-loop))
-
-(defnode op-progn
-  (:title "PROGN")
-  (:type +special+))
-
-(defnode op-loop
-  (:title "LOOP")
-  (:type +special+))
-
-(defnode sec-delimited-control
-  (:title "Delimited Control")
-  (:child 'op-push-prompt
-          'op-take-subcont
-          'op-push-subcont
-          'op-push-prompt-subcont))
-
-(defnode op-push-prompt
-  (:title "PUSH-PROMPT")
-  (:type +special+))
-
-(defnode op-take-subcont
-  (:title "TAKE-SUBCONT")
-  (:type +special+))
-
-(defnode op-push-subcont
-  (:title "PUSH-SUBCONT")
-  (:type +special+))
-
-(defnode op-push-prompt-subcont
-  (:title "PUSH-PROMPT-SUBCONT")
-  (:type +special+))
-
-(defnode tools
-  (:title "Qua Tools Guide")
-  (:byline "How to use Qua in HTML pages, web apps, and Node."))
-
-(defnode sample
-  (:title "Qua Demos and Sample Code")
-  (:byline "Code already written in Qua, such as the generator for
-  this website, for you to look at."))

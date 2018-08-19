@@ -1,18 +1,21 @@
-////// The TMPLCMPL Template Compiler
+////// The TCMPLR Template Compiler
 
 var lib = module.exports;
 
 ///// Nodes
 
-lib.make_node_type = function(supertype) {
-    return Object.create(supertype);
+lib.make_node_type = function(name, supertype) {
+    var type = Object.create(supertype);
+    type.name = name;
+    return type;
 };
 
-lib.NODE = lib.make_node_type(null);
+lib.NODE = lib.make_node_type("node", Object.prototype);
 
 lib.make_node = function(type, id, fields) {
     var node = Object.create(type);
     node.id = id;
+    node.type = type;
     node.fields = fields;
     return node;
 };
@@ -41,7 +44,8 @@ lib.Anchor.prototype.resolve_anchor = function(environment) {
     if (this.node) {
         return this.node;
     } else {
-        var node = environment[this.href];
+        // Horrible kludge: this should really use a Qua VM API
+        var node = environment.bindings["variable:" + this.href];
         if (!node) {
             throw "node not found: " + this.href;
         }
@@ -165,7 +169,6 @@ lib.AnchorFieldInstruction.prototype.compile_instruction = function() {
 lib.compile = function(template) {
     var instructions = lib.template_to_instructions(template);
     var js_code = lib.instructions_to_js_function(instructions);
-    console.log(js_code);
     return eval(js_code);
 };
 
@@ -213,6 +216,9 @@ lib.instructions_to_js_function = function(instructions) {
 lib.rt = Object.create(null);
 
 lib.rt.node_field = function(env, anchor, node, field_name, template_name) {
+    if (!node.fields) {
+        throw "probably not a node: " + node;
+    }
     var field_values = node.fields[field_name];
     if (field_values) {
         var str = "";
@@ -222,11 +228,14 @@ lib.rt.node_field = function(env, anchor, node, field_name, template_name) {
                 str += field_value;
             } else if (field_value instanceof lib.Anchor) {
                 var node = field_value.resolve_anchor(env);
+                if (!node.fields) {
+                    throw "not a node: " + node;
+                }
                 var template = node[template_name];
                 if (!template) {
                     throw "template not found: " + template_name;
                 }
-                return template(lib.rt, env, anchor, node);
+                str += template(lib.rt, env, anchor, node);
             } else {
                 throw "not a field value: " + field_value;
             }
@@ -239,4 +248,10 @@ lib.rt.node_field = function(env, anchor, node, field_name, template_name) {
 
 lib.rt.anchor_field = function(env, anchor, node, field_name, template_name) {
     return "ANCHOR TBD";
+};
+
+///// Rendering
+
+lib.render = function(env, node, template) {
+    return template(lib.rt, env, lib.make_immediate_anchor(node), node);
 };
