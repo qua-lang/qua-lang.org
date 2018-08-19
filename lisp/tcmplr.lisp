@@ -102,11 +102,8 @@
 
 ;;;; Rendering
 
-(defun/env tcmplr-render (node template) env
-  (@render +tcmplr+
-           env
-           node
-           template))
+(defun tcmplr-render (node template)
+  (@render +tcmplr+ (the-environment) node template))
 
 (defun tcmplr-write-file (name node template)
   (node:write-file-sync (+ "docs/" name)
