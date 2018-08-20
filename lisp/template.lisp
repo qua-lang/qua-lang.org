@@ -1,3 +1,13 @@
+(deftemplate qua-hub-inline-template
+  (a (:href (node-link)) (node-field 'title)))
+
+(associate-template +tcmplr-node+ 'inline qua-hub-inline-template)
+
+(deftemplate qua-hub-op-inline-template
+  (a (:href (node-link) :style "text-transform: lowercase") (strong () (node-field 'title))))
+
+(associate-template +qua-hub-manual-operator+ 'inline qua-hub-op-inline-template)
+
 (deftemplate qua-hub-manual-template-large
   (div ()
        (center () (h1 (:style "font-variant:small-caps") (a (:href "index.html") "Qua") " Lisp Manual"))
@@ -33,7 +43,7 @@
 (associate-template +qua-hub-manual-operator+ 'default qua-hub-manual-operator-template-medium)
 
 (deftemplate qua-hub-manual-operator-template-toc
-  (h6 () (node-field 'title)))
+  (h6 () (a (:href (node-link)) (node-field 'title))))
 
 (associate-template +qua-hub-manual-operator+ 'toc qua-hub-manual-operator-template-toc)
 

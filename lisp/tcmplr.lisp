@@ -83,6 +83,9 @@
           (symbol-name field-name)
           (symbol-name (optional opt-template-name 'inline))))
 
+(defun tcmplr-make-node-link-template ()
+  (js-new (.NodeLinkTemplate +tcmplr+)))
+
 (defun tcmplr-make-tag-template (tag-name attrs children)
   (js-new (.TagTemplate +tcmplr+)
           tag-name

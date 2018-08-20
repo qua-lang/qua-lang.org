@@ -149,6 +149,14 @@ lib.AnchorFieldTemplate.prototype.compile_template = function(out) {
     out(new lib.AnchorFieldInstruction(this.field_name, this.template_name));
 };
 
+//// Node Link Template
+
+lib.NodeLinkTemplate = function NodeLinkTemplate() {};
+lib.NodeLinkTemplate.prototype = new lib.Template();
+lib.NodeLinkTemplate.prototype.compile_template = function(out) {
+    out(new lib.NodeLinkInstruction(this.field_name, this.template_name));
+};
+
 ///// Instructions
 
 lib.Instruction = function Instruction() {};
@@ -187,6 +195,14 @@ lib.AnchorFieldInstruction.prototype = new lib.Instruction();
 
 lib.AnchorFieldInstruction.prototype.compile_instruction = function() {
     return "rt.anchor_field(store,anchor,node,\"" + this.field_name + "\",\"" + this.template_name + "\")";
+};
+
+//// Node Link Instruction
+
+lib.NodeLinkInstruction = function NodeLinkInstruction() {};
+lib.NodeLinkInstruction.prototype = new lib.Instruction();
+lib.NodeLinkInstruction.prototype.compile_instruction = function() {
+    return "rt.node_link(node)";
 };
 
 ///// Compilation Process
@@ -273,6 +289,10 @@ lib.rt.node_field = function(store, anchor, node, field_name, template_name) {
 
 lib.rt.anchor_field = function(store, anchor, node, field_name, template_name) {
     return "ANCHOR TBD";
+};
+
+lib.rt.node_link = function(node) {
+    return node.reference.to_html_url();
 };
 
 ///// Rendering
