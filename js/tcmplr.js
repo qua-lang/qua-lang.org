@@ -2,6 +2,8 @@
 
 var lib = module.exports;
 
+var escape_html = require("escape-html");
+
 ///// Nodes
 
 lib.make_node_type = function(name, supertype) {
@@ -282,7 +284,7 @@ lib.rt.node_field = function(store, anchor, node, field_name, template_name) {
         for (var i in field_values) {
             var field_value = field_values[i];
             if (typeof(field_value) === "string") {
-                str += field_value;
+                str += escape_html(field_value);
             } else if (field_value instanceof lib.Anchor) {
                 var node = field_value.resolve_anchor(store);
                 if (!node.fields) {

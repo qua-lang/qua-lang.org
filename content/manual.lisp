@@ -1,50 +1,510 @@
 (defnode (manual) +qua-hub-manual-page+
-  (:title "Qua Lisp Manual")
-  (:url "manual.html")
+  (:title "Generic Lisp Manual")
   (:byline "Reference for the Lisp dialect implemented by Qua.")
   (:child
-   (hyper '(manual . sec-evaluation))))
+   (hyper '(manual . sec-intro))
+   (hyper '(manual . sec-evaluation))
+   (hyper '(manual . sec-environments))
+   (hyper '(manual . sec-objects))
+   (hyper '(manual . sec-generic-functions))
+   (hyper '(manual . sec-places))
+   (hyper '(manual . sec-symbols))
+   (hyper '(manual . sec-lists))
+   (hyper '(manual . sec-sequences))
+   (hyper '(manual . sec-control))
+   (hyper '(manual . sec-dynamic))
+   (hyper '(manual . sec-js))))
+
+
+(defnode (manual . sec-intro) +qua-hub-section+
+  (:title "Introduction")
+  (:content
+   (paragraph "Generic Lisp is a new dialect of Lisp, designed to be
+    ultra-light and allow tiny implementations, yet offer the powerful
+    metaprogramming facilities, control flow abstractions, and general
+    no-nonsense approach associated with Lisp.  Generic Lisp is based
+    on Kernel, Common Lisp, and Scheme.  From Kernel it takes its
+    central computing workhorses, lexically-scoped fexprs and
+    first-class environments.  The surface syntax and core language
+    look and feel a lot like Common Lisp, from which Generic Lisp
+    inherits many operators.  The interface for control flow
+    manipulation, delimited continuations, are the result of a long
+    line of research pioneered in Scheme.")
+   (paragraph "This manual is intended as a definition of Generic Lisp for
+    an audience of knowledgeable Lisp programmers.")))
+
 
 (defnode (manual . sec-evaluation) +qua-hub-section+
   (:title "Evaluation")
   (:child
    (hyper '(manual . op-vau))
+   (hyper '(manual . op-deffexpr))
    (hyper '(manual . op-wrap))
    (hyper '(manual . op-unwrap))
    (hyper '(manual . op-lambda))
+   (hyper '(manual . op-defun))
+   (hyper '(manual . op-function))
    (hyper '(manual . op-eval))
    (hyper '(manual . op-apply))
    (hyper '(manual . op-funcall))
-   (hyper '(manual . op-quote))))
+   (hyper '(manual . op-quote))
+   (hyper '(manual . op-macro))
+   (hyper '(manual . op-defmacro))))
 
 (defnode (manual . op-vau) +qua-hub-manual-operator+
   (:title "VAU")
-  (:syntax "vau operand-tree environment-parameter form* => fexpr"))
+  (:syntax "operand-tree environment-parameter form* => fexpr"))
+
+(defnode (manual . op-deffexpr) +qua-hub-manual-operator+
+  (:title "DEFFEXPR")
+  (:syntax "name operand-tree environment-parameter form* => fexpr"))
 
 (defnode (manual . op-wrap) +qua-hub-manual-operator+
   (:title "WRAP")
-  (:syntax "wrap fexpr => function"))
+  (:syntax "fexpr => function"))
 
 (defnode (manual . op-unwrap) +qua-hub-manual-operator+
   (:title "UNWRAP")
-  (:syntax "unwrap function => fexpr"))
+  (:syntax "function => fexpr"))
 
 (defnode (manual . op-lambda) +qua-hub-manual-operator+
   (:title "LAMBDA")
-  (:syntax "lambda parameter-tree form* => function"))
+  (:syntax "parameter-tree form* => function"))
+
+(defnode (manual . op-defun) +qua-hub-manual-operator+
+  (:title "DEFUN")
+  (:syntax "name parameter-tree form* => function"))
+
+(defnode (manual . op-function) +qua-hub-manual-operator+
+  (:title "FUNCTION")
+  (:syntax "name => function"))
 
 (defnode (manual . op-eval) +qua-hub-manual-operator+
   (:title "EVAL")
-  (:syntax "eval form environment => result"))
+  (:syntax "form environment => result"))
 
 (defnode (manual . op-apply) +qua-hub-manual-operator+
   (:title "APPLY")
-  (:syntax "apply function arguments => result"))
+  (:syntax "function arguments => result"))
 
 (defnode (manual . op-funcall) +qua-hub-manual-operator+
   (:title "FUNCALL")
-  (:syntax "funcall function argument* => result"))
+  (:syntax "function argument* => result"))
 
 (defnode (manual . op-quote) +qua-hub-manual-operator+
   (:title "QUOTE")
-  (:syntax "quote form => form"))
+  (:syntax "form => form"))
+
+(defnode (manual . op-macro) +qua-hub-manual-operator+
+  (:title "MACRO")
+  (:syntax "operand-tree form* => macro"))
+
+(defnode (manual . op-defmacro) +qua-hub-manual-operator+
+  (:title "DEFMACRO")
+  (:syntax "name operand-tree form* => macro"))
+
+
+(defnode (manual . sec-environments) +qua-hub-section+
+  (:title "Environments")
+  (:child
+   (hyper '(manual . op-def))
+   (hyper '(manual . op-defconstant))
+   (hyper '(manual . op-let))
+   (hyper '(manual . op-let-star))
+   (hyper '(manual . op-flet))
+   (hyper '(manual . op-labels))
+   (hyper '(manual . op-make-environment))
+   (hyper '(manual . op-the-environment))))
+
+(defnode (manual . op-def) +qua-hub-manual-operator+
+  (:title "DEF")
+  (:syntax "definiend value => result"))
+
+(defnode (manual . op-defconstant) +qua-hub-manual-operator+
+  (:title "DEFCONSTANT")
+  (:syntax "definiend value => result"))
+
+(defnode (manual . op-let) +qua-hub-manual-operator+
+  (:title "LET")
+  (:syntax "((var value)*) body* => result"))
+
+(defnode (manual . op-let-star) +qua-hub-manual-operator+
+  (:title "LET*")
+  (:syntax "((var value)*) body* => result"))
+
+(defnode (manual . op-flet) +qua-hub-manual-operator+
+  (:title "FLET")
+  (:syntax "((function-name lambda-list form*)*) body* => result"))
+
+(defnode (manual . op-labels) +qua-hub-manual-operator+
+  (:title "LABELS")
+  (:syntax "((function-name lambda-list form*)*) body* => result"))
+
+(defnode (manual . op-make-environment) +qua-hub-manual-operator+
+  (:title "MAKE-ENVIRONMENT")
+  (:syntax "[parent] => environment"))
+
+(defnode (manual . op-the-environment) +qua-hub-manual-operator+
+  (:title "THE-ENVIRONMENT")
+  (:syntax "=> current-environment"))
+
+
+(defnode (manual . sec-objects) +qua-hub-section+
+  (:title "Objects and Classes")
+  (:child
+   (hyper '(manual . op-defstruct))
+   (hyper '(manual . op-make-instance))
+   (hyper '(manual . op-class-of))
+   (hyper '(manual . op-find-class))
+   (hyper '(manual . op-class))
+   (hyper '(manual . op-slot-value))
+   (hyper '(manual . op-set-slot-value))
+   (hyper '(manual . op-slot-boundp))
+   (hyper '(manual . op-eq))
+   (hyper '(manual . op-eql))))
+
+(defnode (manual . op-defstruct) +qua-hub-manual-operator+
+  (:title "DEFSTRUCT")
+  (:syntax "name slot-name* => void"))
+
+(defnode (manual . op-make-instance) +qua-hub-manual-operator+
+  (:title "MAKE-INSTANCE")
+  (:syntax "class &key => instance"))
+
+(defnode (manual . op-class-of) +qua-hub-manual-operator+
+  (:title "CLASS-OF")
+  (:syntax "instance => class"))
+
+(defnode (manual . op-find-class) +qua-hub-manual-operator+
+  (:title "FIND-CLASS")
+  (:syntax "symbol => class"))
+
+(defnode (manual . op-class) +qua-hub-manual-operator+
+  (:title "CLASS")
+  (:syntax "name => class"))
+
+(defnode (manual . op-slot-value) +qua-hub-manual-operator+
+  (:title "SLOT-VALUE")
+  (:syntax "instance slot-name => value"))
+
+(defnode (manual . op-set-slot-value) +qua-hub-manual-operator+
+  (:title "SET-SLOT-VALUE")
+  (:syntax "instance slot-name slot-value => value"))
+
+(defnode (manual . op-slot-boundp) +qua-hub-manual-operator+
+  (:title "SLOT-BOUND?")
+  (:syntax "instance slot-name => boolean"))
+
+(defnode (manual . op-eq) +qua-hub-manual-operator+
+  (:title "EQ")
+  (:syntax "value1 value2 => result"))
+
+(defnode (manual . op-eql) +qua-hub-manual-operator+
+  (:title "EQL")
+  (:syntax "value1 value2 => result"))
+
+
+(defnode (manual . sec-generic-functions) +qua-hub-section+
+  (:title "Generic Functions")
+  (:child
+   (hyper '(manual . op-defgeneric))
+   (hyper '(manual . op-defmethod))))
+
+(defnode (manual . op-defgeneric) +qua-hub-manual-operator+
+  (:title "DEFGENERIC")
+  (:syntax "name (param*) => void"))
+
+(defnode (manual . op-defmethod) +qua-hub-manual-operator+
+  (:title "DEFMETHOD")
+  (:syntax "name ((self class) param*) form* => void"))
+
+
+(defnode (manual . sec-places) +qua-hub-section+
+  (:title "Places")
+  (:child
+   (hyper '(manual . op-setq))
+   (hyper '(manual . op-setf))
+   (hyper '(manual . op-defsetf))
+   (hyper '(manual . op-setter))
+   (hyper '(manual . op-incf))
+   (hyper '(manual . op-decf))))
+
+(defnode (manual . op-setq) +qua-hub-manual-operator+
+  (:title "SETQ")
+  (:syntax "definiend value => result"))
+
+(defnode (manual . op-setf) +qua-hub-manual-operator+
+  (:title "SETF")
+  (:syntax "place value => result"))
+
+(defnode (manual . op-defsetf) +qua-hub-manual-operator+
+  (:title "DEFSETF")
+  (:syntax "accessor-fn update-fn => void"))
+
+(defnode (manual . op-setter) +qua-hub-manual-operator+
+  (:title "SETTER")
+  (:syntax "function => setter-function"))
+
+(defnode (manual . op-incf) +qua-hub-manual-operator+
+  (:title "INCF")
+  (:syntax "place [increment] => result"))
+
+(defnode (manual . op-decf) +qua-hub-manual-operator+
+  (:title "DECF")
+  (:syntax "place [decrement] => result"))
+
+
+(defnode (manual . sec-symbols) +qua-hub-section+
+  (:title "Symbols")
+  (:child
+   (hyper '(manual . op-symbol-name))
+   (hyper '(manual . op-function-symbol))
+   (hyper '(manual . op-type-symbol))))
+
+(defnode (manual . op-symbol-name) +qua-hub-manual-operator+
+  (:title "SYMBOL-NAME")
+  (:syntax "symbol => name"))
+
+(defnode (manual . op-function-symbol) +qua-hub-manual-operator+
+  (:title "FUNCTION-SYMBOL")
+  (:syntax "symbol => function-symbol"))
+
+(defnode (manual . op-type-symbol) +qua-hub-manual-operator+
+  (:title "TYPE-SYMBOL")
+  (:syntax "symbol => type-symbol"))
+
+
+(defnode (manual . sec-lists) +qua-hub-section+
+  (:title "Lists")
+  (:child
+   (hyper '(manual . op-cons))
+   (hyper '(manual . op-car))
+   (hyper '(manual . op-cdr))
+   (hyper '(manual . op-caar))
+   (hyper '(manual . op-cadr))
+   (hyper '(manual . op-cdar))
+   (hyper '(manual . op-cddr))
+   (hyper '(manual . op-list))
+   (hyper '(manual . op-list-star))
+   (hyper '(manual . op-reverse-list))))
+
+(defnode (manual . op-cons) +qua-hub-manual-operator+
+  (:title "CONS")
+  (:syntax "car cdr => cons"))
+
+(defnode (manual . op-car) +qua-hub-manual-operator+
+  (:title "CAR")
+  (:syntax "x => result"))
+
+(defnode (manual . op-cdr) +qua-hub-manual-operator+
+  (:title "CDR")
+  (:syntax "x => result"))
+
+(defnode (manual . op-caar) +qua-hub-manual-operator+
+  (:title "CAAR")
+  (:syntax "x => result"))
+
+(defnode (manual . op-cadr) +qua-hub-manual-operator+
+  (:title "CADR")
+  (:syntax "x => result"))
+
+(defnode (manual . op-cdar) +qua-hub-manual-operator+
+  (:title "CDAR")
+  (:syntax "x => result"))
+
+(defnode (manual . op-cddr) +qua-hub-manual-operator+
+  (:title "CDDR")
+  (:syntax "x => result"))
+
+(defnode (manual . op-list) +qua-hub-manual-operator+
+  (:title "LIST")
+  (:syntax "value* => list"))
+
+(defnode (manual . op-list-star) +qua-hub-manual-operator+
+  (:title "LIST*")
+  (:syntax "value* list => list"))
+
+(defnode (manual . op-reverse-list) +qua-hub-manual-operator+
+  (:title "REVERSE-LIST")
+  (:syntax "list => list"))
+
+
+(defnode (manual . sec-sequences) +qua-hub-section+
+  (:title "Sequences")
+  (:child
+   (hyper '(manual . op-map))
+   (hyper '(manual . op-for-each))
+   (hyper '(manual . op-subseq))))
+
+(defnode (manual . op-map) +qua-hub-manual-operator+
+  (:title "MAP")
+  (:syntax "function sequence => sequence"))
+
+(defnode (manual . op-for-each) +qua-hub-manual-operator+
+  (:title "FOR-EACH")
+  (:syntax "function sequence => void"))
+
+(defnode (manual . op-subseq) +qua-hub-manual-operator+
+  (:title "SUBSEQ")
+  (:syntax "sequence start [end] => sequence"))
+
+
+(defnode (manual . sec-control) +qua-hub-section+
+  (:title "Control Flow")
+  (:child
+   (hyper '(manual . op-progn))
+   (hyper '(manual . op-prog1))
+   (hyper '(manual . op-prog2))
+   (hyper '(manual . op-if))
+   (hyper '(manual . op-when))
+   (hyper '(manual . op-unless))
+   (hyper '(manual . op-cond))
+   (hyper '(manual . op-case))
+   (hyper '(manual . op-and))
+   (hyper '(manual . op-or))
+   (hyper '(manual . op-not))
+   (hyper '(manual . op-block))
+   (hyper '(manual . op-return-from))
+   (hyper '(manual . op-unwind-protect))
+   (hyper '(manual . op-loop))
+   (hyper '(manual . op-while))))
+
+(defnode (manual . op-progn) +qua-hub-manual-operator+
+  (:title "PROGN")
+  (:syntax "form* => result"))
+
+(defnode (manual . op-prog1) +qua-hub-manual-operator+
+  (:title "PROG1")
+  (:syntax "form* => result"))
+
+(defnode (manual . op-prog2) +qua-hub-manual-operator+
+  (:title "PROG2")
+  (:syntax "form form* => result"))
+
+(defnode (manual . op-if) +qua-hub-manual-operator+
+  (:title "IF")
+  (:syntax "test consequent alternative => result"))
+
+(defnode (manual . op-when) +qua-hub-manual-operator+
+  (:title "WHEN")
+  (:syntax "test form* => result"))
+
+(defnode (manual . op-unless) +qua-hub-manual-operator+
+  (:title "UNLESS")
+  (:syntax "test form* => result"))
+
+(defnode (manual . op-cond) +qua-hub-manual-operator+
+  (:title "COND")
+  (:syntax "(test form*)* => result"))
+
+(defnode (manual . op-case) +qua-hub-manual-operator+
+  (:title "CASE")
+  (:syntax "keyform (key form*)* => result"))
+
+(defnode (manual . op-and) +qua-hub-manual-operator+
+  (:title "AND")
+  (:syntax "form* => result"))
+
+(defnode (manual . op-or) +qua-hub-manual-operator+
+  (:title "OR")
+  (:syntax "form* => result"))
+
+(defnode (manual . op-not) +qua-hub-manual-operator+
+  (:title "NOT")
+  (:syntax "value => result"))
+
+(defnode (manual . op-block) +qua-hub-manual-operator+
+  (:title "BLOCK")
+  (:syntax "tag form* => result"))
+
+(defnode (manual . op-return-from) +qua-hub-manual-operator+
+  (:title "RETURN-FROM")
+  (:syntax "tag [value] => |"))
+
+(defnode (manual . op-unwind-protect) +qua-hub-manual-operator+
+  (:title "UNWIND-PROTECT")
+  (:syntax "protected-form cleanup-form* => result"))
+
+(defnode (manual . op-loop) +qua-hub-manual-operator+
+  (:title "LOOP")
+  (:syntax "form* => |"))
+
+(defnode (manual . op-while) +qua-hub-manual-operator+
+  (:title "WHILE")
+  (:syntax "test form* => |"))
+
+
+(defnode (manual . sec-dynamic) +qua-hub-section+
+  (:title "Dynamic Variables")
+  (:child
+   (hyper '(manual . op-defdynamic))
+   (hyper '(manual . op-dynamic-let))
+   (hyper '(manual . op-dynamic))))
+
+(defnode (manual . op-defdynamic) +qua-hub-manual-operator+
+  (:title "DEFDYNAMIC")
+  (:syntax "name value => void"))
+
+(defnode (manual . op-dynamic-let) +qua-hub-manual-operator+
+  (:title "DYNAMIC-LET")
+  (:syntax "((dynamic-var value)*) form* => result"))
+
+(defnode (manual . op-dynamic) +qua-hub-manual-operator+
+  (:title "DYNAMIC")
+  (:syntax "dynamic-var => value"))
+
+
+(defnode (manual . sec-js) +qua-hub-section+
+  (:title "JavaScript Interface")
+  (:child
+   (hyper '(manual . op-js-global))
+   (hyper '(manual . op-js-new))
+   (hyper '(manual . op-js-object))
+   (hyper '(manual . op-js-array))
+   (hyper '(manual . op-js-function))
+   (hyper '(manual . op-js-lambda))
+   (hyper '(manual . op-js-get))
+   (hyper '(manual . op-js-set))
+   (hyper '(manual . op-list-to-js-array))
+   (hyper '(manual . op-plist-to-js-object))))
+
+(defnode (manual . op-js-global) +qua-hub-manual-operator+
+  (:title "JS-GLOBAL")
+  (:syntax "name => value"))
+
+(defnode (manual . op-js-new) +qua-hub-manual-operator+
+  (:title "JS-NEW")
+  (:syntax "constructor argument* => object"))
+
+(defnode (manual . op-js-get) +qua-hub-manual-operator+
+  (:title "JS-GET")
+  (:syntax "object key => value"))
+
+(defnode (manual . op-js-set) +qua-hub-manual-operator+
+  (:title "JS-SET")
+  (:syntax "object key value => value"))
+
+(defnode (manual . op-js-object) +qua-hub-manual-operator+
+  (:title "JS-OBJECT")
+  (:syntax "&key => object"))
+
+(defnode (manual . op-js-array) +qua-hub-manual-operator+
+  (:title "JS-ARRAY")
+  (:syntax "value* => array"))
+
+(defnode (manual . op-list-to-js-array) +qua-hub-manual-operator+
+  (:title "LIST-TO-JS-ARRAY")
+  (:syntax "list => array"))
+
+(defnode (manual . op-plist-to-js-object) +qua-hub-manual-operator+
+  (:title "PLIST-TO-JS-OBJECT")
+  (:syntax "plist => object"))
+
+(defnode (manual . op-js-function) +qua-hub-manual-operator+
+  (:title "JS-FUNCTION")
+  (:syntax "function => js-function"))
+
+(defnode (manual . op-js-lambda) +qua-hub-manual-operator+
+  (:title "JS-LAMBDA")
+  (:syntax "lambda-list *form => js-function"))
+

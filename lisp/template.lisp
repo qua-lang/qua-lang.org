@@ -10,7 +10,7 @@
 
 (deftemplate qua-hub-manual-template-large
   (div ()
-       (center () (h1 (:style "font-variant:small-caps") (a (:href "index.html") "Qua") " Lisp Manual"))
+       (center () (h1 () "Generic Lisp Manual"))
        (ul ()
            (node-field 'child 'toc))
        (div ()
@@ -20,14 +20,15 @@
 
 (deftemplate qua-hub-section-template-medium
   (div ()
-       (h2 () (node-field 'title))
+       (a (:id (node-anchor)) (h2 () (node-field 'title)))
+       (node-field 'content 'default)
        (node-field 'child 'default)))
 
 (associate-template +qua-hub-section+ 'default qua-hub-section-template-medium)
 
 (deftemplate qua-hub-section-template-toc
   (li ()
-      (node-field 'title)
+      (strong () (a (:href (node-link)) (node-field 'title)))
       (ul ()
           (node-field 'child 'toc))))
 
@@ -38,19 +39,24 @@
        (h3 () (a (:id (node-anchor))
                  (node-field 'title) (node-field 'type-name)))
        (h4 () "Syntax")
-       (em () (node-field 'syntax))
+       (em (:style "text-transform: lowercase")
+           (strong () (node-field 'title)) " "
+           (node-field 'syntax))
        (h4 () "Description")
-       (div () (node-field 'description 'default))))
+       (div () (node-field 'content 'default))))
 
 (associate-template +qua-hub-manual-operator+ 'default qua-hub-manual-operator-template-medium)
 
 (deftemplate qua-hub-manual-operator-template-toc
-  (li () (a (:href (node-link)) (node-field 'title))))
+  (li ()
+      (strong (:style "text-transform: lowercase")
+              (a (:href (node-link)) (node-field 'title)))
+      " " (node-field 'syntax)))
 
 (associate-template +qua-hub-manual-operator+ 'toc qua-hub-manual-operator-template-toc)
 
 (deftemplate qua-hub-paragraph-template-medium
-  (p () (node-field 'content)))
+  (p () (node-field 'text)))
 
 (associate-template +qua-hub-paragraph+ 'default qua-hub-paragraph-template-medium)
 
@@ -72,7 +78,7 @@
 (associate-template +qua-hub-page+ 'large qua-hub-page-template-large)
 
 (defun page-link ()
-  (a (:href (node-field 'url)) (node-field 'title)))
+  (a (:href (node-link)) (node-field 'title)))
 
 (deftemplate qua-hub-page-template-medium
   (div ()

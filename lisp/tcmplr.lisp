@@ -25,10 +25,11 @@
   (@make_node +tcmplr+ type reference fields))
 
 (deffexpr tcmplr-anonymous-node (type . field-specs) env
-  (tcmplr-make-node
-   (eval type env)
-   "anon"
-   (tcmplr-parse-field-specs field-specs env)))
+  (tcmplr-make-immediate-anchor ; actual use case is creating anchors
+   (tcmplr-make-node
+    (eval type env)
+    "anon"
+    (tcmplr-parse-field-specs field-specs env))))
 
 (deffexpr tcmplr-define-node (reference-form type . field-specs) env
   (let ((reference (tcmplr-parse-reference reference-form)))

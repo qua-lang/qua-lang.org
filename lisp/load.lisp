@@ -18,6 +18,9 @@
 (define-node-type +qua-hub-manual-page+ +qua-hub-page+)
 (define-node-type +qua-hub-manual-operator+ +qua-hub-item+)
 
+(defmacro paragraph text
+  (list #'node +qua-hub-paragraph+ (list* :text text)))
+
 (load "content/index.lisp")
 (load "content/intro.lisp")
 (load "content/manual.lisp")
