@@ -1,4 +1,4 @@
-(defnode qua-hub-intro +qua-hub-page+
+(defnode (intro) +qua-hub-page+
   (:title "Qua Project Introduction")
   (:url "intro.html")
   (:byline "Qua is a novel implementation of Lisp designed to fit into

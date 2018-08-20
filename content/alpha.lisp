@@ -1,4 +1,4 @@
-(defnode qua-hub-alpha +qua-hub-page+
+(defnode (alpha) +qua-hub-page+
   (:title "Hackers Wanted")
   (:url "alpha.html")
   (:byline "For alpha testing Qua, constant language changes, abysmal

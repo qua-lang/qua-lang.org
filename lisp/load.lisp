@@ -1,7 +1,7 @@
 (load "lisp/tcmplr.lisp")
 (def #'define-node-type #'tcmplr-define-node-type)
 (def #'defnode #'tcmplr-define-node)
-(def #'node #'tcmplr-make-node)
+(def #'node #'tcmplr-anonymous-node)
 (def #'hyper #'tcmplr-make-anchor)
 (def #'deftemplate #'tcmplr-define-template)
 (def #'associate-template #'tcmplr-associate-template)
@@ -15,6 +15,12 @@
 (define-node-type +qua-hub-main-page+ +qua-hub-page+)
 (define-node-type +qua-hub-manual-page+ +qua-hub-page+)
 (define-node-type +qua-hub-manual-operator+ +qua-hub-item+)
+
+(load "content/index.lisp")
+(load "content/intro.lisp")
+(load "content/manual.lisp")
+(load "content/alpha.lisp")
+(load "content/usage.lisp")
 
 (load "lisp/template.lisp")
 (load "lisp/site.lisp")

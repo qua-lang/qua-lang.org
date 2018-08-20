@@ -2,6 +2,16 @@
 
 (defconstant +tcmplr+ (node:require "./js/tcmplr.js"))
 
+;;;; Storage
+
+(defconstant +tcmplr-store+ (js-new (.Store +tcmplr+)))
+
+(defun tcmplr-get-node (reference)
+  (@get_node +tcmplr-store+ reference))
+
+(defun tcmplr-put-node (reference node)
+  (@put_node +tcmplr-store+ reference node))
+
 ;;;; Nodes
 
 (defconstant +tcmplr-node+ (.NODE +tcmplr+))
@@ -11,18 +21,22 @@
                          (symbol-name name)
                          (optional opt-supertype-name +tcmplr-node+))))
 
-(deffexpr tcmplr-make-node (type . field-specs) env
-  (@make_node +tcmplr+
-              (eval type env)
-              "anon"
-              (tcmplr-parse-field-specs field-specs env)))
+(defun tcmplr-make-node (type reference fields)
+  (@make_node +tcmplr+ type reference fields))
 
-(deffexpr tcmplr-define-node (id type . field-specs) env
-  (eval (list #'def id (list @make_node +tcmplr+
-                             type
-                             (symbol-name id)
-                             (tcmplr-parse-field-specs field-specs env)))
-        env))
+(deffexpr tcmplr-anonymous-node (type . field-specs) env
+  (tcmplr-make-node
+   (eval type env)
+   "anon"
+   (tcmplr-parse-field-specs field-specs env)))
+
+(deffexpr tcmplr-define-node (reference-form type . field-specs) env
+  (let ((reference (tcmplr-parse-reference reference-form)))
+    (tcmplr-put-node reference
+                     (tcmplr-make-node
+                      (eval type env)
+                      reference
+                      (tcmplr-parse-field-specs field-specs env)))))
 
 (defun tcmplr-parse-field-specs (field-specs env)
   (prog1 (def dict (js-object))
@@ -36,12 +50,28 @@
 
 ;;;; Anchors
 
-(defun tcmplr-make-anchor (node-id . opt-title)
-  (@make_titled_anchor +tcmplr+ (symbol-name node-id)
+(defun tcmplr-make-anchor (reference-form . opt-title)
+  (@make_titled_anchor +tcmplr+
+                       (tcmplr-parse-reference reference-form)
                        (optional opt-title #null)))
 
 (defun tcmplr-make-immediate-anchor (node)
   (@make_immediate_anchor +tcmplr+ node))
+
+;;;; References
+
+;;; Syntax:
+;;; (symbol . symbol) --- path with 1 element and fragment
+;;; (symbol)          --- path with 1 element and no fragment
+
+(defun tcmplr-make-reference (path fragment)
+  (js-new (.Reference +tcmplr+) path fragment))
+
+(defun tcmplr-parse-reference (form)
+  (let ((path (js-array (symbol-name (car form)))))
+    (tcmplr-make-reference path (if (nil? (cdr form))
+                                    #null
+                                  (symbol-name (cdr form))))))
 
 ;;;; Templates
 
@@ -100,11 +130,15 @@
 (defun tcmplr-associate-template (node-type template-name template)
   (js-set node-type (symbol-name template-name) template))
 
-;;;; Rendering
+;;;; Processing
 
-(defun tcmplr-render (node template)
-  (@render +tcmplr+ (the-environment) node template))
+(defun tcmplr-render (reference template)
+  (let ((node (tcmplr-get-node reference)))
+    (@render +tcmplr+ +tcmplr-store+ node template)))
 
-(defun tcmplr-write-file (name node template)
-  (node:write-file-sync (+ "docs/" name)
-                        (tcmplr-render node template)))
+(defun tcmplr-write-file (reference-form template)
+  (let* ((reference (tcmplr-parse-reference reference-form))
+         (file-name (js-get (.path reference) 0)))
+    (load (+ "content/" file-name ".lisp"))
+    (node:write-file-sync (+ "docs/" file-name ".html")
+                          (tcmplr-render reference template))))

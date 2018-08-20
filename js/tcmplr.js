@@ -12,46 +12,71 @@ lib.make_node_type = function(name, supertype) {
 
 lib.NODE = lib.make_node_type("node", Object.prototype);
 
-lib.make_node = function(type, id, fields) {
+lib.make_node = function(type, reference, fields) {
     var node = Object.create(type);
-    node.id = id;
+    node.reference = reference;
     node.type = type;
     node.fields = fields;
+    node.fragments = Object.create(null);
     return node;
 };
 
 ///// Anchors
 
-lib.Anchor = function Anchor(href, title, node) {
-    this.href = href;
+lib.Anchor = function Anchor(reference, title, node) {
+    this.reference = reference;
     this.title = title;
     this.node = node;
 };
 
-lib.make_anchor = function(href) {
-    return new lib.Anchor(href, null, null);
+lib.make_anchor = function(reference) {
+    return new lib.Anchor(reference, null, null);
 };
 
-lib.make_titled_anchor = function(href, title) {
-    return new lib.Anchor(href, title, null);
+lib.make_titled_anchor = function(reference, title) {
+    return new lib.Anchor(reference, title, null);
 };
 
 lib.make_immediate_anchor = function(node) {
     return new lib.Anchor(null, null, node);
 };
 
-lib.Anchor.prototype.resolve_anchor = function(environment) {
+lib.Anchor.prototype.resolve_anchor = function(store) {
     if (this.node) {
         return this.node;
     } else {
-        // Horrible kludge: this should really use a Qua VM API
-        var node = environment.bindings["variable:" + this.href];
+        var node = store.nodes[this.reference.to_html_url()];
         if (!node) {
-            throw "node not found: " + this.href;
+            throw "node not found: " + this.reference.to_html_url();
         }
         this.node = node;
         return node;
     }
+};
+
+///// Store
+
+lib.Store = function Store() {
+    this.nodes = Object.create(null);
+};
+
+lib.Store.prototype.put_node = function(reference, node) {
+    this.nodes[reference.to_html_url()] = node;
+};
+
+lib.Store.prototype.get_node = function(reference) {
+    return this.nodes[reference.to_html_url()];
+};
+
+///// References
+
+lib.Reference = function Reference(path, fragment) {
+    this.path = path;
+    this.fragment = fragment;
+};
+
+lib.Reference.prototype.to_html_url = function() {
+    return this.path.join("/") + ".html" + (this.fragment ? ("?" + this.fragment) : "");
 };
 
 ///// Templates
@@ -150,7 +175,7 @@ lib.NodeFieldInstruction = function NodeFieldInstruction(field_name, template_na
 lib.NodeFieldInstruction.prototype = new lib.Instruction();
 
 lib.NodeFieldInstruction.prototype.compile_instruction = function() {
-    return "rt.node_field(env,anchor,node,\"" + this.field_name + "\",\"" + this.template_name + "\")";
+    return "rt.node_field(store,anchor,node,\"" + this.field_name + "\",\"" + this.template_name + "\")";
 };
 
 lib.AnchorFieldInstruction = function AnchorFieldInstruction(field_name, template_name) {
@@ -161,7 +186,7 @@ lib.AnchorFieldInstruction = function AnchorFieldInstruction(field_name, templat
 lib.AnchorFieldInstruction.prototype = new lib.Instruction();
 
 lib.AnchorFieldInstruction.prototype.compile_instruction = function() {
-    return "rt.anchor_field(env,anchor,node,\"" + this.field_name + "\",\"" + this.template_name + "\")";
+    return "rt.anchor_field(store,anchor,node,\"" + this.field_name + "\",\"" + this.template_name + "\")";
 };
 
 ///// Compilation Process
@@ -201,7 +226,7 @@ lib.template_to_instructions = function(template) {
     return instructions;
 }
 
-lib.FUNCTION_DEFINITION = "(function(rt,env,anchor,node){";
+lib.FUNCTION_DEFINITION = "(function(rt,store,anchor,node){";
 
 lib.instructions_to_js_function = function(instructions) {
     return lib.FUNCTION_DEFINITION + "return " +
@@ -215,7 +240,7 @@ lib.instructions_to_js_function = function(instructions) {
 
 lib.rt = Object.create(null);
 
-lib.rt.node_field = function(env, anchor, node, field_name, template_name) {
+lib.rt.node_field = function(store, anchor, node, field_name, template_name) {
     if (!node.fields) {
         throw "probably not a node: " + node;
     }
@@ -227,7 +252,7 @@ lib.rt.node_field = function(env, anchor, node, field_name, template_name) {
             if (typeof(field_value) === "string") {
                 str += field_value;
             } else if (field_value instanceof lib.Anchor) {
-                var node = field_value.resolve_anchor(env);
+                var node = field_value.resolve_anchor(store);
                 if (!node.fields) {
                     throw "not a node: " + node;
                 }
@@ -235,7 +260,7 @@ lib.rt.node_field = function(env, anchor, node, field_name, template_name) {
                 if (!template) {
                     throw "template not found: " + template_name;
                 }
-                str += template(lib.rt, env, anchor, node);
+                str += template(lib.rt, store, anchor, node);
             } else {
                 throw "not a field value: " + field_value;
             }
@@ -246,12 +271,12 @@ lib.rt.node_field = function(env, anchor, node, field_name, template_name) {
     }
 };
 
-lib.rt.anchor_field = function(env, anchor, node, field_name, template_name) {
+lib.rt.anchor_field = function(store, anchor, node, field_name, template_name) {
     return "ANCHOR TBD";
 };
 
 ///// Rendering
 
-lib.render = function(env, node, template) {
-    return template(lib.rt, env, lib.make_immediate_anchor(node), node);
+lib.render = function(store, node, template) {
+    return template(lib.rt, store, lib.make_immediate_anchor(node), node);
 };
