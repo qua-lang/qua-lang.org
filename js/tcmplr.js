@@ -76,7 +76,7 @@ lib.Reference = function Reference(path, fragment) {
 };
 
 lib.Reference.prototype.to_html_url = function() {
-    return this.path.join("/") + ".html" + (this.fragment ? ("?" + this.fragment) : "");
+    return this.path.join("/") + ".html" + (this.fragment ? ("#" + this.fragment) : "");
 };
 
 ///// Templates
@@ -157,6 +157,14 @@ lib.NodeLinkTemplate.prototype.compile_template = function(out) {
     out(new lib.NodeLinkInstruction(this.field_name, this.template_name));
 };
 
+//// Node Anchor Template
+
+lib.NodeAnchorTemplate = function NodeAnchorTemplate() {};
+lib.NodeAnchorTemplate.prototype = new lib.Template();
+lib.NodeAnchorTemplate.prototype.compile_template = function(out) {
+    out(new lib.NodeAnchorInstruction(this.field_name, this.template_name));
+};
+
 ///// Instructions
 
 lib.Instruction = function Instruction() {};
@@ -203,6 +211,14 @@ lib.NodeLinkInstruction = function NodeLinkInstruction() {};
 lib.NodeLinkInstruction.prototype = new lib.Instruction();
 lib.NodeLinkInstruction.prototype.compile_instruction = function() {
     return "rt.node_link(node)";
+};
+
+//// Node Anchor Instruction
+
+lib.NodeAnchorInstruction = function NodeAnchorInstruction() {};
+lib.NodeAnchorInstruction.prototype = new lib.Instruction();
+lib.NodeAnchorInstruction.prototype.compile_instruction = function() {
+    return "rt.node_anchor(node)";
 };
 
 ///// Compilation Process
@@ -293,6 +309,10 @@ lib.rt.anchor_field = function(store, anchor, node, field_name, template_name) {
 
 lib.rt.node_link = function(node) {
     return node.reference.to_html_url();
+};
+
+lib.rt.node_anchor = function(node) {
+    return node.reference.fragment ? node.reference.fragment : "";
 };
 
 ///// Rendering

@@ -86,6 +86,9 @@
 (defun tcmplr-make-node-link-template ()
   (js-new (.NodeLinkTemplate +tcmplr+)))
 
+(defun tcmplr-make-node-anchor-template ()
+  (js-new (.NodeAnchorTemplate +tcmplr+)))
+
 (defun tcmplr-make-tag-template (tag-name attrs children)
   (js-new (.TagTemplate +tcmplr+)
           tag-name
@@ -114,6 +117,8 @@
   center
   code
   div
+  dl
+  dt
   em
   h1
   h2
@@ -124,11 +129,15 @@
   h7
   head
   html
+  li
+  ol
   p
   pre
   span
   strong
-  tt)
+  tt
+  ul
+  )
 
 (defun tcmplr-associate-template (node-type template-name template)
   (js-set node-type (symbol-name template-name) template))

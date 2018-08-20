@@ -7,6 +7,7 @@
 (def #'associate-template #'tcmplr-associate-template)
 (def #'node-field #'tcmplr-make-node-field-template)
 (def #'node-link #'tcmplr-make-node-link-template)
+(def #'node-anchor #'tcmplr-make-node-anchor-template)
 (def #'file #'tcmplr-write-file)
 
 (define-node-type +qua-hub-page+)

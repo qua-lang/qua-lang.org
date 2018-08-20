@@ -11,8 +11,8 @@
 (deftemplate qua-hub-manual-template-large
   (div ()
        (center () (h1 (:style "font-variant:small-caps") (a (:href "index.html") "Qua") " Lisp Manual"))
-       (div ()
-            (node-field 'child 'toc))
+       (ul ()
+           (node-field 'child 'toc))
        (div ()
             (node-field 'child 'default))))
 
@@ -26,15 +26,17 @@
 (associate-template +qua-hub-section+ 'default qua-hub-section-template-medium)
 
 (deftemplate qua-hub-section-template-toc
-  (div ()
-       (h5 () (node-field 'title))
-       (node-field 'child 'toc)))
+  (li ()
+      (node-field 'title)
+      (ul ()
+          (node-field 'child 'toc))))
 
 (associate-template +qua-hub-section+ 'toc qua-hub-section-template-toc)
 
 (deftemplate qua-hub-manual-operator-template-medium
   (div ()
-       (h3 () (node-field 'title) (node-field 'type-name))
+       (h3 () (a (:id (node-anchor))
+                 (node-field 'title) (node-field 'type-name)))
        (h4 () "Syntax")
        (em () (node-field 'syntax))
        (h4 () "Description")
@@ -43,7 +45,7 @@
 (associate-template +qua-hub-manual-operator+ 'default qua-hub-manual-operator-template-medium)
 
 (deftemplate qua-hub-manual-operator-template-toc
-  (h6 () (a (:href (node-link)) (node-field 'title))))
+  (li () (a (:href (node-link)) (node-field 'title))))
 
 (associate-template +qua-hub-manual-operator+ 'toc qua-hub-manual-operator-template-toc)
 
