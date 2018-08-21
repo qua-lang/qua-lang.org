@@ -12,8 +12,9 @@
    (hyper '(manual . sec-lists))
    (hyper '(manual . sec-sequences))
    (hyper '(manual . sec-control))
-   (hyper '(manual . sec-continuations))
    (hyper '(manual . sec-dynamic))
+   (hyper '(manual . sec-conditions))
+   (hyper '(manual . sec-continuations))
    (hyper '(manual . sec-js))))
 
 
@@ -493,6 +494,56 @@
 (defnode (manual . op-dynamic) +qua-hub-manual-operator+
   (:title "DYNAMIC")
   (:syntax "dynamic-var => value"))
+
+
+(defnode (manual . sec-conditions) +qua-hub-section+
+  (:title "Conditions and Restarts")
+  (:child
+   (hyper '(manual . op-handler-bind))
+   (hyper '(manual . op-signal))
+   (hyper '(manual . op-warn))
+   (hyper '(manual . op-error))
+   (hyper '(manual . op-restart-bind))
+   (hyper '(manual . op-find-restart))
+   (hyper '(manual . op-compute-restarts))
+   (hyper '(manual . op-invoke-restart))
+   (hyper '(manual . op-invoke-restart-interactively))))
+
+(defnode (manual . op-handler-bind) +qua-hub-manual-operator+
+  (:title "HANDLER-BIND")
+  (:syntax "((condition-type handler-function)*) form* => value"))
+
+(defnode (manual . op-signal) +qua-hub-manual-operator+
+  (:title "SIGNAL")
+  (:syntax "condition => value"))
+
+(defnode (manual . op-warn) +qua-hub-manual-operator+
+  (:title "WARN")
+  (:syntax "condition => value"))
+
+(defnode (manual . op-error) +qua-hub-manual-operator+
+  (:title "ERROR")
+  (:syntax "condition => |"))
+
+(defnode (manual . op-restart-bind) +qua-hub-manual-operator+
+  (:title "RESTART-BIND")
+  (:syntax "((restart-name function key-val-pair*)*) form* => result"))
+
+(defnode (manual . op-invoke-restart) +qua-hub-manual-operator+
+  (:title "INVOKE-RESTART")
+  (:syntax "restart-designator argument* => result"))
+
+(defnode (manual . op-invoke-restart-interactively) +qua-hub-manual-operator+
+  (:title "INVOKE-RESTART-INTERACTIVELY")
+  (:syntax "restart-designator => result"))
+
+(defnode (manual . op-find-restart) +qua-hub-manual-operator+
+  (:title "FIND-RESTART")
+  (:syntax "restart-designator [associated-condition] => restart"))
+
+(defnode (manual . op-compute-restarts) +qua-hub-manual-operator+
+  (:title "COMPUTE-RESTARTS")
+  (:syntax "[associated-condition] => restarts"))
 
 
 (defnode (manual . sec-js) +qua-hub-section+
