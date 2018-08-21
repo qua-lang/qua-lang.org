@@ -12,6 +12,7 @@
    (hyper '(manual . sec-lists))
    (hyper '(manual . sec-sequences))
    (hyper '(manual . sec-control))
+   (hyper '(manual . sec-continuations))
    (hyper '(manual . sec-dynamic))
    (hyper '(manual . sec-js))))
 
@@ -434,6 +435,46 @@
   (:syntax "test form* => |"))
 
 
+(defnode (manual . sec-continuations) +qua-hub-section+
+  (:title "Continuations")
+  (:child
+   (hyper '(manual . op-push-default-prompt))
+   (hyper '(manual . op-take-default-subcont))
+   (hyper '(manual . op-push-default-subcont))
+   (hyper '(manual . op-push-prompt))
+   (hyper '(manual . op-take-subcont))
+   (hyper '(manual . op-push-subcont))
+   (hyper '(manual . op-push-prompt-subcont))))
+
+(defnode (manual . op-push-prompt) +qua-hub-manual-operator+
+  (:title "PUSH-PROMPT")
+  (:syntax "prompt form* => result"))
+
+(defnode (manual . op-take-subcont) +qua-hub-manual-operator+
+  (:title "TAKE-SUBCONT")
+  (:syntax "prompt continuation form* => result"))
+
+(defnode (manual . op-push-subcont) +qua-hub-manual-operator+
+  (:title "PUSH-SUBCONT")
+  (:syntax "continuation form* => result"))
+
+(defnode (manual . op-push-prompt-subcont) +qua-hub-manual-operator+
+  (:title "PUSH-PROMPT-SUBCONT")
+  (:syntax "prompt continuation form* => result"))
+
+(defnode (manual . op-push-default-prompt) +qua-hub-manual-operator+
+  (:title "PUSH-DEFAULT-PROMPT")
+  (:syntax "form* => result"))
+
+(defnode (manual . op-take-default-subcont) +qua-hub-manual-operator+
+  (:title "TAKE-DEFAULT-SUBCONT")
+  (:syntax "continuation form* => result"))
+
+(defnode (manual . op-push-default-subcont) +qua-hub-manual-operator+
+  (:title "PUSH-DEFAULT-SUBCONT")
+  (:syntax "continuation form* => result"))
+
+
 (defnode (manual . sec-dynamic) +qua-hub-section+
   (:title "Dynamic Variables")
   (:child
@@ -443,7 +484,7 @@
 
 (defnode (manual . op-defdynamic) +qua-hub-manual-operator+
   (:title "DEFDYNAMIC")
-  (:syntax "name value => void"))
+  (:syntax "name [value] => void"))
 
 (defnode (manual . op-dynamic-let) +qua-hub-manual-operator+
   (:title "DYNAMIC-LET")
