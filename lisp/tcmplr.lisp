@@ -107,7 +107,7 @@
 (deffexpr tcmplr-define-html-tags names env
   (map (lambda (name)
          (eval (list #'def
-                     (to-fun-sym name)
+                     (function-symbol name)
                      (tcmplr-make-tag-template-operator (symbol-name name)))
                env))
        names))
