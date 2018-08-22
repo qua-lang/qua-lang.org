@@ -10,7 +10,9 @@
 
 (deftemplate qua-hub-manual-template-large
   (div ()
-       (center () (h1 () "Generic Lisp Manual"))
+       (center () (h1 () (a (:href "index.html") "Qua") " Lisp Manual"))
+       (blockquote () (node-field 'abstract 'default))
+       (h3 () "Table of Contents")
        (ul ()
            (node-field 'child 'toc))
        (div ()
@@ -62,7 +64,7 @@
 
 (deftemplate qua-hub-template-large
   (div ()
-       (h1 (:style "font-variant: small-caps") (node-field 'title))
+       (h1 () (node-field 'title))
        (div ()
             (node-field 'child 'medium))))
 
@@ -70,7 +72,7 @@
 
 (deftemplate qua-hub-page-template-large
   (div ()
-       (h1 (:style "font-variant: small-caps")
+       (h1 ()
            (a (:href "index.html") "Qua") " / " (node-field 'title))
        (div ()
             (node-field 'child 'medium))))

@@ -115,6 +115,8 @@
 (tcmplr-define-html-tags
   a
   body
+  blockquote
+  br
   center
   code
   div
@@ -130,6 +132,7 @@
   h7
   head
   html
+  img
   li
   ol
   p

@@ -1,4 +1,4 @@
-////// The TCMPLR Template Compiler
+/////// The TCMPLR Template Compiler
 
 var lib = module.exports;
 

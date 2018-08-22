@@ -1,13 +1,27 @@
 (defnode (manual) +qua-hub-manual-page+
-  (:title "Generic Lisp Manual")
-  (:byline "Reference for the Lisp dialect implemented by Qua.")
+  (:title "Qua Lisp Manual")
+  (:byline "Reference for the Lisp dialect implemented by Qua, a blend
+  of Kernel, Common Lisp, and Scheme.")
+  (:abstract
+   (paragraph "Qua Lisp, or just Qua for short, is a new dialect of
+    Lisp, designed to be ultra-light and allow tiny implementations,
+    yet offer the powerful metaprogramming facilities, control flow
+    abstractions, and general no-nonsense approach associated with
+    Lisp.  Qua is based on Kernel, Common Lisp, and Scheme.  From
+    Kernel it takes its central computing workhorses, lexically-scoped
+    fexprs and first-class environments.  The surface syntax and core
+    language look and feel a lot like Common Lisp, from which Qua
+    inherits many operators.  The interface for control flow
+    manipulation, delimited continuations, are the result of a long
+    line of research pioneered in Scheme."))
   (:child
-   (hyper '(manual . sec-intro))
    (hyper '(manual . sec-evaluation))
    (hyper '(manual . sec-environments))
    (hyper '(manual . sec-objects))
+   (hyper '(manual . sec-types))
    (hyper '(manual . sec-generic-functions))
    (hyper '(manual . sec-places))
+   (hyper '(manual . sec-numbers))
    (hyper '(manual . sec-symbols))
    (hyper '(manual . sec-lists))
    (hyper '(manual . sec-sequences))
@@ -16,24 +30,6 @@
    (hyper '(manual . sec-conditions))
    (hyper '(manual . sec-continuations))
    (hyper '(manual . sec-js))))
-
-
-(defnode (manual . sec-intro) +qua-hub-section+
-  (:title "Introduction")
-  (:content
-   (paragraph "Generic Lisp is a new dialect of Lisp, designed to be
-    ultra-light and allow tiny implementations, yet offer the powerful
-    metaprogramming facilities, control flow abstractions, and general
-    no-nonsense approach associated with Lisp.  Generic Lisp is based
-    on Kernel, Common Lisp, and Scheme.  From Kernel it takes its
-    central computing workhorses, lexically-scoped fexprs and
-    first-class environments.  The surface syntax and core language
-    look and feel a lot like Common Lisp, from which Generic Lisp
-    inherits many operators.  The interface for control flow
-    manipulation, delimited continuations, are the result of a long
-    line of research pioneered in Scheme.")
-   (paragraph "This manual is intended as a definition of Generic Lisp for
-    an audience of knowledgeable Lisp programmers.")))
 
 
 (defnode (manual . sec-evaluation) +qua-hub-section+
@@ -206,6 +202,26 @@
   (:syntax "value1 value2 => result"))
 
 
+(defnode (manual . sec-types) +qua-hub-section+
+  (:title "Types")
+  (:child
+   (hyper '(manual . op-typep))
+   (hyper '(manual . op-typecase))
+   (hyper '(manual . op-the))))
+
+(defnode (manual . op-typep) +qua-hub-manual-operator+
+  (:title "TYPE?")
+  (:syntax "object type-spec => result"))
+
+(defnode (manual . op-typecase) +qua-hub-manual-operator+
+  (:title "TYPECASE")
+  (:syntax "object (type-spec form*)* => result"))
+
+(defnode (manual . op-the) +qua-hub-manual-operator+
+  (:title "THE")
+  (:syntax "object type => result"))
+
+
 (defnode (manual . sec-generic-functions) +qua-hub-section+
   (:title "Generic Functions")
   (:child
@@ -254,6 +270,51 @@
 (defnode (manual . op-decf) +qua-hub-manual-operator+
   (:title "DECF")
   (:syntax "place [decrement] => result"))
+
+
+(defnode (manual . sec-numbers) +qua-hub-section+
+  (:title "Numbers")
+  (:child
+   (hyper '(manual . op-lt))
+   (hyper '(manual . op-lte))
+   (hyper '(manual . op-gt))
+   (hyper '(manual . op-gte))
+   (hyper '(manual . op-add))
+   (hyper '(manual . op-sub))
+   (hyper '(manual . op-mul))
+   (hyper '(manual . op-div))))
+
+(defnode (manual . op-lt) +qua-hub-manual-operator+
+  (:title "<")
+  (:syntax "number+ => result"))
+
+(defnode (manual . op-lte) +qua-hub-manual-operator+
+  (:title "<=")
+  (:syntax "number+ => result"))
+
+(defnode (manual . op-gt) +qua-hub-manual-operator+
+  (:title ">")
+  (:syntax "number+ => result"))
+
+(defnode (manual . op-gte) +qua-hub-manual-operator+
+  (:title ">=")
+  (:syntax "number+ => result"))
+
+(defnode (manual . op-add) +qua-hub-manual-operator+
+  (:title "+")
+  (:syntax "number* => result"))
+
+(defnode (manual . op-sub) +qua-hub-manual-operator+
+  (:title "-")
+  (:syntax "number+ => result"))
+
+(defnode (manual . op-mul) +qua-hub-manual-operator+
+  (:title "*")
+  (:syntax "number* => result"))
+
+(defnode (manual . op-div) +qua-hub-manual-operator+
+  (:title "/")
+  (:syntax "number+ => result"))
 
 
 (defnode (manual . sec-symbols) +qua-hub-section+
@@ -507,7 +568,8 @@
    (hyper '(manual . op-find-restart))
    (hyper '(manual . op-compute-restarts))
    (hyper '(manual . op-invoke-restart))
-   (hyper '(manual . op-invoke-restart-interactively))))
+   (hyper '(manual . op-invoke-restart-interactively))
+   (hyper '(manual . op-invoke-debugger))))
 
 (defnode (manual . op-handler-bind) +qua-hub-manual-operator+
   (:title "HANDLER-BIND")
@@ -536,6 +598,10 @@
 (defnode (manual . op-invoke-restart-interactively) +qua-hub-manual-operator+
   (:title "INVOKE-RESTART-INTERACTIVELY")
   (:syntax "restart-designator => result"))
+
+(defnode (manual . op-invoke-debugger) +qua-hub-manual-operator+
+  (:title "INVOKE-DEBUGGER")
+  (:syntax "condition => |"))
 
 (defnode (manual . op-find-restart) +qua-hub-manual-operator+
   (:title "FIND-RESTART")
