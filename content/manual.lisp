@@ -6,8 +6,8 @@
    (paragraph "Qua Lisp, or just Qua for short, is a new dialect of
     Lisp, designed to be ultra-light and allow tiny implementations,
     yet offer the powerful metaprogramming facilities, control flow
-    abstractions, and general no-nonsense approach associated with
-    Lisp.  Qua is based on Kernel, Common Lisp, and Scheme.  From
+    abstractions, and general no-nonsense approach that are associated
+    with Lisp.  Qua is based on Kernel, Common Lisp, and Scheme.  From
     Kernel it takes its central computing workhorses, lexically-scoped
     fexprs and first-class environments.  The surface syntax and core
     language look and feel a lot like Common Lisp, from which Qua
@@ -167,7 +167,7 @@
 
 (defnode (manual . op-make-instance) +qua-hub-manual-operator+
   (:title "MAKE-INSTANCE")
-  (:syntax "class &key => instance"))
+  (:syntax "class . initargs => instance"))
 
 (defnode (manual . op-class-of) +qua-hub-manual-operator+
   (:title "CLASS-OF")
@@ -430,7 +430,8 @@
    (hyper '(manual . op-return-from))
    (hyper '(manual . op-unwind-protect))
    (hyper '(manual . op-loop))
-   (hyper '(manual . op-while))))
+   (hyper '(manual . op-while))
+   (hyper '(manual . op-dotimes))))
 
 (defnode (manual . op-progn) +qua-hub-manual-operator+
   (:title "PROGN")
@@ -496,17 +497,21 @@
   (:title "WHILE")
   (:syntax "test form* => |"))
 
+(defnode (manual . op-dotimes) +qua-hub-manual-operator+
+  (:title "DOTIMES")
+  (:syntax "(var count-form [result-form]) form* => result"))
+
 
 (defnode (manual . sec-continuations) +qua-hub-section+
-  (:title "Continuations")
+  (:title "Delimited Continuations")
   (:child
-   (hyper '(manual . op-push-default-prompt))
-   (hyper '(manual . op-take-default-subcont))
-   (hyper '(manual . op-push-default-subcont))
    (hyper '(manual . op-push-prompt))
    (hyper '(manual . op-take-subcont))
    (hyper '(manual . op-push-subcont))
-   (hyper '(manual . op-push-prompt-subcont))))
+   (hyper '(manual . op-push-prompt-subcont))
+   (hyper '(manual . op-push-default-prompt))
+   (hyper '(manual . op-take-default-subcont))
+   (hyper '(manual . op-push-default-subcont))))
 
 (defnode (manual . op-push-prompt) +qua-hub-manual-operator+
   (:title "PUSH-PROMPT")
@@ -644,7 +649,7 @@
 
 (defnode (manual . op-js-object) +qua-hub-manual-operator+
   (:title "JS-OBJECT")
-  (:syntax "&key => object"))
+  (:syntax ". initargs => object"))
 
 (defnode (manual . op-js-array) +qua-hub-manual-operator+
   (:title "JS-ARRAY")

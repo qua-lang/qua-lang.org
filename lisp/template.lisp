@@ -65,6 +65,7 @@
 (deftemplate qua-hub-template-large
   (div ()
        (h1 () (node-field 'title))
+       (h2 () (tt () "(print \"Welcome to Qua!\")"))
        (div ()
             (node-field 'child 'medium))))
 
@@ -75,7 +76,7 @@
        (h1 ()
            (a (:href "index.html") "Qua") " / " (node-field 'title))
        (div ()
-            (node-field 'child 'medium))))
+            (node-field 'child 'default))))
 
 (associate-template +qua-hub-page+ 'large qua-hub-page-template-large)
 
