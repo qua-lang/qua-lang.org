@@ -1,1 +1,31 @@
-<div><h1><a href="index.html">Qua</a> / Getting Started</h1><div></div></div>
+<div><h1><a href="index.html">Qua</a> / Using Qua</h1><div><div><a id="web-repl"><h2>Use the Web REPL</h2></a><p>The simplest way to get started is to
+   use <a href="https://qua-lang.github.io/qua-vm/repl/repl.html">the online REPL</a>. Just click on the link to experience Lisp in cyberspace.</p></div><div><a id="html-page"><h2>Use Qua in an HTML Page</h2></a><p>The next simple way, suitable for small projects, is to
+   create an HTML page and include the
+   file <a href="https://qua-lang.github.io/qua-vm/build/out/qua.js">qua.js</a> to
+   evaluate Lisp code.</p><pre>
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;script type=&#39;text/javascript&#39; src=&#39;https://qua-lang.github.io/qua-vm/build/out/qua.js&#39;&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;script type=&#39;text/javascript&#39;&gt;
+qua.vm().eval_string(&#39;($alert &quot;Hello world!&quot;)&#39;)
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre><p>You can also put your Qua code into a &lt;script&gt; tag, see
+   the source of <a href="https://qua-lang.github.io/qua-vm/demo/balls.html">this demo page</a>.</p></div><div><a id="command-line-repl"><h2>Use the Command-Line REPL</h2></a><p>For the authentic &#39;60s teletype experience, Qua can also
+   be run from Unix-like command-lines.  This requires that you have <a href="https://nodejs.org/">Node.js</a> installed.</p><pre>
+$ npm install -g qua-vm
+$ qua
+Welcome to Qua!
+Press ENTER to evaluate the current line in Qua.
+&gt; 
+</pre><p>The following sections depend on having installed Qua
+   with Node.</p></div><div><a id="file"><h2>Run Qua Code in a File</h2></a><pre>$ qua-run path/to/file.lisp</pre></div><div><a id="node"><h2>Use Qua from Node Programs</h2></a><p>Qua is available on NPM as package <a href="https://www.npmjs.com/package/qua-vm">qua-vm</a>.</p><pre>
+var vm = require(&#39;qua-vm&#39;).vm()
+vm.eval_string(&#39;(print &quot;Hello world!&quot;)&#39;)</pre></div><div><a id="bundle"><h2>Create a Bundle for Web Distribution</h2></a><p>A bundle is a JS file that includes both a Qua VM as
+   well as your Lisp code (in a preparsed form) for easy
+   distribution. There&#39;s a <a href="https://github.com/qua-lang/qua-bundle-demo">demo repository</a> that shows how it works, the synopsis
+   is:</p><pre>$ qua-bundle input-file.lisp output-file.js</pre></div></div></div>

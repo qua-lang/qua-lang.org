@@ -8,6 +8,11 @@
 
 (associate-template +qua-hub-manual-operator+ 'inline qua-hub-op-inline-template)
 
+(deftemplate qua-hub-weblink-inline-template
+  (a (:href (node-field 'url)) (node-field 'title)))
+
+(associate-template +qua-hub-weblink+ 'inline qua-hub-weblink-inline-template)
+
 (deftemplate qua-hub-manual-template-large
   (div ()
        (center () (h1 () (a (:href "index.html") "Qua") " Lisp Manual"))
@@ -61,6 +66,11 @@
   (p () (node-field 'text)))
 
 (associate-template +qua-hub-paragraph+ 'default qua-hub-paragraph-template-medium)
+
+(deftemplate qua-hub-code-sample-template-medium
+  (pre () (node-field 'text)))
+
+(associate-template +qua-hub-code-sample+ 'default qua-hub-code-sample-template-medium)
 
 (deftemplate qua-hub-template-large
   (div ()

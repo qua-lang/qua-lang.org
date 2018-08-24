@@ -18,14 +18,29 @@
 (define-node-type +qua-hub-section+)
 (define-node-type +qua-hub-item+)
 (define-node-type +qua-hub-paragraph+)
+(define-node-type +qua-hub-weblink+)
+(define-node-type +qua-hub-code-sample+)
 (define-node-type +qua-hub-main-page+ +qua-hub-page+)
 (define-node-type +qua-hub-manual-page+ +qua-hub-page+)
 (define-node-type +qua-hub-manual-operator+ +qua-hub-item+)
 (define-node-type +qua-hub-ref+ +qua-hub-item+)
 
-;;; Convenience macro for paragraph node
+;;; Convenience macros
 (defmacro paragraph text
   (list #'node +qua-hub-paragraph+ (list* :text text)))
+
+;; Should have :TITLE and :URL props
+(defmacro weblink props
+  (list* #'node +qua-hub-weblink+ props))
+
+(defmacro html-sample text
+  (list #'node +qua-hub-code-sample+ (list* :text text)))
+
+(defmacro shell-sample text
+  (list #'node +qua-hub-code-sample+ (list* :text text)))
+
+(defmacro js-sample text
+  (list #'node +qua-hub-code-sample+ (list* :text text)))
 
 ;;; Load the content files.  Must also be added to lisp/site.lisp :'|
 (load "content/index.lisp")
