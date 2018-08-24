@@ -90,3 +90,22 @@
 
 (associate-template +qua-hub-page+ 'medium qua-hub-page-template-medium)
 
+(deftemplate qua-hub-ref-template-inline
+  (span (:class "ref-inline")
+        "["
+        (a (:href (node-field 'url))
+           (node-field 'title))
+        "]("
+        (a (:href (node-link))
+           "ref")
+        ")"))
+
+(associate-template +qua-hub-ref+ 'inline qua-hub-ref-template-inline)
+
+(deftemplate qua-hub-ref-template-default
+  (div (:class "ref")
+       (a (:id (node-anchor)) (h3 () (node-field 'title)))
+       (p () (node-field 'authors))
+       (p () (a (:href (node-field 'url)) (node-field 'url)))))
+
+(associate-template +qua-hub-ref+ 'default qua-hub-ref-template-default)

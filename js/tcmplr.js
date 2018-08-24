@@ -19,7 +19,6 @@ lib.make_node = function(type, reference, fields) {
     node.reference = reference;
     node.type = type;
     node.fields = fields;
-    node.fragments = Object.create(null);
     return node;
 };
 
