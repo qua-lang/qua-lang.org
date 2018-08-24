@@ -21,7 +21,9 @@
   (:child
    (paragraph "The simplest way to get started is to
    use " (weblink (:title "the online REPL") (:url +qua-repl-url+))
-   ". Just click on the link to experience Lisp in cyberspace.")))
+   ". Just click on the link to experience Lisp in cyberspace.  (Note
+   that this currently requires a keyboard, so it doesn't work on
+   most phones.)")))
 
 (defnode (usage . html-page) +qua-hub-section+
   (:title "Use Qua in an HTML Page")
@@ -82,7 +84,13 @@ vm.eval_string('(print \"Hello world!\")')")))
   (:child
    (paragraph "A bundle is a JS file that includes both a Qua VM as
    well as your Lisp code (in a preparsed form) for easy
-   distribution. There's a " (weblink (:title "demo repository") (:url
+   distribution. This is currently at the proof-of-concept stage, but
+   is intended to become the main way of distributing Qua-based web
+   apps.  There's a " (weblink (:title "demo repository") (:url
    +qua-bundle-demo-url+)) " that shows how it works, the synopsis
    is:")
-   (shell-sample "$ qua-bundle input-file.lisp output-file.js")))
+   (shell-sample "$ qua-bundle input-file.lisp output-file.js")
+   (paragraph "Then include the output JS file in an HTML page and do
+   the following to execute your Lisp code included in the bundle:")
+   (js-sample "qua.vm().eval_user_bytecode()")))
+

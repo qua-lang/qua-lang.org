@@ -47,7 +47,7 @@
   (:title "The Other Language Ingredients: Fexprs, First-Class
   Environments, and a Healthy Dose of Old School Lisp")
   (:child
-   (paragraph "Around the same time, I learned of John Shutt's new
+   (paragraph "Around the same time, I learned about John Shutt's new
    variant of Lisp, called Kernel " (hyper '(ref . kernel)) ", which
    reintroduced an often misapprehended and disparaged language
    construct called the ``fexpr''.  After some investigation and gasps
@@ -87,13 +87,14 @@
    contain a core of JavaScript code for the performance-critical
    parts and inner loops.  So I put effort into making Qua deeply
    integrate and interoperate with JS and I think it turned out quite
-   well.  Qua can directly -- without any FFI-like declarations --
-   access JS globals, object properties, call methods and functions,
-   and all Qua functions can be made callable as normal JS functions.
-   Qua Lisp and JS parts of a program can live in harmony, and
-   switching between the two languages is effortless.  Node, NPM, and
-   Browserify give Qua programs access to a huge number of JS modules,
-   and modules can also be written in Qua.")
+   well.  Qua can directly -- without any FFI declarations -- access
+   JS globals, object properties, call methods and functions, and all
+   Qua functions can be made callable as normal JS functions.  Qua
+   Lisp and JS parts of a program can live in harmony, and switching
+   between the two languages is effortless.  Node and NPM give Qua
+   programs access to the immense JS ecosystem.  Qua also works with
+   the Browserify tool that makes it possible to use many NPM packages
+   in the browser.")
    (paragraph "The role I see for Qua is as the high-level
    ``intelligence'' layer of my JavaScript apps, where the complex
    data-dependent logic resides, while the lower-level JavaScript code
@@ -103,6 +104,4 @@
    ``language-oriented'' Lisp programming style to JavaScript.  And of
    course, just being able to use Lisp on the web is a joy in itself,
    and it is my hope that you get to experience that when you use
-   Qua. I do.")
-   (paragraph "Read more about the current status and availability of
-   Qua here: " (hyper '(alpha)) ".")))
+   Qua. I do.")))

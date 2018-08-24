@@ -29,7 +29,6 @@
 (defmacro paragraph text
   (list #'node +qua-hub-paragraph+ (list* :text text)))
 
-;; Should have :TITLE and :URL props
 (defmacro weblink props
   (list* #'node +qua-hub-weblink+ props))
 

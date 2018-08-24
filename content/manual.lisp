@@ -6,14 +6,14 @@
    (paragraph "Qua Lisp, or just Qua for short, is a new dialect of
     Lisp, designed to be ultra-light and allow tiny implementations,
     yet offer the powerful metaprogramming facilities, control flow
-    abstractions, and general no-nonsense approach that are associated
-    with Lisp.  Qua is based on Kernel, Common Lisp, and Scheme.  From
-    Kernel it takes its central computing workhorses, lexically-scoped
-    fexprs and first-class environments.  The surface syntax and core
-    language look and feel a lot like Common Lisp, from which Qua
-    inherits many operators.  The interface for control flow
-    manipulation, delimited continuations, are the result of a long
-    line of research pioneered in Scheme."))
+    abstractions, and general no-nonsense approach that Lisp
+    programmers have come to expect.  Qua is based on Kernel, Common
+    Lisp, and Scheme.  From Kernel it takes its central computing
+    workhorses, lexically-scoped fexprs and first-class environments.
+    The surface syntax and core language look and feel a lot like
+    Common Lisp, from which Qua inherits many operators.  The
+    interface for control flow manipulation, delimited continuations,
+    is the result of a long line of research pioneered in Scheme."))
   (:child
    (hyper '(manual . sec-evaluation))
    (hyper '(manual . sec-environments))
