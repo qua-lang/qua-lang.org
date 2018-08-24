@@ -12,7 +12,7 @@
 
 (defnode (intro . why) +qua-hub-section+
   (:title "Why I Had to Create a New Language: Web Programming Needs
-  Powerful Control Flow Tools")
+  Powerful Control Flow Tools (Like Delimited Continuations)")
   (:child
    (paragraph "The main problem I am addressing with Qua is the loss
    of control stack information caused by the asynchronous APIs
@@ -80,7 +80,7 @@
    of vintage Lisp data and control flow operators.")))
 
 (defnode (intro . co) +qua-hub-section+
-  (:title "A Companion Language to JavaScript and Plain Lisp Fun")
+  (:title "A Companion Language to JavaScript and Just Good Fun")
   (:child
    (paragraph "Qua is designed to be symbiotic with JavaScript, not
    replace it, and it is my expectation that most Qua programs will
