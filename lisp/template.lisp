@@ -13,9 +13,19 @@
 
 (associate-template +qua-hub-weblink+ 'inline qua-hub-weblink-inline-template)
 
+(deftemplate qua-hub-image-default-template
+  (img (:src (node-field 'src))))
+
+(associate-template +qua-hub-image+ 'default qua-hub-image-default-template)
+(associate-template +qua-hub-image+ 'inline qua-hub-image-default-template)
+
 (deftemplate qua-hub-manual-template-large
   (div ()
-       (center () (h1 () (a (:href "index.html") "Qua") " Lisp Manual"))
+       (center ()
+               (h1 () (a (:href "index.html") "Qua") " Lisp")
+               (node-field 'header 'default)
+               (h1 () "Manual")
+               (em() "Manuel Simoni"))
        (blockquote () (node-field 'abstract 'default))
        (h3 () "Table of Contents")
        (ul ()
@@ -74,6 +84,7 @@
 
 (deftemplate qua-hub-template-large
   (div ()
+       (node-field 'header 'default)
        (h1 () (node-field 'title))
        (h2 () (tt () "(print \"Welcome to Qua!\")"))
        (div ()
@@ -83,6 +94,7 @@
 
 (deftemplate qua-hub-page-template-large
   (div ()
+       (node-field 'header 'default)
        (h1 ()
            (a (:href "index.html") "Qua") " / " (node-field 'title))
        (div ()

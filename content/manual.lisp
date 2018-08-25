@@ -2,18 +2,25 @@
   (:title "Qua Lisp Manual")
   (:byline "Reference for the Lisp dialect implemented by Qua, a blend
   of Kernel, Common Lisp, and Scheme.")
+  (:header (image (:src "../img/silly-parens.png") (:border 4)))
   (:abstract
    (paragraph "Qua Lisp, or just Qua for short, is a new dialect of
     Lisp, designed to be ultra-light and allow tiny implementations,
     yet offer the powerful metaprogramming facilities, control flow
     abstractions, and general no-nonsense approach that Lisp
-    programmers have come to expect.  Qua is based on Kernel, Common
-    Lisp, and Scheme.  From Kernel it takes its central computing
+    programmers know and love.  Qua is based on Kernel, Common Lisp,
+    and Scheme.  From Kernel it takes its central computing
     workhorses, lexically-scoped fexprs and first-class environments.
     The surface syntax and core language look and feel a lot like
     Common Lisp, from which Qua inherits many operators.  The
     interface for control flow manipulation, delimited continuations,
-    is the result of a long line of research pioneered in Scheme."))
+    is the result of a long line of research pioneered in Scheme.")
+   (paragraph "Qua Lisp is still unfinished.  Especially the areas of
+    strings, numbers, objects, classes, generic functions, methods,
+    sequences, streams, and the JS interface are still in flux and/or
+    unspecified.  Nevertheless, it is already a practical language and
+    the functionality documented in this manual is not expected to
+    change in major ways."))
   (:child
    (hyper '(manual . sec-evaluation))
    (hyper '(manual . sec-environments))
@@ -632,7 +639,8 @@
    (hyper '(manual . op-js-get))
    (hyper '(manual . op-js-set))
    (hyper '(manual . op-list-to-js-array))
-   (hyper '(manual . op-plist-to-js-object))))
+   (hyper '(manual . op-plist-to-js-object))
+   (hyper '(manual . op-log))))
 
 (defnode (manual . op-js-global) +qua-hub-manual-operator+
   (:title "JS-GLOBAL")
@@ -674,3 +682,6 @@
   (:title "JS-LAMBDA")
   (:syntax "lambda-list *form => js-function"))
 
+(defnode (manual . op-log) +qua-hub-manual-operator+
+  (:title "LOG")
+  (:syntax "value* => result"))
