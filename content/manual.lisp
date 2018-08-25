@@ -18,7 +18,6 @@
    (hyper '(manual . sec-evaluation))
    (hyper '(manual . sec-environments))
    (hyper '(manual . sec-objects))
-   (hyper '(manual . sec-types))
    (hyper '(manual . sec-generic-functions))
    (hyper '(manual . sec-places))
    (hyper '(manual . sec-numbers))
@@ -107,6 +106,7 @@
   (:child
    (hyper '(manual . op-def))
    (hyper '(manual . op-defconstant))
+   (hyper '(manual . op-setq))
    (hyper '(manual . op-let))
    (hyper '(manual . op-let-star))
    (hyper '(manual . op-flet))
@@ -120,6 +120,10 @@
 
 (defnode (manual . op-defconstant) +qua-hub-manual-operator+
   (:title "DEFCONSTANT")
+  (:syntax "definiend value => result"))
+
+(defnode (manual . op-setq) +qua-hub-manual-operator+
+  (:title "SETQ")
   (:syntax "definiend value => result"))
 
 (defnode (manual . op-let) +qua-hub-manual-operator+
@@ -148,7 +152,7 @@
 
 
 (defnode (manual . sec-objects) +qua-hub-section+
-  (:title "Objects and Classes")
+  (:title "Objects")
   (:child
    (hyper '(manual . op-defstruct))
    (hyper '(manual . op-make-instance))
@@ -159,7 +163,10 @@
    (hyper '(manual . op-set-slot-value))
    (hyper '(manual . op-slot-boundp))
    (hyper '(manual . op-eq))
-   (hyper '(manual . op-eql))))
+   (hyper '(manual . op-eql))
+   (hyper '(manual . op-typep))
+   (hyper '(manual . op-typecase))
+   (hyper '(manual . op-the))))
 
 (defnode (manual . op-defstruct) +qua-hub-manual-operator+
   (:title "DEFSTRUCT")
@@ -201,14 +208,6 @@
   (:title "EQL")
   (:syntax "value1 value2 => result"))
 
-
-(defnode (manual . sec-types) +qua-hub-section+
-  (:title "Types")
-  (:child
-   (hyper '(manual . op-typep))
-   (hyper '(manual . op-typecase))
-   (hyper '(manual . op-the))))
-
 (defnode (manual . op-typep) +qua-hub-manual-operator+
   (:title "TYPE?")
   (:syntax "object type-spec => result"))
@@ -240,16 +239,11 @@
 (defnode (manual . sec-places) +qua-hub-section+
   (:title "Places")
   (:child
-   (hyper '(manual . op-setq))
    (hyper '(manual . op-setf))
    (hyper '(manual . op-defsetf))
    (hyper '(manual . op-setter))
    (hyper '(manual . op-incf))
    (hyper '(manual . op-decf))))
-
-(defnode (manual . op-setq) +qua-hub-manual-operator+
-  (:title "SETQ")
-  (:syntax "definiend value => result"))
 
 (defnode (manual . op-setf) +qua-hub-manual-operator+
   (:title "SETF")
@@ -320,13 +314,18 @@
 (defnode (manual . sec-symbols) +qua-hub-section+
   (:title "Symbols")
   (:child
+   (hyper '(manual . op-make-symbol))
    (hyper '(manual . op-symbol-name))
    (hyper '(manual . op-function-symbol))
    (hyper '(manual . op-type-symbol))))
 
+(defnode (manual . op-make-symbol) +qua-hub-manual-operator+
+  (:title "MAKE-SYMBOL")
+  (:syntax "string => symbol"))
+
 (defnode (manual . op-symbol-name) +qua-hub-manual-operator+
   (:title "SYMBOL-NAME")
-  (:syntax "symbol => name"))
+  (:syntax "symbol => string"))
 
 (defnode (manual . op-function-symbol) +qua-hub-manual-operator+
   (:title "FUNCTION-SYMBOL")
@@ -546,20 +545,24 @@
   (:title "Dynamic Variables")
   (:child
    (hyper '(manual . op-defdynamic))
-   (hyper '(manual . op-dynamic-let))
+   (hyper '(manual . op-dynamic-bind))
    (hyper '(manual . op-dynamic))))
 
 (defnode (manual . op-defdynamic) +qua-hub-manual-operator+
   (:title "DEFDYNAMIC")
   (:syntax "name [value] => void"))
 
-(defnode (manual . op-dynamic-let) +qua-hub-manual-operator+
-  (:title "DYNAMIC-LET")
+(defnode (manual . op-dynamic-bind) +qua-hub-manual-operator+
+  (:title "DYNAMIC-BIND")
   (:syntax "((dynamic-var value)*) form* => result"))
 
 (defnode (manual . op-dynamic) +qua-hub-manual-operator+
   (:title "DYNAMIC")
   (:syntax "dynamic-var => value"))
+
+(defnode (manual . op-progv) +qua-hub-manual-operator+
+  (:title "PROGV")
+  (:syntax "dynamic-var value function => result"))
 
 
 (defnode (manual . sec-conditions) +qua-hub-section+
