@@ -11,7 +11,7 @@
 
 (defnode (intro . why) +qua-hub-section+
   (:title "Why I Had to Create a New Language: Web Programming Needs
-  Powerful Control (Like Delimited Continuations)")
+  Powerful Control (like Delimited Continuations)")
   (:child
    (paragraph "The main problem I am addressing with Qua is the
     control stack loss caused by the asynchronous APIs pervasive in
