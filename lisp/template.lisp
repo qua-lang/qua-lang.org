@@ -25,7 +25,7 @@
                (h1 () (a (:href "index.html") "Qua") " Lisp")
                (node-field 'header 'default)
                (h1 () "Manual")
-               (em() "Manuel Simoni"))
+               "Manuel Simoni")
        (blockquote () (node-field 'abstract 'default))
        (h3 () "Table of Contents")
        (ul ()

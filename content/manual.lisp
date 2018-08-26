@@ -437,6 +437,7 @@
    (hyper '(manual . op-unwind-protect))
    (hyper '(manual . op-loop))
    (hyper '(manual . op-while))
+   (hyper '(manual . op-until))
    (hyper '(manual . op-dotimes))))
 
 (defnode (manual . op-progn) +qua-hub-manual-operator+
@@ -501,6 +502,10 @@
 
 (defnode (manual . op-while) +qua-hub-manual-operator+
   (:title "WHILE")
+  (:syntax "test form* => |"))
+
+(defnode (manual . op-until) +qua-hub-manual-operator+
+  (:title "UNTIL")
   (:syntax "test form* => |"))
 
 (defnode (manual . op-dotimes) +qua-hub-manual-operator+
@@ -680,7 +685,7 @@
 
 (defnode (manual . op-js-lambda) +qua-hub-manual-operator+
   (:title "JS-LAMBDA")
-  (:syntax "lambda-list *form => js-function"))
+  (:syntax "lambda-list form* => js-function"))
 
 (defnode (manual . op-log) +qua-hub-manual-operator+
   (:title "LOG")
