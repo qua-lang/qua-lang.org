@@ -24,6 +24,7 @@
 (define-node-type +qua-hub-main-page+ +qua-hub-page+)
 (define-node-type +qua-hub-manual-page+ +qua-hub-page+)
 (define-node-type +qua-hub-manual-operator+ +qua-hub-item+)
+(define-node-type +qua-hub-manual-syntax+ +qua-hub-item+)
 (define-node-type +qua-hub-ref+ +qua-hub-item+)
 
 ;;; Convenience macros
@@ -44,6 +45,44 @@
 
 (defmacro js-sample text
   (list #'node +qua-hub-code-sample+ (list* :text text)))
+
+(defmacro define-manual (id . body)
+  (list* #'defnode id +qua-hub-manual-page+
+         body))
+
+(defmacro define-manual-section (id . body)
+  (list* #'defnode id +qua-hub-section+
+         body))
+
+(defmacro define-manual-notation (id . body)
+  (list* #'defnode id +qua-hub-manual-syntax+
+         '(:type-name "Syntax")
+         body))
+
+(defmacro define-manual-syntax (id . body)
+  (list* #'defnode id +qua-hub-manual-syntax+
+         '(:type-name "Syntax")
+         body))
+
+(defmacro define-manual-special (id . body)
+  (list* #'defnode id +qua-hub-manual-operator+
+         '(:type-name "Special Operator")
+         body))
+
+(defmacro define-manual-function (id . body)
+  (list* #'defnode id +qua-hub-manual-operator+
+         '(:type-name "Function")
+         body))
+
+(defmacro define-manual-fexpr (id . body)
+  (list* #'defnode id +qua-hub-manual-operator+
+         '(:type-name "Fexpr")
+         body))
+
+(defmacro define-manual-macro (id . body)
+  (list* #'defnode id +qua-hub-manual-operator+
+         '(:type-name "Macro")
+         body))
 
 ;;; Load the content files.  Must also be added to lisp/site.lisp :'|
 (load "content/index.lisp")

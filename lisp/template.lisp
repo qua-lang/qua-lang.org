@@ -54,23 +54,34 @@
 (deftemplate qua-hub-manual-operator-template-medium
   (div ()
        (h3 () (a (:id (node-anchor))
-                 (node-field 'title) (node-field 'type-name)))
-       (h4 () "Syntax")
-       (em (:style "text-transform: lowercase")
-           (strong () (node-field 'title)) " "
-           (node-field 'syntax))
-       (h4 () "Description")
-       (div () (node-field 'content 'default))))
+                 (node-field 'title)
+                 (em () " (" (node-field 'type-name) ")")))
+       (h4 () "Syntax:")
+       (tt (:color "#999") (node-field 'syntax))
+       (h4 () "Description:")
+       (div () (node-field 'content 'default))
+       (h4 () "Examples:")
+       (div () (node-field 'example 'default))
+       (h4 () "See Also:")
+       (div () (node-field 'see-also 'default))
+       (h4 () "Rationale:")
+       (div () (node-field 'rationale 'default))))
 
 (associate-template +qua-hub-manual-operator+ 'default qua-hub-manual-operator-template-medium)
+(associate-template +qua-hub-manual-syntax+ 'default qua-hub-manual-operator-template-medium)
 
-(deftemplate qua-hub-manual-operator-template-toc
+(deftemplate qua-hub-item-template-toc
   (li ()
-      (strong (:style "text-transform: lowercase")
-              (a (:href (node-link)) (node-field 'title)))
-      " " (node-field 'syntax)))
+      (a (:href (node-link))
+         (strong () (node-field 'title)))
+      " "
+      (tt ()
+          (node-field 'syntax))
+      " "
+      (em ()
+          "(" (node-field 'type-name) ")")))
 
-(associate-template +qua-hub-manual-operator+ 'toc qua-hub-manual-operator-template-toc)
+(associate-template +qua-hub-item+ 'toc qua-hub-item-template-toc)
 
 (deftemplate qua-hub-paragraph-template-medium
   (p () (node-field 'text)))
