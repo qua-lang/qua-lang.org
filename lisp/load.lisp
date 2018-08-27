@@ -26,6 +26,7 @@
 (define-node-type +qua-hub-manual-page+ +qua-hub-page+)
 (define-node-type +qua-hub-manual-operator+ +qua-hub-item+)
 (define-node-type +qua-hub-manual-syntax+ +qua-hub-item+)
+(define-node-type +qua-hub-manual-constant+ +qua-hub-item+)
 (define-node-type +qua-hub-ref+ +qua-hub-item+)
 
 ;;; Convenience macros
@@ -55,9 +56,9 @@
   (list* #'defnode id +qua-hub-section+
          body))
 
-(defmacro define-manual-notation (id . body)
-  (list* #'defnode id +qua-hub-manual-syntax+
-         '(:type-name "Syntax")
+(defmacro define-manual-constant (id . body)
+  (list* #'defnode id +qua-hub-manual-constant+
+         '(:type-name "Constant")
          body))
 
 (defmacro define-manual-syntax (id . body)

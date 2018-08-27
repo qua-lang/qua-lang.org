@@ -28,6 +28,7 @@
    (hyper '(manual . sec-objects))
    (hyper '(manual . sec-generic-functions))
    (hyper '(manual . sec-places))
+   (hyper '(manual . sec-booleans))
    (hyper '(manual . sec-numbers))
    (hyper '(manual . sec-symbols))
    (hyper '(manual . sec-lists))
@@ -99,7 +100,9 @@
    (hyper '(manual . op-funcall))
    (hyper '(manual . op-quote))
    (hyper '(manual . op-macro))
-   (hyper '(manual . op-defmacro))))
+   (hyper '(manual . op-defmacro))
+   (hyper '(manual . const-void))
+   (hyper '(manual . const-ign))))
 
 (define-manual-special (manual . op-vau)
   (:title "VAU")
@@ -152,6 +155,14 @@
 (define-manual-special (manual . op-defmacro)
   (:title "DEFMACRO")
   (:syntax "name operand-tree form* => macro"))
+
+(define-manual-constant (manual . const-void)
+  (:title "#VOID")
+  (:syntax "#void"))
+
+(define-manual-constant (manual . const-ign)
+  (:title "#IGN")
+  (:syntax "#ign"))
 
 
 (define-manual-section (manual . sec-environments)
@@ -319,6 +330,20 @@
   (:syntax "place [decrement] => result"))
 
 
+(define-manual-section (manual . sec-booleans)
+  (:title "Booleans")
+  (:child
+   (hyper '(manual . const-t))
+   (hyper '(manual . const-f))))
+
+(define-manual-constant (manual . const-t)
+  (:title "#T")
+  (:syntax "#t"))
+
+(define-manual-constant (manual . const-f)
+  (:title "#F")
+  (:syntax "#f"))
+
 (define-manual-section (manual . sec-numbers)
   (:title "Numbers")
   (:child
@@ -392,6 +417,7 @@
 (define-manual-section (manual . sec-lists)
   (:title "Lists")
   (:child
+   (hyper '(manual . const-nil))
    (hyper '(manual . op-cons))
    (hyper '(manual . op-car))
    (hyper '(manual . op-cdr))
@@ -399,6 +425,10 @@
    (hyper '(manual . op-list))
    (hyper '(manual . op-list-star))
    (hyper '(manual . op-reverse-list))))
+
+(define-manual-constant (manual . const-nil)
+  (:title "#NIL")
+  (:syntax "#nil"))
 
 (define-manual-function (manual . op-cons)
   (:title "CONS")
@@ -669,6 +699,8 @@
    (hyper '(manual . stx-js-global))
    (hyper '(manual . stx-js-property))
    (hyper '(manual . stx-js-method))
+   (hyper '(manual . const-null))
+   (hyper '(manual . const-undefined))
    (hyper '(manual . op-js-global))
    (hyper '(manual . op-js-new))
    (hyper '(manual . op-js-object))
@@ -692,6 +724,14 @@
 (define-manual-syntax (manual . stx-js-method)
   (:title "JS Method Syntax")
   (:syntax "@method"))
+
+(define-manual-constant (manual . const-null)
+  (:title "#NULL")
+  (:syntax "#null"))
+
+(define-manual-constant (manual . const-undefined)
+  (:title "#UNDEFINED")
+  (:syntax "#undefined"))
 
 (define-manual-function (manual . op-js-global)
   (:title "JS-GLOBAL")

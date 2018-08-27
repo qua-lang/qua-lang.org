@@ -56,6 +56,11 @@
 
 (associate-template +qua-hub-manual-operator+ 'syntax qua-hub-manual-operator-syntax-template)
 
+(deftemplate qua-hub-manual-constant-syntax-template
+  (strong () (node-field 'syntax)))
+
+(associate-template +qua-hub-manual-constant+ 'syntax qua-hub-manual-constant-syntax-template)
+
 (deftemplate qua-hub-manual-syntax-syntax-template
   (node-field 'syntax))
 
@@ -80,6 +85,7 @@
 
 (associate-template +qua-hub-manual-operator+ 'default qua-hub-manual-operator-template-medium)
 (associate-template +qua-hub-manual-syntax+ 'default qua-hub-manual-operator-template-medium)
+(associate-template +qua-hub-manual-constant+ 'default qua-hub-manual-operator-template-medium)
 
 (deftemplate qua-hub-item-template-toc
   (li ()
