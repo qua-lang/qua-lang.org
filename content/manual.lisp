@@ -30,6 +30,7 @@
    (hyper '(manual . sec-places))
    (hyper '(manual . sec-booleans))
    (hyper '(manual . sec-numbers))
+   (hyper '(manual . sec-strings))
    (hyper '(manual . sec-symbols))
    (hyper '(manual . sec-lists))
    (hyper '(manual . sec-sequences))
@@ -45,12 +46,19 @@
   (:child
    (hyper '(manual . stx-string))
    (hyper '(manual . stx-number))
-   (hyper '(manual . stx-boolean))
    (hyper '(manual . stx-constant))
    (hyper '(manual . stx-symbol))
+   (hyper '(manual . stx-function))
    (hyper '(manual . stx-keyword))
    (hyper '(manual . stx-list))
-   (hyper '(manual . stx-dotted-list))))
+   (hyper '(manual . stx-dotted-list))
+   (hyper '(manual . stx-dynamic-variable))
+   (hyper '(manual . stx-constant-variable))
+   (hyper '(manual . stx-global-variable))
+   (hyper '(manual . stx-js-global))
+   (hyper '(manual . stx-js-property))
+   (hyper '(manual . stx-js-method))))
+
 
 (define-manual-syntax (manual . stx-string)
   (:title "String Syntax")
@@ -60,21 +68,33 @@
   (:title "Number Syntax")
   (:syntax "[+|-]digits[.digits]"))
 
-(define-manual-syntax (manual . stx-boolean)
-  (:title "Boolean Syntax")
-  (:syntax "#t #f"))
-
 (define-manual-syntax (manual . stx-constant)
-  (:title "Other Constant Syntax")
-  (:syntax "#nil #void #ign"))
+  (:title "Constant Syntax")
+  (:syntax "#name"))
 
 (define-manual-syntax (manual . stx-symbol)
-  (:title "Symbol Syntax")
+  (:title "Variable Symbol Syntax")
   (:syntax "name"))
 
 (define-manual-syntax (manual . stx-keyword)
   (:title "Keyword Symbol Syntax")
   (:syntax ":name"))
+
+(define-manual-syntax (manual . stx-function)
+  (:title "Function Symbol Syntax")
+  (:syntax "#'name"))
+
+(define-manual-syntax (manual . stx-dynamic-variable)
+  (:title "Dynamic Variable Syntax")
+  (:syntax "*name*"))
+
+(define-manual-syntax (manual . stx-constant-variable)
+  (:title "Constant Variable Syntax")
+  (:syntax "+name+"))
+
+(define-manual-syntax (manual . stx-global-variable)
+  (:title "Global Variable Syntax")
+  (:syntax "-name-"))
 
 (define-manual-syntax (manual . stx-list)
   (:title "List Syntax")
@@ -82,14 +102,28 @@
 
 (define-manual-syntax (manual . stx-dotted-list)
   (:title "Dotted List Syntax")
-  (:syntax "( element* . element )"))
+  (:syntax "( element+ . element )"))
+
+(define-manual-syntax (manual . stx-js-global)
+  (:title "JS Global Variable Syntax")
+  (:syntax "$variable"))
+
+(define-manual-syntax (manual . stx-js-property)
+  (:title "JS Property Syntax")
+  (:syntax ".property"))
+
+(define-manual-syntax (manual . stx-js-method)
+  (:title "JS Method Syntax")
+  (:syntax "@method"))
 
 
 (define-manual-section (manual . sec-evaluation)
   (:title "Evaluation")
   (:child
+   (hyper '(manual . class-fexpr))
    (hyper '(manual . op-vau))
    (hyper '(manual . op-deffexpr))
+   (hyper '(manual . class-function))
    (hyper '(manual . op-wrap))
    (hyper '(manual . op-unwrap))
    (hyper '(manual . op-lambda))
@@ -101,8 +135,13 @@
    (hyper '(manual . op-quote))
    (hyper '(manual . op-macro))
    (hyper '(manual . op-defmacro))
+   (hyper '(manual . class-void))
    (hyper '(manual . const-void))
+   (hyper '(manual . class-ign))
    (hyper '(manual . const-ign))))
+
+(define-manual-class (manual . class-fexpr)
+  (:title "FEXPR"))
 
 (define-manual-special (manual . op-vau)
   (:title "VAU")
@@ -111,6 +150,9 @@
 (define-manual-special (manual . op-deffexpr)
   (:title "DEFFEXPR")
   (:syntax "name operand-tree environment-parameter form* => fexpr"))
+
+(define-manual-class (manual . class-function)
+  (:title "FUNCTION"))
 
 (define-manual-function (manual . op-wrap)
   (:title "WRAP")
@@ -156,9 +198,15 @@
   (:title "DEFMACRO")
   (:syntax "name operand-tree form* => macro"))
 
+(define-manual-class (manual . class-void)
+  (:title "VOID"))
+
 (define-manual-constant (manual . const-void)
   (:title "#VOID")
   (:syntax "#void"))
+
+(define-manual-class (manual . class-ign)
+  (:title "IGN"))
 
 (define-manual-constant (manual . const-ign)
   (:title "#IGN")
@@ -168,6 +216,7 @@
 (define-manual-section (manual . sec-environments)
   (:title "Environments")
   (:child
+   (hyper '(manual . class-environment))
    (hyper '(manual . op-def))
    (hyper '(manual . op-defconstant))
    (hyper '(manual . op-setq))
@@ -177,6 +226,9 @@
    (hyper '(manual . op-labels))
    (hyper '(manual . op-make-environment))
    (hyper '(manual . op-the-environment))))
+
+(define-manual-class (manual . class-environment)
+  (:title "ENVIRONMENT"))
 
 (define-manual-special (manual . op-def)
   (:title "DEF")
@@ -218,6 +270,7 @@
 (define-manual-section (manual . sec-objects)
   (:title "Objects")
   (:child
+   (hyper '(manual . class-object))
    (hyper '(manual . op-defstruct))
    (hyper '(manual . op-make-instance))
    (hyper '(manual . op-class-of))
@@ -231,6 +284,9 @@
    (hyper '(manual . op-typep))
    (hyper '(manual . op-typecase))
    (hyper '(manual . op-the))))
+
+(define-manual-class (manual . class-object)
+  (:title "OBJECT"))
 
 (define-manual-special (manual . op-defstruct)
   (:title "DEFSTRUCT")
@@ -333,8 +389,12 @@
 (define-manual-section (manual . sec-booleans)
   (:title "Booleans")
   (:child
+   (hyper '(manual . class-boolean))
    (hyper '(manual . const-t))
    (hyper '(manual . const-f))))
+
+(define-manual-class (manual . class-boolean)
+  (:title "BOOLEAN"))
 
 (define-manual-constant (manual . const-t)
   (:title "#T")
@@ -347,6 +407,7 @@
 (define-manual-section (manual . sec-numbers)
   (:title "Numbers")
   (:child
+   (hyper '(manual . class-number))
    (hyper '(manual . op-lt))
    (hyper '(manual . op-lte))
    (hyper '(manual . op-gt))
@@ -355,6 +416,9 @@
    (hyper '(manual . op-sub))
    (hyper '(manual . op-mul))
    (hyper '(manual . op-div))))
+
+(define-manual-class (manual . class-number)
+  (:title "NUMBER"))
 
 (define-manual-function (manual . op-lt)
   (:title "<")
@@ -389,13 +453,26 @@
   (:syntax "number+ => result"))
 
 
+(define-manual-section (manual . sec-strings)
+  (:title "Strings")
+  (:child
+   (hyper '(manual . class-string))))
+
+(define-manual-class (manual . class-string)
+  (:title "STRING"))
+
+
 (define-manual-section (manual . sec-symbols)
   (:title "Symbols")
   (:child
+   (hyper '(manual . class-symbol))
    (hyper '(manual . op-make-symbol))
    (hyper '(manual . op-symbol-name))
    (hyper '(manual . op-function-symbol))
    (hyper '(manual . op-type-symbol))))
+
+(define-manual-class (manual . class-symbol)
+  (:title "SYMBOL"))
 
 (define-manual-function (manual . op-make-symbol)
   (:title "MAKE-SYMBOL")
@@ -417,7 +494,9 @@
 (define-manual-section (manual . sec-lists)
   (:title "Lists")
   (:child
+   (hyper '(manual . class-nil))
    (hyper '(manual . const-nil))
+   (hyper '(manual . class-cons))
    (hyper '(manual . op-cons))
    (hyper '(manual . op-car))
    (hyper '(manual . op-cdr))
@@ -426,9 +505,15 @@
    (hyper '(manual . op-list-star))
    (hyper '(manual . op-reverse-list))))
 
+(define-manual-class (manual . class-nil)
+  (:title "NIL"))
+
 (define-manual-constant (manual . const-nil)
   (:title "#NIL")
   (:syntax "#nil"))
+
+(define-manual-class (manual . class-cons)
+  (:title "CONS"))
 
 (define-manual-function (manual . op-cons)
   (:title "CONS")
@@ -577,6 +662,7 @@
 (define-manual-section (manual . sec-continuations)
   (:title "Delimited Continuations")
   (:child
+   (hyper '(manual . class-continuation))
    (hyper '(manual . op-push-prompt))
    (hyper '(manual . op-take-subcont))
    (hyper '(manual . op-push-subcont))
@@ -584,6 +670,9 @@
    (hyper '(manual . op-push-default-prompt))
    (hyper '(manual . op-take-default-subcont))
    (hyper '(manual . op-push-default-subcont))))
+
+(define-manual-class (manual . class-continuation)
+  (:title "CONTINUATION"))
 
 (define-manual-special (manual . op-push-prompt)
   (:title "PUSH-PROMPT")
@@ -632,10 +721,6 @@
 (define-manual-special (manual . op-dynamic)
   (:title "DYNAMIC")
   (:syntax "dynamic-var => value"))
-
-(define-manual-special (manual . op-progv)
-  (:title "PROGV")
-  (:syntax "dynamic-var value function => result"))
 
 
 (define-manual-section (manual . sec-conditions)
@@ -696,11 +781,9 @@
 (define-manual-section (manual . sec-js)
   (:title "JavaScript Interface")
   (:child
-   (hyper '(manual . stx-js-global))
-   (hyper '(manual . stx-js-property))
-   (hyper '(manual . stx-js-method))
-   (hyper '(manual . const-null))
-   (hyper '(manual . const-undefined))
+   (hyper '(manual . class-js-object))
+   (hyper '(manual . class-js-array))
+   (hyper '(manual . class-js-function))
    (hyper '(manual . op-js-global))
    (hyper '(manual . op-js-new))
    (hyper '(manual . op-js-object))
@@ -709,21 +792,28 @@
    (hyper '(manual . op-js-lambda))
    (hyper '(manual . op-js-get))
    (hyper '(manual . op-js-set))
+   (hyper '(manual . class-js-null))
+   (hyper '(manual . const-null))
+   (hyper '(manual . class-js-undefined))
+   (hyper '(manual . const-undefined))
    (hyper '(manual . op-list-to-js-array))
    (hyper '(manual . op-plist-to-js-object))
    (hyper '(manual . op-log))))
 
-(define-manual-syntax (manual . stx-js-global)
-  (:title "JS Global Variable Syntax")
-  (:syntax "$variable"))
+(define-manual-class (manual . class-js-object)
+  (:title "JS-OBJECT"))
 
-(define-manual-syntax (manual . stx-js-property)
-  (:title "JS Property Syntax")
-  (:syntax ".property"))
+(define-manual-class (manual . class-js-array)
+  (:title "JS-ARRAY"))
 
-(define-manual-syntax (manual . stx-js-method)
-  (:title "JS Method Syntax")
-  (:syntax "@method"))
+(define-manual-class (manual . class-js-function)
+  (:title "JS-FUNCTION"))
+
+(define-manual-class (manual . class-js-null)
+  (:title "JS-NULL"))
+
+(define-manual-class (manual . class-js-undefined)
+  (:title "JS-UNDEFINED"))
 
 (define-manual-constant (manual . const-null)
   (:title "#NULL")

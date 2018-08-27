@@ -52,19 +52,33 @@
 (associate-template +qua-hub-section+ 'toc qua-hub-section-template-toc)
 
 (deftemplate qua-hub-manual-operator-syntax-template
-  (span () (strong (:style "text-transform: lowercase") (node-field 'title)) " " (node-field 'syntax)))
+  (div ()
+       (h4 () "Syntax:")
+       (tt ()
+           (strong (:style "text-transform: lowercase") (node-field 'title))
+           " "
+           (node-field 'syntax))))
 
 (associate-template +qua-hub-manual-operator+ 'syntax qua-hub-manual-operator-syntax-template)
 
 (deftemplate qua-hub-manual-constant-syntax-template
-  (strong () (node-field 'syntax)))
+  (div ()
+       (h4 () "Syntax:")
+       (tt () (strong () (node-field 'syntax)))))
 
 (associate-template +qua-hub-manual-constant+ 'syntax qua-hub-manual-constant-syntax-template)
 
 (deftemplate qua-hub-manual-syntax-syntax-template
-  (node-field 'syntax))
+  (div ()
+       (h4 () "Syntax:")
+       (tt () (node-field 'syntax))))
 
 (associate-template +qua-hub-manual-syntax+ 'syntax qua-hub-manual-syntax-syntax-template)
+
+(deftemplate qua-hub-manual-default-syntax-template
+  (div ()))
+
+(associate-template +qua-hub-item+ 'syntax qua-hub-manual-default-syntax-template)
 
 (deftemplate qua-hub-manual-operator-template-medium
   (div ()
@@ -72,8 +86,7 @@
                  (node-field 'title)
                  " "
                  (em () " (" (node-field 'type-name) ")")))
-       (h4 () "Syntax:")
-       (tt () (call-template 'syntax))
+       (call-template 'syntax)
        (h4 () "Description:")
        (div () (node-field 'content 'default))
        (h4 () "Examples:")
@@ -86,6 +99,7 @@
 (associate-template +qua-hub-manual-operator+ 'default qua-hub-manual-operator-template-medium)
 (associate-template +qua-hub-manual-syntax+ 'default qua-hub-manual-operator-template-medium)
 (associate-template +qua-hub-manual-constant+ 'default qua-hub-manual-operator-template-medium)
+(associate-template +qua-hub-manual-class+ 'default qua-hub-manual-operator-template-medium)
 
 (deftemplate qua-hub-item-template-toc
   (li ()
@@ -114,7 +128,6 @@
   (div ()
        (node-field 'header 'default)
        (h1 () (node-field 'title))
-       (h2 () (tt () "(print \"Welcome to Qua!\")"))
        (div ()
             (node-field 'child 'medium))))
 
