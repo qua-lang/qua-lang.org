@@ -51,13 +51,24 @@
 
 (associate-template +qua-hub-section+ 'toc qua-hub-section-template-toc)
 
+(deftemplate qua-hub-manual-operator-syntax-template
+  (span () (strong (:style "text-transform: lowercase") (node-field 'title)) " " (node-field 'syntax)))
+
+(associate-template +qua-hub-manual-operator+ 'syntax qua-hub-manual-operator-syntax-template)
+
+(deftemplate qua-hub-manual-syntax-syntax-template
+  (node-field 'syntax))
+
+(associate-template +qua-hub-manual-syntax+ 'syntax qua-hub-manual-syntax-syntax-template)
+
 (deftemplate qua-hub-manual-operator-template-medium
   (div ()
        (h3 () (a (:id (node-anchor))
                  (node-field 'title)
+                 " "
                  (em () " (" (node-field 'type-name) ")")))
        (h4 () "Syntax:")
-       (tt (:color "#999") (node-field 'syntax))
+       (tt () (call-template 'syntax))
        (h4 () "Description:")
        (div () (node-field 'content 'default))
        (h4 () "Examples:")

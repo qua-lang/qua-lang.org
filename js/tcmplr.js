@@ -150,6 +150,18 @@ lib.AnchorFieldTemplate.prototype.compile_template = function(out) {
     out(new lib.AnchorFieldInstruction(this.field_name, this.template_name));
 };
 
+//// Call Templates
+
+lib.CallTemplate = function CallTemplate(template_name) {
+    this.template_name = template_name;
+};
+
+lib.CallTemplate.prototype = new lib.Template();
+
+lib.CallTemplate.prototype.compile_template = function(out) {
+    out(new lib.CallTemplateInstruction(this.template_name));
+};
+
 //// Node Link Template
 
 lib.NodeLinkTemplate = function NodeLinkTemplate() {};
@@ -204,6 +216,18 @@ lib.AnchorFieldInstruction.prototype = new lib.Instruction();
 
 lib.AnchorFieldInstruction.prototype.compile_instruction = function() {
     return "rt.anchor_field(store,anchor,node,\"" + this.field_name + "\",\"" + this.template_name + "\")";
+};
+
+//// Call Template Instruction
+
+lib.CallTemplateInstruction = function CallTemplateInstruction(template_name) {
+    this.template_name = template_name;
+};
+
+lib.CallTemplateInstruction.prototype = new lib.Instruction();
+
+lib.CallTemplateInstruction.prototype.compile_instruction = function() {
+    return "rt.call_template(store,anchor,node,\"" + this.template_name + "\")";
 };
 
 //// Node Link Instruction
@@ -289,11 +313,7 @@ lib.rt.node_field = function(store, anchor, node, field_name, template_name) {
                 if (!node.fields) {
                     throw "not a node: " + node;
                 }
-                var template = node[template_name];
-                if (!template) {
-                    throw "template not found: " + template_name;
-                }
-                str += template(lib.rt, store, anchor, node);
+                str += lib.rt.call_template(store, anchor, node, template_name);
             } else {
                 throw "not a field value: " + field_value;
             }
@@ -302,6 +322,14 @@ lib.rt.node_field = function(store, anchor, node, field_name, template_name) {
     } else {
         return "";
     }
+};
+
+lib.rt.call_template = function(store, anchor, node, template_name) {
+    var template = node[template_name];
+    if (!template) {
+        throw "template not found: " + template_name;
+    }
+    return template(lib.rt, store, anchor, node);
 };
 
 lib.rt.anchor_field = function(store, anchor, node, field_name, template_name) {

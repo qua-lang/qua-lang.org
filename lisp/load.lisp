@@ -11,6 +11,7 @@
 (def #'node-field #'tcmplr-make-node-field-template)
 (def #'node-link #'tcmplr-make-node-link-template)
 (def #'node-anchor #'tcmplr-make-node-anchor-template)
+(def #'call-template #'tcmplr-make-call-template)
 (def #'file #'tcmplr-write-file)
 
 ;;; Define website node types
