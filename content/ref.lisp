@@ -4,7 +4,8 @@
    (hyper '(ref . kernel))
    (hyper '(ref . caml-shift))
    (hyper '(ref . monadic-framework))
-   (hyper '(ref . mainstream-yield))))
+   (hyper '(ref . mainstream-yield))
+   (hyper '(ref . json))))
 
 (defnode (ref . kernel) +qua-hub-ref+
   (:title "The Kernel Programming Language")
@@ -26,3 +27,7 @@
   (:url "https://www.cs.indiana.edu/~sabry/papers/yield.pdf")
   (:authors "Roshan P. James, Amr Sabry"))
 
+(defnode (ref . json) +qua-hub-ref+
+  (:title "JavaScript Object Notation")
+  (:url "http://www.json.org")
+  (:authors ""))

@@ -90,7 +90,7 @@
        (h4 () "Description:")
        (div () (node-field 'content 'default))
        (h4 () "Examples:")
-       (div () (node-field 'example 'default))
+       (pre () (node-field 'example 'default))
        (h4 () "See Also:")
        (div () (node-field 'see-also 'default))
        (h4 () "Rationale:")

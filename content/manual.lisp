@@ -59,42 +59,121 @@
    (hyper '(manual . stx-js-property))
    (hyper '(manual . stx-js-method))))
 
-
 (define-manual-syntax (manual . stx-string)
   (:title "String Syntax")
-  (:syntax "\"characters\" \\\" \\\\"))
+  (:syntax "\"characters\" \\\" \\t \\r \\n \\\\")
+  (:content
+   (paragraph
+    "Qua string syntax follows " (hyper '(ref . json))
+    " but only supports a subset of it at the moment."))
+  (:example
+   "\"foo \\\" bar\" => \"foo \\\" bar\"")
+  (:rationale
+   (paragraph
+    "Given the close integration between Qua and JavaScript it seems
+    to be a good idea to follow JavaScript's string syntax, and not
+    more traditional Lisp syntax, so that programmers don't need to
+    keep two syntaxes in their heads.")))
 
 (define-manual-syntax (manual . stx-number)
   (:title "Number Syntax")
-  (:syntax "[+|-]digits[.digits]"))
+  (:syntax "[+|-]digits[.digits]")
+  (:content
+   (paragraph
+    "Qua number syntax follows " (hyper '(ref . json))
+    " but only supports a subset of it at the moment."))
+  (:example
+   "-12.34 => -12.34")
+  (:rationale
+   (paragraph
+    "See rationale for " (hyper '(manual . stx-string)))))
 
 (define-manual-syntax (manual . stx-constant)
   (:title "Constant Syntax")
-  (:syntax "#name"))
+  (:syntax "#constant")
+  (:content
+   (paragraph
+    "Built-in constants, such as " (hyper '(manual . const-t)) "
+    or " (hyper '(manual . const-void)) " get a special syntax
+    distinct from symbols."))
+  (:example
+   "#t => #t
+#void => #void")
+  (:rationale
+   (paragraph
+    "Avoiding to pollute the variable namespace with identifiers for constants,
+    which should be short, seems to be a good idea.")))
 
 (define-manual-syntax (manual . stx-symbol)
   (:title "Variable Symbol Syntax")
-  (:syntax "name"))
+  (:syntax "symbol-name")
+  (:content
+   (paragraph
+    "Variable symbols allow many characters except space (exact list
+    to be determined) and should allow all alphanumeric Unicode
+    characters at some point, but are currently restricted to
+    ASCII."))
+  (:example
+   "foo-bar*"))
 
 (define-manual-syntax (manual . stx-keyword)
   (:title "Keyword Symbol Syntax")
-  (:syntax ":name"))
+  (:syntax ":keyword-name")
+  (:content
+   (paragraph
+    "Keyword symbols follow " (hyper '(manual . stx-symbol)) " as to
+    the content of the symbol name."))
+  (:example
+   ":my-keyword => :my-keyword"))
 
 (define-manual-syntax (manual . stx-function)
   (:title "Function Symbol Syntax")
-  (:syntax "#'name"))
+  (:syntax "#'function-name")
+  (:content
+   (paragraph
+    "Function symbols follow " (hyper '(manual . stx-symbol)) " as to
+    the content of the symbol name."))
+  (:example
+   "#'+
+#'quuxify"))
 
 (define-manual-syntax (manual . stx-dynamic-variable)
   (:title "Dynamic Variable Syntax")
-  (:syntax "*name*"))
+  (:syntax "*dynamic-name*")
+  (:content
+   (paragraph
+    "Dynamic variable names are wrapped in ``*'' by convention."))
+  (:example
+   "*standard-output*")
+  (:rationale
+   (paragraph "Using special prefixes and suffixes prevents having to
+   use prefixes like ``current-'' for dynamic variable names to
+   distinguish them from local variables.")))
 
 (define-manual-syntax (manual . stx-constant-variable)
   (:title "Constant Variable Syntax")
-  (:syntax "+name+"))
+  (:syntax "+constant-name+")
+  (:content
+   (paragraph
+    "Constant variable names are wrapped in ``+'' by convention.  This
+    should be used for global variables that are never reassigned, and
+    that are bound to objects whose contents are immutable."))
+  (:example
+   "+my-constant+"))
 
 (define-manual-syntax (manual . stx-global-variable)
   (:title "Global Variable Syntax")
-  (:syntax "-name-"))
+  (:syntax "-global-name-")
+  (:content
+   (paragraph
+    "Global variable names are wrapped in ``-'' by convention.  This
+    should be used for global variables that are reassigned, like a
+    global counter, or that are bound to objects whose contents are
+    mutated, like a global hash table."))
+  (:example "-my-global-hash-table-")
+  (:rationale
+   (paragraph "It seems like a good idea to syntactically distinguish
+   global variables, analogous to dynamic variables.")))
 
 (define-manual-syntax (manual . stx-list)
   (:title "List Syntax")
