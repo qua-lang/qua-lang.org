@@ -253,7 +253,15 @@ $window => #[js-object]
 
 (define-manual-syntax (manual . stx-js-method)
   (:title "JS Method Syntax")
-  (:syntax "@method"))
+  (:syntax "@method")
+  (:content
+   (paragraph
+    "Syntax for invoking a JavaScript method.  This is syntactic sugar
+    for " (hyper '(manual . op-js-invoker)) "."))
+  (:example
+   "(@toString 12) => \"12\"
+
+(@log $console \"This is a log message sent to the browser console\")"))
 
 
 (define-manual-section (manual . sec-evaluation)
