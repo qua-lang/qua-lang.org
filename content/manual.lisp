@@ -52,6 +52,7 @@
    (hyper '(manual . stx-keyword))
    (hyper '(manual . stx-list))
    (hyper '(manual . stx-dotted-list))
+   (hyper '(manual . stx-quote))
    (hyper '(manual . stx-dynamic-variable))
    (hyper '(manual . stx-constant-variable))
    (hyper '(manual . stx-global-variable))
@@ -86,7 +87,7 @@
    "-12.34 => -12.34")
   (:rationale
    (paragraph
-    "See rationale for " (hyper '(manual . stx-string)))))
+    "See rationale for " (hyper '(manual . stx-string)) ".")))
 
 (define-manual-syntax (manual . stx-constant)
   (:title "Constant Syntax")
@@ -159,7 +160,7 @@
     should be used for global variables that are never reassigned, and
     that are bound to objects whose contents are immutable."))
   (:example
-   "+my-constant+"))
+   "(defconstant +my-constant+ 23)"))
 
 (define-manual-syntax (manual . stx-global-variable)
   (:title "Global Variable Syntax")
@@ -170,26 +171,85 @@
     should be used for global variables that are reassigned, like a
     global counter, or that are bound to objects whose contents are
     mutated, like a global hash table."))
-  (:example "-my-global-hash-table-")
+  (:example "(def -my-global-hash-table- (js-object))")
   (:rationale
    (paragraph "It seems like a good idea to syntactically distinguish
    global variables, analogous to dynamic variables.")))
 
 (define-manual-syntax (manual . stx-list)
   (:title "List Syntax")
-  (:syntax "( element* )"))
+  (:syntax "( element* )")
+  (:content
+   (paragraph
+    "The usual syntax for lists."))
+  (:example "(a big (nested (list)))
+
+() === #nil"))
 
 (define-manual-syntax (manual . stx-dotted-list)
   (:title "Dotted List Syntax")
-  (:syntax "( element+ . element )"))
+  (:syntax "( element+ . element )")
+  (:content
+   (paragraph
+    "The usual syntax for specifying the last element of a list
+    explicitly."))
+  (:example "(a dotted . list)
+
+(1 2) === (1 . (2)) === (1 . (2 . #nil))"))
+
+(define-manual-syntax (manual . stx-quote)
+  (:title "Quotation Syntax")
+  (:syntax "'form")
+  (:content
+   (paragraph
+    "The usual syntax for preventing evaluation of a form, syntactic
+    sugar for " (hyper '(manual . op-quote)) "."))
+  (:example "'foo => foo
+'#'foo => #'foo
+'12 => 12
+''foo => 'foo
+'(+ 3 4) => (+ 3 4)"))
 
 (define-manual-syntax (manual . stx-js-global)
   (:title "JS Global Variable Syntax")
-  (:syntax "$variable"))
+  (:syntax "$variable")
+  (:content
+   (paragraph
+    "Syntax for accessing a JavaScript global variable or function.
+    Can be used with " (hyper '(manual . op-setf)) " to update the
+    variable.  This is syntactic sugar for " (hyper '(manual
+    . op-js-global)) "."))
+  (:example
+   ";; Used to access global variables ...
+$window => #[js-object]
+;; ... and call global JS functions:
+($alert \"Hello world!\") => #void
+
+(setf $SOME_JS_VARIABLE 12) => 12")
+  (:rationale
+   (paragraph "Qua needs convenient access to JS globals, so it seems
+   to make sense to spend a special sigil for that purpose.")))
 
 (define-manual-syntax (manual . stx-js-property)
   (:title "JS Property Syntax")
-  (:syntax ".property"))
+  (:syntax ".property")
+  (:content
+   (paragraph
+    "Syntax for accessing a JavaScript property.  Can be used
+    with " (hyper '(manual . op-setf)) " to update the property.  This
+    is syntactic sugar for " (hyper '(manual . op-js-getter)) "."))
+  (:example
+   "(.title $document) => \"Qua Lisp Manual\"
+
+(setf (.title $document) \"Qua rocks\")
+
+;; Is actually shorthand for a function, so can be mapped across lists
+;; of objects, etc:
+(map .x (list (js-object :x 1 :y 2) (js-object :x 3 :y 4)))
+=> (1 3)")
+  (:rationale
+   (paragraph "JS properties are accessed frequently so it makes sense
+   to spend a sigil for that purpose.")))
 
 (define-manual-syntax (manual . stx-js-method)
   (:title "JS Method Syntax")
@@ -212,6 +272,7 @@
    (hyper '(manual . op-apply))
    (hyper '(manual . op-funcall))
    (hyper '(manual . op-quote))
+   (hyper '(manual . class-macro))
    (hyper '(manual . op-macro))
    (hyper '(manual . op-defmacro))
    (hyper '(manual . class-void))
@@ -268,6 +329,9 @@
 (define-manual-special (manual . op-quote)
   (:title "QUOTE")
   (:syntax "form => form"))
+
+(define-manual-class (manual . class-macro)
+  (:title "MACRO"))
 
 (define-manual-special (manual . op-macro)
   (:title "MACRO")
@@ -671,11 +735,11 @@
 
 (define-manual-special (manual . op-prog1)
   (:title "PROG1")
-  (:syntax "form* => result"))
+  (:syntax "form form* => result"))
 
 (define-manual-special (manual . op-prog2)
   (:title "PROG2")
-  (:syntax "form form* => result"))
+  (:syntax "form form form* => result"))
 
 (define-manual-special (manual . op-if)
   (:title "IF")
@@ -871,6 +935,8 @@
    (hyper '(manual . op-js-lambda))
    (hyper '(manual . op-js-get))
    (hyper '(manual . op-js-set))
+   (hyper '(manual . op-js-getter))
+   (hyper '(manual . op-js-invoker))
    (hyper '(manual . class-js-null))
    (hyper '(manual . const-null))
    (hyper '(manual . class-js-undefined))
@@ -904,7 +970,15 @@
 
 (define-manual-function (manual . op-js-global)
   (:title "JS-GLOBAL")
-  (:syntax "name => value"))
+  (:syntax "variable-name => value"))
+
+(define-manual-function (manual . op-js-getter)
+  (:title "JS-GETTER")
+  (:syntax "property-name => getter-function"))
+
+(define-manual-function (manual . op-js-invoker)
+  (:title "JS-INVOKER")
+  (:syntax "method-name => invoker-function"))
 
 (define-manual-function (manual . op-js-new)
   (:title "JS-NEW")

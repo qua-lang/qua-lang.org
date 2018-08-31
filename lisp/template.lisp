@@ -82,8 +82,9 @@
 
 (deftemplate qua-hub-manual-operator-template-medium
   (div ()
-       (h3 () (a (:id (node-anchor))
-                 (node-field 'title)
+       (h3 ()
+           (a (:id (node-anchor))
+              (node-field 'title)
                  " "
                  (em () " (" (node-field 'type-name) ")")))
        (call-template 'syntax)
@@ -91,8 +92,6 @@
        (div () (node-field 'content 'default))
        (h4 () "Examples:")
        (pre () (node-field 'example 'default))
-       (h4 () "See Also:")
-       (div () (node-field 'see-also 'default))
        (h4 () "Rationale:")
        (div () (node-field 'rationale 'default))))
 
