@@ -2,7 +2,6 @@
   (:title "Qua Lisp Manual")
   (:byline "Reference for the Lisp dialect implemented by Qua, a blend
   of Kernel, Common Lisp, and Scheme.")
-  (:header (image (:src "../img/silly-parens.png") (:border 4)))
   (:abstract
    (paragraph "Qua Lisp, or just Qua for short, is a new dialect of
     Lisp, designed to be ultra-light and allow tiny implementations,
