@@ -40,7 +40,7 @@
    (hyper '(manual . sec-js))))
 
 
-(define-manual-section (manual . sec-syntax)
+(define-section (manual . sec-syntax)
   (:title "Syntax")
   (:child
    (hyper '(manual . stx-string))
@@ -263,7 +263,7 @@ $window => #[js-object]
 (@log $console \"This is a log message sent to the browser console\")"))
 
 
-(define-manual-section (manual . sec-evaluation)
+(define-section (manual . sec-evaluation)
   (:title "Evaluation")
   (:child
    (hyper '(manual . class-fexpr))
@@ -288,11 +288,20 @@ $window => #[js-object]
    (hyper '(manual . const-ign))))
 
 (define-manual-class (manual . class-fexpr)
-  (:title "FEXPR"))
+  (:title "FEXPR")
+  (:content
+   (paragraph "Fexprs are the fundamental building block of
+   computation in Qua.  A fexpr is conceptually like a Lisp function,
+   but it does not evaluate its arguments, and receives the lexical
+   environment in which it is called as a parameter.")))
 
 (define-manual-special (manual . op-vau)
   (:title "VAU")
-  (:syntax "operand-tree environment-parameter form* => fexpr"))
+  (:syntax "operand-tree environment-parameter form* => fexpr")
+  (:content
+   (paragraph (hyper '(manual . op-vau)) " is the constructor of
+   fexprs, analogous to how " (hyper '(manual . op-lambda)) " is the
+   constructor of functions.")))
 
 (define-manual-special (manual . op-deffexpr)
   (:title "DEFFEXPR")
@@ -363,7 +372,7 @@ $window => #[js-object]
   (:syntax "#ign"))
 
 
-(define-manual-section (manual . sec-environments)
+(define-section (manual . sec-environments)
   (:title "Environments")
   (:child
    (hyper '(manual . class-environment))
@@ -417,7 +426,7 @@ $window => #[js-object]
   (:syntax "=> current-environment"))
 
 
-(define-manual-section (manual . sec-objects)
+(define-section (manual . sec-objects)
   (:title "Objects")
   (:child
    (hyper '(manual . class-object))
@@ -491,7 +500,7 @@ $window => #[js-object]
   (:syntax "object type => result"))
 
 
-(define-manual-section (manual . sec-generic-functions)
+(define-section (manual . sec-generic-functions)
   (:title "Generic Functions")
   (:child
    (hyper '(manual . op-defgeneric))
@@ -506,7 +515,7 @@ $window => #[js-object]
   (:syntax "name ((self class) param*) form* => void"))
 
 
-(define-manual-section (manual . sec-places)
+(define-section (manual . sec-places)
   (:title "Places")
   (:child
    (hyper '(manual . op-setf))
@@ -536,7 +545,7 @@ $window => #[js-object]
   (:syntax "place [decrement] => result"))
 
 
-(define-manual-section (manual . sec-booleans)
+(define-section (manual . sec-booleans)
   (:title "Booleans")
   (:child
    (hyper '(manual . class-boolean))
@@ -554,7 +563,7 @@ $window => #[js-object]
   (:title "#F")
   (:syntax "#f"))
 
-(define-manual-section (manual . sec-numbers)
+(define-section (manual . sec-numbers)
   (:title "Numbers")
   (:child
    (hyper '(manual . class-number))
@@ -603,7 +612,7 @@ $window => #[js-object]
   (:syntax "number+ => result"))
 
 
-(define-manual-section (manual . sec-strings)
+(define-section (manual . sec-strings)
   (:title "Strings")
   (:child
    (hyper '(manual . class-string))))
@@ -612,7 +621,7 @@ $window => #[js-object]
   (:title "STRING"))
 
 
-(define-manual-section (manual . sec-symbols)
+(define-section (manual . sec-symbols)
   (:title "Symbols")
   (:child
    (hyper '(manual . class-symbol))
@@ -641,7 +650,7 @@ $window => #[js-object]
   (:syntax "symbol => type-symbol"))
 
 
-(define-manual-section (manual . sec-lists)
+(define-section (manual . sec-lists)
   (:title "Lists")
   (:child
    (hyper '(manual . class-nil))
@@ -694,7 +703,7 @@ $window => #[js-object]
   (:syntax "list => list"))
 
 
-(define-manual-section (manual . sec-sequences)
+(define-section (manual . sec-sequences)
   (:title "Sequences")
   (:child
    (hyper '(manual . op-map))
@@ -714,7 +723,7 @@ $window => #[js-object]
   (:syntax "sequence start [end] => sequence"))
 
 
-(define-manual-section (manual . sec-control)
+(define-section (manual . sec-control)
   (:title "Control Flow")
   (:child
    (hyper '(manual . op-progn))
@@ -809,7 +818,7 @@ $window => #[js-object]
   (:syntax "(var count-form [result-form]) form* => result"))
 
 
-(define-manual-section (manual . sec-continuations)
+(define-section (manual . sec-continuations)
   (:title "Delimited Continuations")
   (:child
    (hyper '(manual . class-continuation))
@@ -853,7 +862,7 @@ $window => #[js-object]
   (:syntax "continuation form* => result"))
 
 
-(define-manual-section (manual . sec-dynamic)
+(define-section (manual . sec-dynamic)
   (:title "Dynamic Variables")
   (:child
    (hyper '(manual . op-defdynamic))
@@ -873,7 +882,7 @@ $window => #[js-object]
   (:syntax "dynamic-var => value"))
 
 
-(define-manual-section (manual . sec-conditions)
+(define-section (manual . sec-conditions)
   (:title "Conditions and Restarts")
   (:child
    (hyper '(manual . op-handler-bind))
@@ -928,7 +937,7 @@ $window => #[js-object]
   (:syntax "[associated-condition] => restarts"))
 
 
-(define-manual-section (manual . sec-js)
+(define-section (manual . sec-js)
   (:title "JavaScript Interface")
   (:child
    (hyper '(manual . class-js-object))

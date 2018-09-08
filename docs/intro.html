@@ -39,23 +39,24 @@
    Scheme&#39;s most advanced hygienic macro systems, but with none of the
    headaches or flashbacks: hygiene is simply achieved with the
    lexical scope already built into the language.  This means that
-   once you put the very simple, in fact trivial, concepts of fexprs
-   and first-class environments into a language, you have sufficient
-   tools to bootstrap the rest of the language from there, because
-   fexprs effectively combine the power of functions and hygienic
-   macros (and more) into a single construct.  And to top it off,
-   fexprs are a lot of fun, too, so it became a no-brainer to use them
-   as the basis of Qua.</p><p>As to the actual look and feel of Qua Lisp, its surface
+   once you put the very simple concepts of fexprs and first-class
+   environments into a language, you have sufficient tools to
+   bootstrap the rest of the language from there, because fexprs
+   effectively combine the power of functions and hygienic macros (and
+   more) into a single construct <span class="ref-inline">[<a href="https://web.wpi.edu/Pubs/ETD/Available/etd-090110-124904/">Fexprs as the basis of Lisp function application; or, $vau: the ultimate abstraction</a>](<a href="ref.html#vau-the-ultimate">ref</a>)</span>.  And to top it off, fexprs are a lot of
+   fun, too, so it became a no-brainer to use them as the basis of
+   Qua.</p><p>As to the actual look and feel of Qua Lisp, its surface
    syntax and higher-level language, I am following ``classic&#39;&#39; Lisps,
-   like Lisp Machine Lisp, Common Lisp, and Emacs Lisp.  Qua is not
-   and will never be compatible with any of these languages, but many
-   Qua programs look almost exactly like them, and vice versa.
-   Features that Qua Lisp shares with (some of) these languages are
-   separate function and variable namespaces, an object system with
-   generic functions, dynamically-scoped variables, generalized
-   references, a condition system with restarts, a generic sequence
-   protocol, and a rich set of vintage Lisp data and control flow
-   operators.</p></div><div><a id="co"><h2>A Companion Language to JavaScript and Just Good Fun</h2></a><p>Qua is designed to be symbiotic with JavaScript, not
+   like Maclisp <span class="ref-inline">[<a href="http://www.maclisp.info/pitmanual/">The Revised Maclisp Manual</a>](<a href="ref.html#maclisp">ref</a>)</span>, Common Lisp, and Emacs
+   Lisp.  Qua is not and will never be compatible with any of these
+   languages, but many Qua programs look almost exactly like them, and
+   vice versa.  Features that Qua Lisp shares with (some of) these
+   languages are separate function and variable
+   namespaces (``Lisp-2&#39;&#39;), an object system with generic functions,
+   dynamically-scoped variables, generalized references, a condition
+   system with restarts, a generic sequence protocol (inspired by
+   David Moon&#39;s PLOT <span class="ref-inline">[<a href="http://users.rcn.com/david-moon/PLOT/">Programming Language for Old Timers</a>](<a href="ref.html#plot">ref</a>)</span>), and a rich set of
+   vintage Lisp data and control flow operators.</p></div><div><a id="co"><h2>A Companion Language to JavaScript and Just Good Fun</h2></a><p>Qua is designed to be symbiotic with JavaScript, not
    replace it, and it is my expectation that most Qua programs will
    contain a core of JavaScript code for the performance-critical
    parts and inner loops.  So I put effort into making Qua deeply
