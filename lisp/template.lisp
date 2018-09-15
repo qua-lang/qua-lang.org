@@ -25,6 +25,8 @@
    (div ()
         (h1 ()
             (a (:href "index.html") "Qua") " / " (node-field 'title))
+        (ul ()
+            (node-field 'child 'toc))
         (div ()
              (node-field 'child 'default)))))
 
@@ -41,7 +43,7 @@
         (blockquote () (node-field 'abstract 'default))
         (h3 () "Table of Contents")
         (ul ()
-            (node-field 'child 'toc))
+            (node-field 'child 'manual-toc))
         (div ()
              (node-field 'child 'default)))))
 
@@ -76,11 +78,17 @@
 
 (associate-template +qua-hub-section+ 'default qua-hub-section-template-medium)
 
-(deftemplate qua-hub-section-template-toc
+(deftemplate qua-hub-section-template-manual-toc
   (li ()
       (strong () (a (:href (node-link)) (node-field 'title)))
       (ul ()
-          (node-field 'child 'toc))))
+          (node-field 'child 'manual-toc))))
+
+(associate-template +qua-hub-section+ 'manual-toc qua-hub-section-template-manual-toc)
+
+(deftemplate qua-hub-section-template-toc
+  (li (:class "section-toc")
+      (a (:href (node-link)) (node-field 'title))))
 
 (associate-template +qua-hub-section+ 'toc qua-hub-section-template-toc)
 
@@ -135,7 +143,7 @@
 (associate-template +qua-hub-manual-constant+ 'default qua-hub-manual-operator-template-medium)
 (associate-template +qua-hub-manual-class+ 'default qua-hub-manual-operator-template-medium)
 
-(deftemplate qua-hub-item-template-toc
+(deftemplate qua-hub-item-template-manual-toc
   (li ()
       (a (:href (node-link))
          (strong () (node-field 'title)))
@@ -146,7 +154,7 @@
       (em ()
           "(" (node-field 'type-name) ")")))
 
-(associate-template +qua-hub-item+ 'toc qua-hub-item-template-toc)
+(associate-template +qua-hub-item+ 'manual-toc qua-hub-item-template-manual-toc)
 
 (deftemplate qua-hub-paragraph-template-medium
   (p () (node-field 'text)))
@@ -173,10 +181,7 @@
         "["
         (a (:href (node-field 'url))
            (node-field 'title))
-        "]("
-        (a (:href (node-link))
-           "ref")
-        ")"))
+        "]"))
 
 (associate-template +qua-hub-ref+ 'inline qua-hub-ref-template-inline)
 

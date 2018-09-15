@@ -1,4 +1,6 @@
-<html><head><meta charset="UTF-8"></meta><title>Project Introduction</title><link rel="stylesheet" type="text/css" href="../style/style.css"></link></head><body><div><h1><a href="index.html">Qua</a> / Project Introduction</h1><div><div><a id="why"><h2>Why I Had to Create a New Language: Web Programming Needs
+<html><head><meta charset="UTF-8"></meta><title>Project Introduction</title><link rel="stylesheet" type="text/css" href="../style/style.css"></link></head><body><div><h1><a href="index.html">Qua</a> / Project Introduction</h1><ul><li class="section-toc"><a href="intro.html#why">Why I Had to Create a New Language: Web Programming Needs
+  Powerful Control (like Delimited Continuations)</a></li><li class="section-toc"><a href="intro.html#other">The Other Language Ingredients: Fexprs, First-Class
+  Environments, and a Healthy Dose of Old School Lisp</a></li><li class="section-toc"><a href="intro.html#co">A Companion Language to JavaScript and Just Good Fun</a></li></ul><div><div><a id="why"><h2>Why I Had to Create a New Language: Web Programming Needs
   Powerful Control (like Delimited Continuations)</h2></a><p>The main problem I am addressing with Qua is the
     control stack loss caused by the asynchronous APIs pervasive in
     JavaScript.  At some point I decided I simply wasn&#39;t going to
@@ -14,8 +16,8 @@
     manipulation models and eventually settled on delimited
     continuations as the main control model of Qua.  Delimited
     continuations have emerged as a consensus way to add continuations
-    to a language <span class="ref-inline">[<a href="https://www.cs.indiana.edu/~dyb/pubs/monadicDC.pdf">A Monadic Framework for Delimited Continuations</a>](<a href="ref.html#monadic-framework">ref</a>)</span><span class="ref-inline">[<a href="http://okmij.org/ftp/continuations/caml-shift.pdf">Delimited Control in OCaml, Abstractly and Concretely</a>](<a href="ref.html#caml-shift">ref</a>)</span>, and are essentially a more elegant formulation
-    of the same functionality as coroutines <span class="ref-inline">[<a href="https://www.cs.indiana.edu/~sabry/papers/yield.pdf">Yield: Mainstream Delimited Continuations</a>](<a href="ref.html#mainstream-yield">ref</a>)</span>. If you understand e.g. Lua coroutines, you
+    to a language <span class="ref-inline">[<a href="https://www.cs.indiana.edu/~dyb/pubs/monadicDC.pdf">A Monadic Framework for Delimited Continuations</a>]</span><span class="ref-inline">[<a href="http://okmij.org/ftp/continuations/caml-shift.pdf">Delimited Control in OCaml, Abstractly and Concretely</a>]</span>, and are essentially a more elegant formulation
+    of the same functionality as coroutines <span class="ref-inline">[<a href="https://www.cs.indiana.edu/~sabry/papers/yield.pdf">Yield: Mainstream Delimited Continuations</a>]</span>. If you understand e.g. Lua coroutines, you
     already understand delimited continuations, too, and just have to
     learn the new interface, which is beautiful and quite
     mind-blowing.  With delimited continuations, Qua programmers can
@@ -26,7 +28,7 @@
     back.  So all asynchronous APIs can be inverted to a synchronous
     style from the point of view of the Qua programmer.</p></div><div><a id="other"><h2>The Other Language Ingredients: Fexprs, First-Class
   Environments, and a Healthy Dose of Old School Lisp</h2></a><p>Around the same time, I learned about John Shutt&#39;s new
-   variant of Lisp, called Kernel <span class="ref-inline">[<a href="https://web.cs.wpi.edu/~jshutt/kernel.html">The Kernel Programming Language</a>](<a href="ref.html#kernel">ref</a>)</span>, which
+   variant of Lisp, called Kernel <span class="ref-inline">[<a href="https://web.cs.wpi.edu/~jshutt/kernel.html">The Kernel Programming Language</a>]</span>, which
    reintroduced an often misapprehended and disparaged language
    construct called the ``fexpr&#39;&#39;.  After some investigation and gasps
    I realized that fexprs are the perfect fundament on which to build
@@ -43,11 +45,11 @@
    environments into a language, you have sufficient tools to
    bootstrap the rest of the language from there, because fexprs
    effectively combine the power of functions and hygienic macros (and
-   more) into a single construct <span class="ref-inline">[<a href="https://web.wpi.edu/Pubs/ETD/Available/etd-090110-124904/">Fexprs as the basis of Lisp function application; or, $vau: the ultimate abstraction</a>](<a href="ref.html#vau-the-ultimate">ref</a>)</span>.  And to top it off, fexprs are a lot of
+   more) into a single construct <span class="ref-inline">[<a href="https://web.wpi.edu/Pubs/ETD/Available/etd-090110-124904/">Fexprs as the basis of Lisp function application; or, $vau: the ultimate abstraction</a>]</span>.  And to top it off, fexprs are a lot of
    fun, too, so it became a no-brainer to use them as the basis of
    Qua.</p><p>As to the actual look and feel of Qua Lisp, its surface
    syntax and higher-level language, I am following ``classic&#39;&#39; Lisps,
-   like Maclisp <span class="ref-inline">[<a href="http://www.maclisp.info/pitmanual/">The Revised Maclisp Manual</a>](<a href="ref.html#maclisp">ref</a>)</span>, Common Lisp, and Emacs
+   like Maclisp <span class="ref-inline">[<a href="http://www.maclisp.info/pitmanual/">The Revised Maclisp Manual</a>]</span>, Common Lisp, and Emacs
    Lisp.  Qua is not and will never be compatible with any of these
    languages, but many Qua programs look almost exactly like them, and
    vice versa.  Features that Qua Lisp shares with (some of) these

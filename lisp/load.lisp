@@ -91,9 +91,9 @@
 ;;; Load the content files.  Must also be added to lisp/site.lisp :'|
 (load "content/index.lisp")
 (load "content/intro.lisp")
-(load "content/tour.lisp")
+;(load "content/tour.lisp")
 (load "content/manual.lisp")
-(load "content/alpha.lisp")
+;(load "content/alpha.lisp")
 (load "content/usage.lisp")
 (load "content/ref.lisp")
 

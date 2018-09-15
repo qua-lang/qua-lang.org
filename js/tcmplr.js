@@ -327,7 +327,7 @@ lib.rt.node_field = function(store, anchor, node, field_name, template_name) {
 lib.rt.call_template = function(store, anchor, node, template_name) {
     var template = node[template_name];
     if (!template) {
-        throw "template not found: " + template_name;
+        throw "template not found: " + template_name + " of type " + node.type.name;
     }
     return template(lib.rt, store, anchor, node);
 };
