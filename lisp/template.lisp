@@ -1,3 +1,54 @@
+(deffexpr qua-hub-with-default-template body env
+  (html ()
+        (head ()
+              (meta (:charset "UTF-8"))
+              (title () (node-field 'title))
+              (link (:rel "stylesheet" :type "text/css" :href "../style/style.css")))
+        (body ()
+              (eval (list* #'progn body) env))))
+
+;;;; Main page template
+
+(deftemplate qua-hub-main-page-template-large
+  (qua-hub-with-default-template
+   (div ()
+        (h1 () (node-field 'title))
+        (div ()
+             (node-field 'child 'medium)))))
+  
+(associate-template +qua-hub-main-page+ 'large qua-hub-main-page-template-large)
+
+;;;; Default page template
+
+(deftemplate qua-hub-page-template-large
+  (qua-hub-with-default-template
+   (div ()
+        (h1 ()
+            (a (:href "index.html") "Qua") " / " (node-field 'title))
+        (div ()
+             (node-field 'child 'default)))))
+
+(associate-template +qua-hub-page+ 'large qua-hub-page-template-large)
+
+;;;; Manual page template
+
+(deftemplate qua-hub-manual-template-large
+  (qua-hub-with-default-template
+   (div ()
+        (center ()
+                (h1 () (a (:href "index.html") "Qua") " Lisp Manual")
+                "Manuel Simoni")
+        (blockquote () (node-field 'abstract 'default))
+        (h3 () "Table of Contents")
+        (ul ()
+            (node-field 'child 'toc))
+        (div ()
+             (node-field 'child 'default)))))
+
+(associate-template +qua-hub-manual-page+ 'default qua-hub-manual-template-large)
+
+;;;; Inline templates
+
 (deftemplate qua-hub-inline-template
   (a (:href (node-link)) (node-field 'title)))
 
@@ -6,6 +57,8 @@
 (deftemplate qua-hub-op-inline-template
   (a (:href (node-link) :style "text-transform: lowercase") (strong () (node-field 'title))))
 
+(associate-template +qua-hub-manual-class+ 'inline qua-hub-op-inline-template)
+(associate-template +qua-hub-manual-constant+ 'inline qua-hub-op-inline-template)
 (associate-template +qua-hub-manual-operator+ 'inline qua-hub-op-inline-template)
 
 (deftemplate qua-hub-weblink-inline-template
@@ -13,19 +66,7 @@
 
 (associate-template +qua-hub-weblink+ 'inline qua-hub-weblink-inline-template)
 
-(deftemplate qua-hub-manual-template-large
-  (div ()
-       (center ()
-               (h1 () (a (:href "index.html") "Qua") " Lisp Manual")
-               "Manuel Simoni")
-       (blockquote () (node-field 'abstract 'default))
-       (h3 () "Table of Contents")
-       (ul ()
-           (node-field 'child 'toc))
-       (div ()
-            (node-field 'child 'default))))
-
-(associate-template +qua-hub-manual-page+ 'default qua-hub-manual-template-large)
+;;;; Section templates
 
 (deftemplate qua-hub-section-template-medium
   (div ()
@@ -42,6 +83,8 @@
           (node-field 'child 'toc))))
 
 (associate-template +qua-hub-section+ 'toc qua-hub-section-template-toc)
+
+;;;; Item templates
 
 (deftemplate qua-hub-manual-operator-syntax-template
   (div ()
@@ -114,23 +157,6 @@
   (pre () (node-field 'text)))
 
 (associate-template +qua-hub-code-sample+ 'default qua-hub-code-sample-template-medium)
-
-(deftemplate qua-hub-template-large
-  (div ()
-       (h1 () (node-field 'title))
-       (div ()
-            (node-field 'child 'medium))))
-
-(associate-template +qua-hub-main-page+ 'large qua-hub-template-large)
-
-(deftemplate qua-hub-page-template-large
-  (div ()
-       (h1 ()
-           (a (:href "index.html") "Qua") " / " (node-field 'title))
-       (div ()
-            (node-field 'child 'default))))
-
-(associate-template +qua-hub-page+ 'large qua-hub-page-template-large)
 
 (defun page-link ()
   (a (:href (node-link)) (node-field 'title)))

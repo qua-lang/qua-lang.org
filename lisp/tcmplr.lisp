@@ -138,11 +138,16 @@
   html
   img
   li
+  link
+  meta
   ol
   p
   pre
+  script
   span
   strong
+  style
+  title
   tt
   ul
   )

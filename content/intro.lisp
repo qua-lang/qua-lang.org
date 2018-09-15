@@ -75,12 +75,11 @@
    Lisp.  Qua is not and will never be compatible with any of these
    languages, but many Qua programs look almost exactly like them, and
    vice versa.  Features that Qua Lisp shares with (some of) these
-   languages are separate function and variable
-   namespaces (``Lisp-2''), an object system with generic functions,
-   dynamically-scoped variables, generalized references, a condition
-   system with restarts, a generic sequence protocol (inspired by
-   David Moon's PLOT " (hyper '(ref . plot)) "), and a rich set of
-   vintage Lisp data and control flow operators.")))
+   languages are separate function and variable namespaces, an object
+   system with generic functions, dynamically-scoped variables,
+   generalized references, a condition system with restarts, a generic
+   sequence protocol, and a rich set of vintage Lisp data and control
+   flow operators.")))
 
 (defnode (intro . co) +qua-hub-section+
   (:title "A Companion Language to JavaScript and Just Good Fun")
