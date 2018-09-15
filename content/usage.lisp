@@ -1,3 +1,4 @@
+(defconstant +qua-repo-url+ "https://github.com/qua-lang/qua-vm")
 (defconstant +qua-repl-url+ "https://qua-lang.github.io/qua-vm/repl/repl.html")
 (defconstant +qua-balls-demo-url+ "https://qua-lang.github.io/qua-vm/demo/balls.html")
 (defconstant +qua-bundle-demo-url+ "https://github.com/qua-lang/qua-bundle-demo")

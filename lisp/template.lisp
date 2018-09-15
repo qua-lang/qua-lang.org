@@ -1,53 +1,62 @@
-(deffexpr qua-hub-with-default-template body env
+(deftemplate qua-hub-template-wrapper
   (html ()
         (head ()
               (meta (:charset "UTF-8"))
               (title () (node-field 'title))
               (link (:rel "stylesheet" :type "text/css" :href "../style/style.css")))
         (body ()
-              (eval (list* #'progn body) env))))
+              (div (:class "navbar")
+                   "'("
+                   (a (:href "intro.html") "intro")
+                   " "
+                   (a (:href "manual.html") "manual")
+                   " "
+                   (a (:href "usage.html") "usage")
+                   " "
+                   (a (:href +qua-repl-url+) "repl")
+                   " "
+                   (a (:href +qua-repo-url+) "github")
+                   ")")
+              (call-template 'default))))
 
 ;;;; Main page template
 
-(deftemplate qua-hub-main-page-template-large
-  (qua-hub-with-default-template
-   (div ()
-        (h1 () (node-field 'title))
-        (div ()
-             (node-field 'child 'medium)))))
-  
-(associate-template +qua-hub-main-page+ 'large qua-hub-main-page-template-large)
+(deftemplate qua-hub-main-page-template-default
+  (div ()
+       (h1 () (node-field 'title))
+       (div ()
+            (node-field 'child 'medium))))
+
+(associate-template +qua-hub-main-page+ 'default qua-hub-main-page-template-default)
 
 ;;;; Default page template
 
-(deftemplate qua-hub-page-template-large
-  (qua-hub-with-default-template
-   (div ()
-        (h1 ()
-            (a (:href "index.html") "Qua") " / " (node-field 'title))
-        (ul ()
-            (node-field 'child 'toc))
-        (div ()
-             (node-field 'child 'default)))))
+(deftemplate qua-hub-page-template-default
+  (div ()
+       (h1 ()
+           (a (:href "index.html") "Qua") " / " (node-field 'title))
+       (ul ()
+           (node-field 'child 'toc))
+       (div ()
+            (node-field 'child 'default))))
 
-(associate-template +qua-hub-page+ 'large qua-hub-page-template-large)
+(associate-template +qua-hub-page+ 'default qua-hub-page-template-default)
 
 ;;;; Manual page template
 
-(deftemplate qua-hub-manual-template-large
-  (qua-hub-with-default-template
-   (div ()
-        (center ()
-                (h1 () (a (:href "index.html") "Qua") " Lisp Manual")
-                "Manuel Simoni")
-        (blockquote () (node-field 'abstract 'default))
-        (h3 () "Table of Contents")
-        (ul ()
-            (node-field 'child 'manual-toc))
-        (div ()
-             (node-field 'child 'default)))))
+(deftemplate qua-hub-manual-template-default
+  (div ()
+       (center ()
+               (h1 () (a (:href "index.html") "Qua") " Lisp Manual")
+               "Manuel Simoni")
+       (blockquote () (node-field 'abstract 'default))
+       (h3 () "Table of Contents")
+       (ul ()
+           (node-field 'child 'manual-toc))
+       (div ()
+            (node-field 'child 'default))))
 
-(associate-template +qua-hub-manual-page+ 'default qua-hub-manual-template-large)
+(associate-template +qua-hub-manual-page+ 'default qua-hub-manual-template-default)
 
 ;;;; Inline templates
 
