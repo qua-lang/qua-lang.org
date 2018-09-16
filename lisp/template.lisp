@@ -142,7 +142,7 @@
 
 (deftemplate qua-hub-manual-operator-template-medium
   (div ()
-       (h3 ()
+       (h3 (:class "operator-title")
            (a (:id (node-anchor))
               (node-field 'title)
                  " "

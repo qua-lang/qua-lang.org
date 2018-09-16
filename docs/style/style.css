@@ -1,3 +1,4 @@
 html { font-family: sans-serif; }
 .navbar { font-family: monospace; font-size: 133%; font-weight: bold;}
 .section-toc { font-size: 85%; }
+.operator-title { border-top: 1px solid black; padding-top: 1em; }

@@ -168,7 +168,9 @@
     should be used for global variables that are never reassigned, and
     that are bound to objects whose contents are immutable."))
   (:example
-   "(defconstant +my-constant+ 23)"))
+   "(defconstant +my-constant+ 23)")
+  (:rationale
+   (paragraph "Common Lisp convention.")))
 
 (define-manual-syntax (manual . stx-global-variable)
   (:title "Global Variable Syntax")
@@ -192,7 +194,8 @@
     "The usual syntax for lists."))
   (:example "(a big (nested (list)))
 
-() === #nil"))
+() === #nil")
+  (:rationale (paragraph "Proven syntax since 1958.")))
 
 (define-manual-syntax (manual . stx-dotted-list)
   (:title "Dotted List Syntax")
@@ -203,7 +206,8 @@
     explicitly."))
   (:example "(a dotted . list)
 
-(1 2) === (1 . (2)) === (1 . (2 . #nil))"))
+(1 2) === (1 . (2)) === (1 . (2 . #nil))")
+  (:rationale (paragraph "Proven syntax since 1958.")))
 
 (define-manual-syntax (manual . stx-quote)
   (:title "Quotation Syntax")
@@ -216,7 +220,8 @@
 '#'foo => #'foo
 '12 => 12
 ''foo => 'foo
-'(+ 3 4) => (+ 3 4)"))
+'(+ 3 4) => (+ 3 4)")
+  (:rationale (paragraph "Proven syntax since 1958.")))
 
 (define-manual-syntax (manual . stx-js-global)
   (:title "JS Global Variable Syntax")
@@ -256,8 +261,7 @@ $window => #[js-object]
 (map .x (list (js-object :x 1 :y 2) (js-object :x 3 :y 4)))
 => (1 3)")
   (:rationale
-   (paragraph "JS properties are accessed frequently so it makes sense
-   to spend a sigil for that purpose.")))
+   (paragraph "See rationale for " (hyper '(manual . stx-js-global)) ".")))
 
 (define-manual-syntax (manual . stx-js-method)
   (:title "JS Method Syntax")
@@ -269,8 +273,9 @@ $window => #[js-object]
   (:example
    "(@toString 12) => \"12\"
 
-(@log $console \"This is a log message sent to the browser console\")"))
-
+(@log $console \"This is a log message sent to the browser console\")")
+  (:rationale
+   (paragraph "See rationale for " (hyper '(manual . stx-js-global)) ".")))
 
 (define-section (manual . sec-evaluation)
   (:title "Evaluation")
