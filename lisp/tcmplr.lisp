@@ -150,7 +150,11 @@
   span
   strong
   style
+  table
+  td
+  th
   title
+  tr
   tt
   ul
   )

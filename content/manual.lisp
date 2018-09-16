@@ -4,16 +4,16 @@
   of Kernel, Common Lisp, and Scheme.")
   (:abstract
    (paragraph "Qua is a new dialect of Lisp, designed to be
-    ultra-light and allow tiny implementations, yet offer the powerful
-    metaprogramming facilities, control flow abstractions, and general
-    no-nonsense approach that Lisp programmers know and love.  Qua is
-    based on Kernel, Common Lisp, and Scheme.  From Kernel it takes
-    its central computing workhorses, lexically-scoped fexprs and
-    first-class environments.  The surface syntax and core language
-    look and feel a lot like Common Lisp, from which Qua inherits many
-    operators.  The interface for control flow manipulation, delimited
-    continuations, is the result of a long line of research pioneered
-    in Scheme.")
+    exceptionally simple and allow tiny implementations, yet offer the
+    powerful metaprogramming facilities, control flow abstractions,
+    and general no-nonsense approach that Lisp programmers have come
+    to expect.  Qua is based on Kernel, Common Lisp, and Scheme.  From
+    Kernel it takes its central computing workhorses, lexically-scoped
+    fexprs and first-class environments.  The surface syntax and core
+    language look and feel a lot like Common Lisp, from which Qua
+    inherits many operators.  The interface for control flow
+    manipulation, delimited continuations, is the result of a long
+    line of research pioneered in Scheme.")
    (paragraph "Qua is still unfinished.  Especially the areas of
     strings, numbers, objects, classes, generic functions, methods,
     sequences, streams, and the JS interface are still in flux and/or
@@ -284,7 +284,11 @@ $window => #[js-object]
   (:example
    "(@toString 12) => \"12\"
 
-(@log $console \"This is a log message sent to the browser console\")")
+(@log $console \"This is a log message sent to the browser console\")
+
+;; Like .property syntax, this returns a function, so we can
+;; do things like:
+(map @toString (list 1 2 3)) => (\"1\" \"2\" \"3\")")
   (:rationale
    (paragraph "See rationale for " (hyper '(manual . stx-js-global)) ".")))
 
@@ -293,11 +297,7 @@ $window => #[js-object]
   (:content
    (paragraph "Evaluation is the process of turning a " (hyper
    '(manual . concept-form) "form") " into a " (hyper '(manual
-   . concept-value) "value") ".  Evaluation is performed by "
-   (hyper '(manual . concept-operator) "operators") ", such as "
-   (hyper '(manual . class-fexpr) "fexprs") ", "
-   (hyper '(manual . class-function) "functions") ", and "
-   (hyper '(manual . concept-macro) "macros") "."))
+   . concept-value) "value") "."))
   (:child
    (hyper '(manual . concept-form))
    (hyper '(manual . concept-compound-form))
