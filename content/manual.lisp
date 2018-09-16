@@ -42,6 +42,9 @@
 
 (define-section (manual . sec-syntax)
   (:title "Syntax")
+  (:content (paragraph "Apart from some extra syntax for JS-related
+  functionality, Qua syntax mostly follows common Lisp syntactic
+  conventions and shouldn't be too surprising."))
   (:child
    (hyper '(manual . stx-string))
    (hyper '(manual . stx-number))
