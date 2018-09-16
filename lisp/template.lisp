@@ -35,7 +35,7 @@
                        (th () "VM Lines of Code (per " (tt () "cloc") ")")
                        (td () "980"))
                    (tr ()
-                       (th () "Size (Minifed, Gzipped)")
+                       (th () "Size (Minified, Gzipped)")
                        (td () "15 KB"))
                    (tr ()
                        (th () "VM Startup Time (2015 Laptop)")

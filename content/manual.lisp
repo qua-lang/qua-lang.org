@@ -67,7 +67,8 @@
   (:syntax "\"characters\" \\\" \\t \\r \\n \\\\")
   (:content
    (paragraph
-    "Qua string syntax follows " (hyper '(ref . json))
+    "Syntax for " (hyper '(manual . class-string) "strings") "
+    follows " (hyper '(ref . json))
     " but only supports a subset of it at the moment."))
   (:example
    "\"foo \\\" bar\" => \"foo \\\" bar\"")
@@ -83,8 +84,9 @@
   (:syntax "[+|-]digits[.digits]")
   (:content
    (paragraph
-    "Qua number syntax follows " (hyper '(ref . json))
-    " but only supports a subset of it at the moment."))
+    "Syntax for " (hyper '(manual . class-number) "numbers") "
+    follows " (hyper '(ref . json)) " but only supports a subset of it
+    at the moment."))
   (:example
    "-12.34 => -12.34")
   (:rationale
@@ -96,26 +98,29 @@
   (:syntax "#constant")
   (:content
    (paragraph
-    "Built-in constants, such as " (hyper '(manual . const-t)) "
-    or " (hyper '(manual . const-void)) " get a special syntax
-    distinct from symbols."))
+    "Built-in " (hyper '(manual . concept-constant) "constants") ",
+    such as " (hyper '(manual . const-t)) " or " (hyper '(manual
+    . const-void)) " get a special syntax distinct from " (hyper
+    '(manual . class-symbol) "symbols") "."))
   (:example
    "#t => #t
 #void => #void")
   (:rationale
    (paragraph
-    "Avoiding to pollute the variable namespace with identifiers for constants,
-    which should be short, seems to be a good idea.")))
+    "Avoiding to pollute the "
+    (hyper '(manual . concept-variable-namespace) "variable namespace")
+    " with identifiers for constants, which should be short, seems to
+    be a good idea.")))
 
 (define-manual-syntax (manual . stx-symbol)
   (:title "Variable Symbol Syntax")
   (:syntax "symbol-name")
   (:content
    (paragraph
-    "Variable symbols allow many characters except space (exact list
-    to be determined) and should allow all alphanumeric Unicode
-    characters at some point, but are currently restricted to
-    ASCII."))
+    (hyper '(manual . concept-variable-namespace) "Variable symbols")
+    " allow many characters except space (exact list to be determined)
+    and should allow all alphanumeric Unicode characters at some
+    point, but are currently restricted to ASCII."))
   (:example
    "foo-bar*")
   (:rationale
@@ -126,8 +131,9 @@
   (:syntax ":keyword-name")
   (:content
    (paragraph
-    "Keyword symbols follow " (hyper '(manual . stx-symbol)) " as to
-    the content of the symbol name."))
+    (hyper '(manual . concept-keyword-namespace) "Keyword symbols")
+    " follow " (hyper '(manual . stx-symbol)) " as to the content of the
+    symbol name."))
   (:example
    ":my-keyword => :my-keyword")
   (:rationale
@@ -138,19 +144,20 @@
   (:syntax "#'function-name")
   (:content
    (paragraph
-    "Function symbols follow " (hyper '(manual . stx-symbol)) " as to
-    the content of the symbol name."))
+    (hyper '(manual . concept-function-namespace) "Function symbols")
+    " follow " (hyper '(manual . stx-symbol)) " as to the content of the
+    symbol name."))
   (:example
    "#'+
 #'quuxify
 
 ;; Unlike Common Lisp, Qua universally allows function symbols
-;; as definiends:
+;; as definiends and parameters:
 (def #'my-function (lambda () 1))
 (my-function) => 1
 
-(let ((#'my-other-function (lambda () 2)))
-  (my-other-function)) => 2")
+(defun compose (#'f #'g)
+  (lambda (x) (f (g x))))")
   (:rationale
    (paragraph "While Qua handles " (hyper '(manual
    . concept-namespace) "namespaces") " differently than existing
@@ -202,7 +209,7 @@
   (:syntax "( element* )")
   (:content
    (paragraph
-    "The usual syntax for lists."))
+    "The usual syntax for " (hyper '(manual . concept-list) "lists") "."))
   (:example "(a big (nested (list)))
 
 () === #nil")
@@ -213,8 +220,8 @@
   (:syntax "( element+ . element )")
   (:content
    (paragraph
-    "The usual syntax for specifying the last element of a list
-    explicitly."))
+    "The usual syntax for specifying the last element of a "
+    (hyper '(manual . concept-list) "list") " explicitly."))
   (:example "(a dotted . list)
 
 (1 2) === (1 . (2)) === (1 . (2 . #nil))")
@@ -225,8 +232,10 @@
   (:syntax "'form")
   (:content
    (paragraph
-    "The usual syntax for preventing evaluation of a form, syntactic
-    sugar for " (hyper '(manual . op-quote)) "."))
+    "The usual syntax for preventing " (hyper '(manual
+    . concept-evaluation) "evaluation") " of a " (hyper '(manual
+    . concept-form) "form") ", syntactic sugar for " (hyper '(manual
+    . op-quote)) "."))
   (:example "'foo => foo
 '#'foo => #'foo
 '12 => 12
@@ -294,12 +303,12 @@ $window => #[js-object]
 
 (define-section (manual . sec-evaluation)
   (:title "Evaluation")
-  (:content
-   (paragraph "Evaluation is the process of turning a " (hyper
-   '(manual . concept-form) "form") " into a " (hyper '(manual
-   . concept-value) "value") "."))
   (:child
+   (hyper '(manual . concept-evaluation))
    (hyper '(manual . concept-form))
+   (hyper '(manual . concept-self-evaluating-form))
+   (hyper '(manual . concept-constant))
+   (hyper '(manual . concept-reference-form))
    (hyper '(manual . concept-compound-form))
    (hyper '(manual . concept-operator))
    (hyper '(manual . concept-special-operator))
@@ -330,12 +339,91 @@ $window => #[js-object]
    (hyper '(manual . class-ign))
    (hyper '(manual . const-ign))))
 
-(define-manual-concept (manual . concept-form)
+(define-manual-concept (manual . concept-evaluation)
+  (:title "Evaluation")
+  (:content
+   (paragraph "Evaluation is the process of turning a " (hyper
+   '(manual . concept-form) "form") " into a " (hyper '(manual
+   . concept-value) "value") ".  Evaluation happens either implicitly,
+   e.g. at the REPL, or explicitly, under programmer control via "
+   (hyper '(manual . op-eval)) "."))
+  (:example
+   "12 => 12
+
+(eval '(+ 1 2) (the-environment)) => 3")
+  (:rationale (paragraph "Classic Lisp.")))
+
+   (define-manual-concept (manual . concept-form)
   (:title "Form")
   (:content
    (paragraph
     "A form is any " (hyper '(manual . class-object)) " meant to be
-  evaluated."))
+  evaluated.  It is either a " (hyper '(manual
+  . concept-self-evaluating-form) "self-evaluating form") ", a "
+  (hyper '(manual . concept-reference-form) "reference
+  form") " (symbol), or a "
+  (hyper '(manual . concept-compound-form) "compound form") " (list)."))
+  (:example ";; Self-evaluating forms:
+#t => #t
+12 => 12
+\"foo\" => \"foo\"
+:key => :key
+
+;; Reference forms
+(def x 1)
+x => 1
+
+;; Compound forms:
+(+ 1 2) => 3
+(if #t 1 2) => 1")
+  (:rationale
+   (paragraph "Classic Lisp.")))
+
+(define-manual-concept (manual . concept-self-evaluating-form)
+  (:title "Self-Evaluating Form")
+  (:content
+   (paragraph (hyper '(manual . class-object) "Objects") " like "
+    (hyper '(manual . concept-constant) "constants") ", " 
+    (hyper '(manual . class-string) "strings") ", " 
+    (hyper '(manual . class-number) "numbers") ", and " 
+    (hyper '(manual . concept-keyword-namespace) "keyword symbols")
+    " are said to be ``self-evaluating'', that is, they simply "
+    (hyper '(manual . concept-evaluation) "evaluate") " to themselves."))
+    (:example "#t => #t
+12 => 12
+\"foo\" => \"foo\"
+:key => :key")
+  (:rationale
+   (paragraph "Classic Lisp.")))
+
+(define-manual-concept (manual . concept-constant)
+  (:title "Constant")
+  (:content
+   (paragraph "A constant is a built-in " (hyper '(manual
+   . class-object)) " that is a " (hyper '(manual
+   . concept-self-evaluating-form) "self-evaluating form") ".  It is
+   not possible for the Qua programmer to define new constants.
+   Constants are distinct from " (hyper '(manual
+   . concept-constant-variable) "constant variables") ", which are
+   simply variables that are (hopefully) never modified.")
+  (paragraph "Core Qua has the following constants: "
+             (hyper '(manual . const-nil)) ", "
+             (hyper '(manual . const-t)) ", "
+             (hyper '(manual . const-f)) ", and "
+             (hyper '(manual . const-void)) ". In addition, there are "
+             (hyper '(manual . const-null)) " and "
+             (hyper '(manual . const-undefined)) " from JavaScript."))
+  (:example "#t
+#f
+#void
+#nil")
+  (:rationale
+   (paragraph "Classic Lisp.")))
+
+(define-manual-concept (manual . concept-reference-form)
+  (:title "Reference Form")
+  (:content
+   (paragraph ""))
   (:example "")
   (:rationale
    (paragraph "")))
@@ -524,8 +612,10 @@ $window => #[js-object]
 (define-section (manual . sec-environments)
   (:title "Environments")
   (:child
+   (hyper '(manual . concept-definiend))
    (hyper '(manual . class-environment))
    (hyper '(manual . op-def))
+   (hyper '(manual . concept-constant-variable))
    (hyper '(manual . op-defconstant))
    (hyper '(manual . op-setq))
    (hyper '(manual . op-let))
@@ -534,6 +624,22 @@ $window => #[js-object]
    (hyper '(manual . op-labels))
    (hyper '(manual . op-make-environment))
    (hyper '(manual . op-the-environment))))
+
+(define-manual-concept (manual . concept-definiend)
+  (:title "Definiend")
+  (:content
+   (paragraph ""))
+  (:example "")
+  (:rationale
+   (paragraph "")))
+
+(define-manual-concept (manual . concept-constant-variable)
+  (:title "Constant Variable")
+  (:content
+   (paragraph ""))
+  (:example "")
+  (:rationale
+   (paragraph "")))
 
 (define-manual-class (manual . class-environment)
   (:title "ENVIRONMENT"))
@@ -836,6 +942,7 @@ foo => 12
 (define-section (manual . sec-lists)
   (:title "Lists")
   (:child
+   (hyper '(manual . concept-list))
    (hyper '(manual . class-nil))
    (hyper '(manual . const-nil))
    (hyper '(manual . class-cons))
@@ -846,6 +953,14 @@ foo => 12
    (hyper '(manual . op-list))
    (hyper '(manual . op-list-star))
    (hyper '(manual . op-reverse-list))))
+
+(define-manual-concept (manual . concept-list)
+  (:title "List")
+  (:content
+   (paragraph ""))
+  (:example "")
+  (:rationale
+   (paragraph "")))
 
 (define-manual-class (manual . class-nil)
   (:title "NIL"))
