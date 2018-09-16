@@ -1,6 +1,4 @@
-<html><head><meta charset="UTF-8"></meta><title>Project Introduction</title><link rel="stylesheet" type="text/css" href="../style/style.css"></link></head><body><div class="navbar">'(<a href="intro.html">intro</a> <a href="manual.html">manual</a> <a href="usage.html">usage</a> <a href="https://qua-lang.github.io/qua-vm/repl/repl.html">repl</a> <a href="https://github.com/qua-lang/qua-vm">github</a>)</div><div><h1><a href="index.html">Qua</a> / Project Introduction</h1><ul><li class="section-toc"><a href="intro.html#why">Why I Had to Create a New Language: Web Programming Needs
-  Powerful Control (like Delimited Continuations)</a></li><li class="section-toc"><a href="intro.html#other">The Other Language Ingredients: Fexprs, First-Class
-  Environments, and a Healthy Dose of Old School Lisp</a></li><li class="section-toc"><a href="intro.html#co">A Companion Language to JavaScript and Just Good Fun</a></li></ul><div><div><a id="why"><h2>Why I Had to Create a New Language: Web Programming Needs
+<html><head><meta charset="UTF-8"></meta><title>Project Introduction</title><link rel="stylesheet" type="text/css" href="../style/style.css"></link></head><body><div class="navbar">(<a href="index.html">qua</a> '(<a href="intro.html">intro</a> <a href="manual.html">manual</a> <a href="usage.html">usage</a> <a href="https://qua-lang.github.io/qua-vm/repl/repl.html">repl</a> <a href="https://github.com/qua-lang/qua-vm">github</a>))</div><div><h1>Project Introduction</h1><div><div><a id="why"><h2>Why I Had to Create a New Language: Web Programming Needs
   Powerful Control (like Delimited Continuations)</h2></a><p>The main problem I am addressing with Qua is the
     control stack loss caused by the asynchronous APIs pervasive in
     JavaScript.  At some point I decided I simply wasn&#39;t going to
@@ -47,12 +45,12 @@
    effectively combine the power of functions and hygienic macros (and
    more) into a single construct <span class="ref-inline">[<a href="https://web.wpi.edu/Pubs/ETD/Available/etd-090110-124904/">Fexprs as the basis of Lisp function application; or, $vau: the ultimate abstraction</a>]</span>.  And to top it off, fexprs are a lot of
    fun, too, so it became a no-brainer to use them as the basis of
-   Qua.</p><p>As to the actual look and feel of Qua Lisp, its surface
+   Qua.</p><p>As to the actual look and feel of Qua, its surface
    syntax and higher-level language, I am following ``classic&#39;&#39; Lisps,
    like Maclisp <span class="ref-inline">[<a href="http://www.maclisp.info/pitmanual/">The Revised Maclisp Manual</a>]</span>, Common Lisp, and Emacs
    Lisp.  Qua is not and will never be compatible with any of these
    languages, but many Qua programs look almost exactly like them, and
-   vice versa.  Features that Qua Lisp shares with (some of) these
+   vice versa.  Features that Qua shares with (some of) these
    languages are separate function and variable namespaces, an object
    system with generic functions, dynamically-scoped variables,
    generalized references, a condition system with restarts, a generic
@@ -64,12 +62,12 @@
    integrate and interoperate with JS and I think it turned out quite
    well.  Qua can directly -- without any FFI declarations -- access
    JS globals, object properties, call methods and functions, and all
-   Qua functions can be made callable as normal JS functions.  Qua
-   Lisp and JS parts of a program can live in harmony, and switching
-   between the two languages is effortless.  Node and NPM give Qua
-   programs access to the immense JS ecosystem.  Qua also works with
-   the Browserify tool that makes it possible to use many NPM packages
-   in the browser.</p><p>The role I see for Qua is as the high-level
+   Qua functions can be made callable as normal JS functions.  Qua and
+   JS parts of a program can live in harmony, and switching between
+   the two languages is effortless.  Node and NPM give Qua programs
+   access to the immense JS ecosystem.  Qua also works with the
+   Browserify tool that makes it possible to use many NPM packages in
+   the browser.</p><p>The role I see for Qua is as the high-level
    ``intelligence&#39;&#39; layer of my JavaScript apps, where the complex
    data-dependent logic resides, while the lower-level JavaScript code
    handles the rote data-processing inner loops. Besides tackling the

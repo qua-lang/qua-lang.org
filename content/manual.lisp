@@ -1,20 +1,20 @@
 (define-manual (manual)
-  (:title "Qua Lisp Manual")
+  (:title "Qua Manual")
   (:byline "Reference for the Lisp dialect implemented by Qua, a blend
   of Kernel, Common Lisp, and Scheme.")
   (:abstract
-   (paragraph "Qua Lisp, or just Qua for short, is a new dialect of
-    Lisp, designed to be ultra-light and allow tiny implementations,
-    yet offer the powerful metaprogramming facilities, control flow
-    abstractions, and general no-nonsense approach that Lisp
-    programmers know and love.  Qua is based on Kernel, Common Lisp,
-    and Scheme.  From Kernel it takes its central computing
-    workhorses, lexically-scoped fexprs and first-class environments.
-    The surface syntax and core language look and feel a lot like
-    Common Lisp, from which Qua inherits many operators.  The
-    interface for control flow manipulation, delimited continuations,
-    is the result of a long line of research pioneered in Scheme.")
-   (paragraph "Qua Lisp is still unfinished.  Especially the areas of
+   (paragraph "Qua is a new dialect of Lisp, designed to be
+    ultra-light and allow tiny implementations, yet offer the powerful
+    metaprogramming facilities, control flow abstractions, and general
+    no-nonsense approach that Lisp programmers know and love.  Qua is
+    based on Kernel, Common Lisp, and Scheme.  From Kernel it takes
+    its central computing workhorses, lexically-scoped fexprs and
+    first-class environments.  The surface syntax and core language
+    look and feel a lot like Common Lisp, from which Qua inherits many
+    operators.  The interface for control flow manipulation, delimited
+    continuations, is the result of a long line of research pioneered
+    in Scheme.")
+   (paragraph "Qua is still unfinished.  Especially the areas of
     strings, numbers, objects, classes, generic functions, methods,
     sequences, streams, and the JS interface are still in flux and/or
     unspecified.  Nevertheless, it is already a practical language and
@@ -114,7 +114,9 @@
     characters at some point, but are currently restricted to
     ASCII."))
   (:example
-   "foo-bar*"))
+   "foo-bar*")
+  (:rationale
+   (paragraph "This is just the usual Lisp symbol syntax.")))
 
 (define-manual-syntax (manual . stx-keyword)
   (:title "Keyword Symbol Syntax")
@@ -124,7 +126,9 @@
     "Keyword symbols follow " (hyper '(manual . stx-symbol)) " as to
     the content of the symbol name."))
   (:example
-   ":my-keyword => :my-keyword"))
+   ":my-keyword => :my-keyword")
+  (:rationale
+   (paragraph "This is just the usual Lisp keyword syntax.")))
 
 (define-manual-syntax (manual . stx-function)
   (:title "Function Symbol Syntax")
@@ -135,7 +139,12 @@
     the content of the symbol name."))
   (:example
    "#'+
-#'quuxify"))
+#'quuxify")
+  (:rationale
+   (paragraph "While Qua handles " (hyper '(manual
+   . concept-namespace) "namespaces") " differently than existing
+   Lisps, it makes sense to keep the familiar syntax for referring to
+   functions.")))
 
 (define-manual-syntax (manual . stx-dynamic-variable)
   (:title "Dynamic Variable Syntax")
@@ -622,6 +631,11 @@ $window => #[js-object]
   (:title "Symbols")
   (:child
    (hyper '(manual . class-symbol))
+   (hyper '(manual . concept-namespace))
+   (hyper '(manual . concept-variable-namespace))
+   (hyper '(manual . concept-function-namespace))
+   (hyper '(manual . concept-keyword-namespace))
+   (hyper '(manual . concept-type-namespace))
    (hyper '(manual . op-make-symbol))
    (hyper '(manual . op-symbol-name))
    (hyper '(manual . op-function-symbol))
@@ -629,6 +643,35 @@ $window => #[js-object]
 
 (define-manual-class (manual . class-symbol)
   (:title "SYMBOL"))
+
+(define-manual-concept (manual . concept-namespace)
+  (:title "Namespace")
+  (:content
+   (paragraph "In addition to its " (hyper '(manual
+   . op-symbol-name) "name") ", every " (hyper '(manual
+   . class-symbol)) " in Qua has a namespace, either the "
+   (hyper '(manual . concept-variable-namespace) "variable
+   namespace") ", " (hyper '(manual . concept-function-namespace) "function namespace")
+   ", " (hyper '(manual . concept-keyword-namespace) "keyword namespace")
+   ", or " (hyper '(manual . concept-type-namespace) "type namespace") "."))
+  (:example
+   ";; Thanks to namespaces, we can have a variable and function with the same name
+(def foo 12)
+(defun foo () (+ foo 100))
+foo => 12
+(foo) => 112"))
+
+(define-manual-concept (manual . concept-variable-namespace)
+  (:title "Variable Namespace"))
+
+(define-manual-concept (manual . concept-function-namespace)
+  (:title "Function Namespace"))
+
+(define-manual-concept (manual . concept-keyword-namespace)
+  (:title "Keyword Namespace"))
+
+(define-manual-concept (manual . concept-type-namespace)
+  (:title "Type Namespace"))
 
 (define-manual-function (manual . op-make-symbol)
   (:title "MAKE-SYMBOL")

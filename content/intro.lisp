@@ -69,12 +69,12 @@
    . vau-the-ultimate)) ".  And to top it off, fexprs are a lot of
    fun, too, so it became a no-brainer to use them as the basis of
    Qua.")
-   (paragraph "As to the actual look and feel of Qua Lisp, its surface
+   (paragraph "As to the actual look and feel of Qua, its surface
    syntax and higher-level language, I am following ``classic'' Lisps,
    like Maclisp " (hyper '(ref . maclisp)) ", Common Lisp, and Emacs
    Lisp.  Qua is not and will never be compatible with any of these
    languages, but many Qua programs look almost exactly like them, and
-   vice versa.  Features that Qua Lisp shares with (some of) these
+   vice versa.  Features that Qua shares with (some of) these
    languages are separate function and variable namespaces, an object
    system with generic functions, dynamically-scoped variables,
    generalized references, a condition system with restarts, a generic
@@ -91,12 +91,12 @@
    integrate and interoperate with JS and I think it turned out quite
    well.  Qua can directly -- without any FFI declarations -- access
    JS globals, object properties, call methods and functions, and all
-   Qua functions can be made callable as normal JS functions.  Qua
-   Lisp and JS parts of a program can live in harmony, and switching
-   between the two languages is effortless.  Node and NPM give Qua
-   programs access to the immense JS ecosystem.  Qua also works with
-   the Browserify tool that makes it possible to use many NPM packages
-   in the browser.")
+   Qua functions can be made callable as normal JS functions.  Qua and
+   JS parts of a program can live in harmony, and switching between
+   the two languages is effortless.  Node and NPM give Qua programs
+   access to the immense JS ecosystem.  Qua also works with the
+   Browserify tool that makes it possible to use many NPM packages in
+   the browser.")
    (paragraph "The role I see for Qua is as the high-level
    ``intelligence'' layer of my JavaScript apps, where the complex
    data-dependent logic resides, while the lower-level JavaScript code

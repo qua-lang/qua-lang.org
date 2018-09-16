@@ -6,7 +6,9 @@
               (link (:rel "stylesheet" :type "text/css" :href "../style/style.css")))
         (body ()
               (div (:class "navbar")
-                   "'("
+                   "("
+                   (a (:href "index.html") "qua")
+                   " '("
                    (a (:href "intro.html") "intro")
                    " "
                    (a (:href "manual.html") "manual")
@@ -16,7 +18,7 @@
                    (a (:href +qua-repl-url+) "repl")
                    " "
                    (a (:href +qua-repo-url+) "github")
-                   ")")
+                   "))")
               (call-template 'default))))
 
 ;;;; Main page template
@@ -34,9 +36,7 @@
 (deftemplate qua-hub-page-template-default
   (div ()
        (h1 ()
-           (a (:href "index.html") "Qua") " / " (node-field 'title))
-       (ul ()
-           (node-field 'child 'toc))
+           (node-field 'title))
        (div ()
             (node-field 'child 'default))))
 
@@ -47,8 +47,8 @@
 (deftemplate qua-hub-manual-template-default
   (div ()
        (center ()
-               (h1 () (a (:href "index.html") "Qua") " Lisp Manual")
-               "Manuel Simoni")
+               (h1 () "Qua Manual")
+               (strong () "Manuel Simoni"))
        (blockquote () (node-field 'abstract 'default))
        (h3 () "Table of Contents")
        (ul ()
@@ -69,6 +69,14 @@
   (a (:href (node-link)) (anchor-title)))
 
 (associate-template +tcmplr-node+ 'inline-titled qua-hub-inline-titled-template)
+
+(deftemplate qua-hub-concept-inline-template
+  (a (:href (node-link) :style "font-style: italic") (node-field 'title)))
+(deftemplate qua-hub-concept-inline-titled-template
+  (a (:href (node-link) :style "font-style: italic") (anchor-title)))
+
+(associate-template +qua-hub-manual-concept+ 'inline qua-hub-concept-inline-template)
+(associate-template +qua-hub-manual-concept+ 'inline-titled qua-hub-concept-inline-titled-template)
 
 (deftemplate qua-hub-op-inline-template
   (a (:href (node-link) :style "text-transform: lowercase") (strong () (node-field 'title))))
@@ -99,12 +107,6 @@
           (node-field 'child 'manual-toc))))
 
 (associate-template +qua-hub-section+ 'manual-toc qua-hub-section-template-manual-toc)
-
-(deftemplate qua-hub-section-template-toc
-  (li (:class "section-toc")
-      (a (:href (node-link)) (node-field 'title))))
-
-(associate-template +qua-hub-section+ 'toc qua-hub-section-template-toc)
 
 ;;;; Item templates
 
@@ -156,6 +158,7 @@
 (associate-template +qua-hub-manual-syntax+ 'default qua-hub-manual-operator-template-medium)
 (associate-template +qua-hub-manual-constant+ 'default qua-hub-manual-operator-template-medium)
 (associate-template +qua-hub-manual-class+ 'default qua-hub-manual-operator-template-medium)
+(associate-template +qua-hub-manual-concept+ 'default qua-hub-manual-operator-template-medium)
 
 (deftemplate qua-hub-item-template-manual-toc
   (li ()
@@ -169,6 +172,16 @@
           "(" (node-field 'type-name) ")")))
 
 (associate-template +qua-hub-item+ 'manual-toc qua-hub-item-template-manual-toc)
+
+(deftemplate qua-hub-concept-template-manual-toc
+  (li ()
+      (a (:href (node-link))
+         (strong () (em () (node-field 'title))))
+      " "
+      (em ()
+          "(" (node-field 'type-name) ")")))
+
+(associate-template +qua-hub-manual-concept+ 'manual-toc qua-hub-concept-template-manual-toc)
 
 (deftemplate qua-hub-paragraph-template-medium
   (p () (node-field 'text)))
