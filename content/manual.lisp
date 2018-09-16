@@ -142,7 +142,15 @@
     the content of the symbol name."))
   (:example
    "#'+
-#'quuxify")
+#'quuxify
+
+;; Unlike Common Lisp, Qua universally allows function symbols
+;; as definiends:
+(def #'my-function (lambda () 1))
+(my-function) => 1
+
+(let ((#'my-other-function (lambda () 2)))
+  (my-other-function)) => 2")
   (:rationale
    (paragraph "While Qua handles " (hyper '(manual
    . concept-namespace) "namespaces") " differently than existing
@@ -282,7 +290,25 @@ $window => #[js-object]
 
 (define-section (manual . sec-evaluation)
   (:title "Evaluation")
+  (:content
+   (paragraph "Evaluation is the process of turning a " (hyper
+   '(manual . concept-form) "form") " into a " (hyper '(manual
+   . concept-value) "value") ".  Evaluation is performed by "
+   (hyper '(manual . concept-operator) "operators") ", such as "
+   (hyper '(manual . class-fexpr) "fexprs") ", "
+   (hyper '(manual . class-function) "functions") ", and "
+   (hyper '(manual . concept-macro) "macros") "."))
   (:child
+   (hyper '(manual . concept-form))
+   (hyper '(manual . concept-compound-form))
+   (hyper '(manual . concept-operator))
+   (hyper '(manual . concept-special-operator))
+   (hyper '(manual . concept-primitive-operator))
+   (hyper '(manual . concept-parameter))
+   (hyper '(manual . concept-environment-parameter))
+   (hyper '(manual . concept-operand))
+   (hyper '(manual . concept-argument))
+   (hyper '(manual . concept-value))
    (hyper '(manual . class-fexpr))
    (hyper '(manual . op-vau))
    (hyper '(manual . op-deffexpr))
@@ -296,6 +322,7 @@ $window => #[js-object]
    (hyper '(manual . op-apply))
    (hyper '(manual . op-funcall))
    (hyper '(manual . op-quote))
+   (hyper '(manual . concept-macro))
    (hyper '(manual . op-macro))
    (hyper '(manual . op-defmacro))
    (hyper '(manual . class-void))
@@ -303,22 +330,122 @@ $window => #[js-object]
    (hyper '(manual . class-ign))
    (hyper '(manual . const-ign))))
 
+(define-manual-concept (manual . concept-form)
+  (:title "Form")
+  (:content
+   (paragraph
+    "A form is any " (hyper '(manual . class-object)) " meant to be
+  evaluated."))
+  (:example "")
+  (:rationale
+   (paragraph "")))
+
+(define-manual-concept (manual . concept-compound-form)
+  (:title "Compound Form")
+  (:content
+   (paragraph ""))
+  (:example "")
+  (:rationale
+   (paragraph "")))
+
+(define-manual-concept (manual . concept-operator)
+  (:title "Operator")
+  (:content
+   (paragraph ""))
+  (:example "")
+  (:rationale
+   (paragraph "")))
+
+(define-manual-concept (manual . concept-special-operator)
+  (:title "Special Operator")
+  (:content
+   (paragraph ""))
+  (:example "")
+  (:rationale
+   (paragraph "")))
+
+(define-manual-concept (manual . concept-primitive-operator)
+  (:title "Primitive Operator")
+  (:content
+   (paragraph ""))
+  (:example "")
+  (:rationale
+   (paragraph "")))
+
+(define-manual-concept (manual . concept-parameter)
+  (:title "Parameter")
+  (:content
+   (paragraph ""))
+  (:example "")
+  (:rationale
+   (paragraph "")))
+
+(define-manual-concept (manual . concept-environment-parameter)
+  (:title "Environment Parameter")
+  (:content
+   (paragraph ""))
+  (:example "")
+  (:rationale
+   (paragraph "")))
+
+(define-manual-concept (manual . concept-operand)
+  (:title "Operand")
+  (:content
+   (paragraph ""))
+  (:example "")
+  (:rationale
+   (paragraph "")))
+
+(define-manual-concept (manual . concept-argument)
+  (:title "Argument")
+  (:content
+   (paragraph ""))
+  (:example "")
+  (:rationale
+   (paragraph "")))
+
+(define-manual-concept (manual . concept-value)
+  (:title "Value")
+  (:content
+   (paragraph ""))
+  (:example "")
+  (:rationale
+   (paragraph "")))
+
 (define-manual-class (manual . class-fexpr)
   (:title "FEXPR")
   (:content
    (paragraph "Fexprs are the fundamental building block of
-   computation in Qua.  A fexpr is conceptually like a Lisp " (hyper
+   computation in Qua.  A fexpr is conceptually like a " (hyper
    '(manual . class-function) "function") ", but it does not evaluate
    its arguments, and receives the lexical environment in which it is
-   called as a parameter.")))
+   called as a parameter."))
+  (:example
+   ";; A very simple fexpr that simply returns its single operand,
+;; analogous to QUOTE:
+(deffexpr my-quote (anything) #ign anything)
+(my-quote (1 2 3)) => (1 2 3)
+
+;; A fexpr that takes no parameters and returns the environment
+;; in which it is called:
+(deffexpr my-current-environment () env env)
+(let ((x 1))
+  (def current-env (my-current-environment))
+  (eval 'x current-env)) => 1")
+  (:rationale (paragraph "See " (hyper '(ref . kernel)) ".")))
 
 (define-manual-special (manual . op-vau)
   (:title "VAU")
-  (:syntax "operand-tree environment-parameter form* => fexpr")
+  (:syntax "parameter-tree environment-parameter form* => fexpr")
   (:content
-   (paragraph (hyper '(manual . op-vau)) " is the constructor of
-   fexprs, analogous to how " (hyper '(manual . op-lambda)) " is the
-   constructor of functions.")))
+   (paragraph (hyper '(manual . op-vau)) " is the constructor of "
+              (hyper '(manual . class-fexpr) "fexprs") ", analogous to how "
+              (hyper '(manual . op-lambda)) " is the constructor of "
+              (hyper '(manual . class-function) "functions") "."))
+  (:example
+   "(def #'my-fexpr (vau (arg) #ign (+ arg 12)))
+(my-fexpr 12) => 24")
+  (:rationale (paragraph "See " (hyper '(ref . kernel)) ".")))
 
 (define-manual-special (manual . op-deffexpr)
   (:title "DEFFEXPR")
@@ -362,6 +489,14 @@ $window => #[js-object]
 (define-manual-special (manual . op-quote)
   (:title "QUOTE")
   (:syntax "form => form"))
+
+(define-manual-concept (manual . concept-macro)
+  (:title "Macro")
+  (:content
+   (paragraph ""))
+  (:example "")
+  (:rationale
+   (paragraph "")))
 
 (define-manual-special (manual . op-macro)
   (:title "MACRO")
