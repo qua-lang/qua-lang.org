@@ -162,7 +162,7 @@
 
 (defun tcmplr-render (reference template)
   (let ((node (tcmplr-get-node reference)))
-    (@render +tcmplr+ +tcmplr-store+ node template)))
+    (+ "<!doctype html>" (@render +tcmplr+ +tcmplr-store+ node template))))
 
 (defun tcmplr-write-file (reference-form template)
   (let* ((reference (tcmplr-parse-reference reference-form))
