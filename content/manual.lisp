@@ -279,7 +279,6 @@ $window => #[js-object]
    (hyper '(manual . op-apply))
    (hyper '(manual . op-funcall))
    (hyper '(manual . op-quote))
-   (hyper '(manual . class-macro))
    (hyper '(manual . op-macro))
    (hyper '(manual . op-defmacro))
    (hyper '(manual . class-void))
@@ -291,9 +290,10 @@ $window => #[js-object]
   (:title "FEXPR")
   (:content
    (paragraph "Fexprs are the fundamental building block of
-   computation in Qua.  A fexpr is conceptually like a Lisp function,
-   but it does not evaluate its arguments, and receives the lexical
-   environment in which it is called as a parameter.")))
+   computation in Qua.  A fexpr is conceptually like a Lisp " (hyper
+   '(manual . class-function) "function") ", but it does not evaluate
+   its arguments, and receives the lexical environment in which it is
+   called as a parameter.")))
 
 (define-manual-special (manual . op-vau)
   (:title "VAU")
@@ -345,9 +345,6 @@ $window => #[js-object]
 (define-manual-special (manual . op-quote)
   (:title "QUOTE")
   (:syntax "form => form"))
-
-(define-manual-class (manual . class-macro)
-  (:title "MACRO"))
 
 (define-manual-special (manual . op-macro)
   (:title "MACRO")

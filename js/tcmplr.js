@@ -102,7 +102,7 @@ lib.compile_template = function(template, out) {
     } else {
         throw "not a template: " + template;
     }
-}
+};
 
 lib.TagTemplate.prototype.compile_template = function(out) {
     out("<" + this.tag_name);
@@ -139,15 +139,15 @@ lib.NodeFieldTemplate.prototype.compile_template = function(out) {
     out(new lib.NodeFieldInstruction(this.field_name, this.template_name));
 };
 
-lib.AnchorFieldTemplate = function AnchorFieldTemplate(field_name, template_name) {
-    this.field_name = field_name;
-    this.template_name = template_name;
+//// Anchor Title Template
+
+lib.AnchorTitleTemplate = function AnchorTitleTemplate() {
 };
 
-lib.AnchorFieldTemplate.prototype = new lib.Template();
+lib.AnchorTitleTemplate.prototype = new lib.Template();
 
-lib.AnchorFieldTemplate.prototype.compile_template = function(out) {
-    out(new lib.AnchorFieldInstruction(this.field_name, this.template_name));
+lib.AnchorTitleTemplate.prototype.compile_template = function(out) {
+    out(new lib.AnchorTitleInstruction());
 };
 
 //// Call Templates
@@ -207,15 +207,13 @@ lib.NodeFieldInstruction.prototype.compile_instruction = function() {
     return "rt.node_field(store,anchor,node,\"" + this.field_name + "\",\"" + this.template_name + "\")";
 };
 
-lib.AnchorFieldInstruction = function AnchorFieldInstruction(field_name, template_name) {
-    this.field_name = field_name;
-    this.template_name = template_name;
+lib.AnchorTitleInstruction = function AnchorTitleInstruction() {
 };
 
-lib.AnchorFieldInstruction.prototype = new lib.Instruction();
+lib.AnchorTitleInstruction.prototype = new lib.Instruction();
 
-lib.AnchorFieldInstruction.prototype.compile_instruction = function() {
-    return "rt.anchor_field(store,anchor,node,\"" + this.field_name + "\",\"" + this.template_name + "\")";
+lib.AnchorTitleInstruction.prototype.compile_instruction = function() {
+    return "rt.anchor_title(anchor)";
 };
 
 //// Call Template Instruction
@@ -281,7 +279,7 @@ lib.template_to_instructions = function(template) {
         instructions.push(new lib.StringInstruction(str));
     }
     return instructions;
-}
+};
 
 lib.FUNCTION_DEFINITION = "(function(rt,store,anchor,node){";
 
@@ -313,7 +311,7 @@ lib.rt.node_field = function(store, anchor, node, field_name, template_name) {
                 if (!node.fields) {
                     throw "not a node: " + node;
                 }
-                str += lib.rt.call_template(store, anchor, node, template_name);
+                str += lib.rt.call_template(store, field_value, node, template_name);
             } else {
                 throw "not a field value: " + field_value;
             }
@@ -325,15 +323,19 @@ lib.rt.node_field = function(store, anchor, node, field_name, template_name) {
 };
 
 lib.rt.call_template = function(store, anchor, node, template_name) {
-    var template = node[template_name];
+    if ((template_name === "inline") && anchor.title) {
+        var template = node["inline-titled"];
+    } else {
+        var template = node[template_name];
+    }
     if (!template) {
         throw "template not found: " + template_name + " of type " + node.type.name;
     }
     return template(lib.rt, store, anchor, node);
 };
 
-lib.rt.anchor_field = function(store, anchor, node, field_name, template_name) {
-    return "ANCHOR TBD";
+lib.rt.anchor_title = function(anchor) {
+    return anchor.title ? anchor.title : "untitled";
 };
 
 lib.rt.node_link = function(node) {

@@ -65,6 +65,11 @@
 
 (associate-template +tcmplr-node+ 'inline qua-hub-inline-template)
 
+(deftemplate qua-hub-inline-titled-template
+  (a (:href (node-link)) (anchor-title)))
+
+(associate-template +tcmplr-node+ 'inline-titled qua-hub-inline-titled-template)
+
 (deftemplate qua-hub-op-inline-template
   (a (:href (node-link) :style "text-transform: lowercase") (strong () (node-field 'title))))
 

@@ -9,6 +9,7 @@
 (def #'deftemplate #'tcmplr-define-template)
 (def #'associate-template #'tcmplr-associate-template)
 (def #'node-field #'tcmplr-make-node-field-template)
+(def #'anchor-title #'tcmplr-make-anchor-title-template)
 (def #'node-link #'tcmplr-make-node-link-template)
 (def #'node-anchor #'tcmplr-make-node-anchor-template)
 (def #'call-template #'tcmplr-make-call-template)

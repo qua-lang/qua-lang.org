@@ -84,6 +84,9 @@
           (symbol-name field-name)
           (symbol-name (optional opt-template-name 'inline))))
 
+(defun tcmplr-make-anchor-title-template ()
+  (js-new (.AnchorTitleTemplate +tcmplr+)))
+
 (defun tcmplr-make-call-template (template-name)
   (js-new (.CallTemplate +tcmplr+)
           (symbol-name template-name)))
