@@ -109,7 +109,7 @@
   (:rationale
    (paragraph
     "Avoiding to pollute the "
-    (hyper '(manual . concept-variable-namespace) "variable namespace")
+    (hyper '(manual . concept-variable-namespace))
     " with identifiers for constants, which should be short, seems to
     be a good idea.")))
 
@@ -222,7 +222,7 @@
   (:content
    (paragraph
     "The usual syntax for specifying the last element of a "
-    (hyper '(manual . concept-list) "list") " explicitly."))
+    (hyper '(manual . concept-list)) " explicitly."))
   (:example "(a dotted . list)
 
 (1 2) === (1 . (2)) === (1 . (2 . #nil))")
@@ -235,7 +235,7 @@
    (paragraph
     "The usual syntax for preventing " (hyper '(manual
     . sec-evaluation) "evaluation") " of a " (hyper '(manual
-    . concept-form) "form") ", syntactic sugar for " (hyper '(manual
+    . concept-form)) ", syntactic sugar for " (hyper '(manual
     . op-quote)) "."))
   (:example "'foo => foo
 '#'foo => #'foo
@@ -319,15 +319,15 @@ $window => #[js-object]
   (:title "Evaluation")
   (:content
    (paragraph "Evaluation is the process of turning a " (hyper
-   '(manual . concept-form) "form") " into a " (hyper '(manual
-   . concept-value) "value") ".  Evaluation happens either implicitly,
+   '(manual . concept-form)) " into a " (hyper '(manual
+   . concept-value)) ".  Evaluation happens either implicitly,
    e.g. at the REPL, or explicitly, under programmer control via "
    (hyper '(manual . op-eval)) "."))
   (:child
    (hyper '(manual . concept-form))
    (hyper '(manual . concept-self-evaluating-form))
    (hyper '(manual . concept-constant))
-   (hyper '(manual . concept-reference-form))
+   (hyper '(manual . concept-identifier-form))
    (hyper '(manual . concept-compound-form))
    (hyper '(manual . concept-operator))
    (hyper '(manual . concept-special-operator))
@@ -365,19 +365,17 @@ $window => #[js-object]
    (paragraph
     "A form is any " (hyper '(manual . class-object)) " meant to be
   evaluated.  It is either a " (hyper '(manual
-  . concept-self-evaluating-form) "self-evaluating form") ", a "
-  (hyper '(manual . concept-reference-form) "reference
-  form") ", or a "
-  (hyper '(manual . concept-compound-form) "compound form") "."))
+  . concept-self-evaluating-form)) ", an "
+  (hyper '(manual . concept-identifier-form)) ", or a "
+  (hyper '(manual . concept-compound-form)) "."))
   (:example ";; Self-evaluating forms:
 #t => #t
 12 => 12
 \"foo\" => \"foo\"
 :key => :key
 
-;; Reference forms
 (def x 1)
-x => 1
+x => 1 ; Identifier form
 
 ;; Compound forms:
 (+ 1 2) => 3
@@ -407,7 +405,7 @@ x => 1
   (:content
    (paragraph "A constant is a built-in " (hyper '(manual
    . class-object)) " that is a " (hyper '(manual
-   . concept-self-evaluating-form) "self-evaluating form") ".  It is
+   . concept-self-evaluating-form)) ".  It is
    not possible for the Qua programmer to define new constants.
    Constants are distinct from " (hyper '(manual
    . concept-constant-variable) "constant variables") ", which are
@@ -415,29 +413,43 @@ x => 1
   (paragraph "Core Qua has the following constants: "
              (hyper '(manual . const-nil)) ", "
              (hyper '(manual . const-t)) ", "
-             (hyper '(manual . const-f)) ", and "
-             (hyper '(manual . const-void)) ". In addition, there are "
+             (hyper '(manual . const-f)) ", "
+             (hyper '(manual . const-void)) ", and "
+             (hyper '(manual . const-ign)) ". In addition, there are "
              (hyper '(manual . const-null)) " and "
              (hyper '(manual . const-undefined)) " from JavaScript."))
-  (:example "#t
-#f
-#void
-#nil")
+  (:example "#t => #t
+#void => #void")
   (:rationale
    (paragraph "Classic Lisp.")))
 
-(define-manual-concept (manual . concept-reference-form)
-  (:title "Reference Form")
+(define-manual-concept (manual . concept-identifier-form)
+  (:title "Identifier Form")
   (:content
-   (paragraph ""))
-  (:example "")
+   (paragraph "A " (hyper '(manual . class-symbol)) " used as a "
+              (hyper '(manual . concept-form)) " is called an identifier form and "
+              (hyper '(manual . sec-evaluation) "evaluates") " to the
+              value of the " (hyper '(manual . concept-binding)) "
+              identified by the symbol.  An error is signaled if the
+              symbol is unbound."))
+  (:example "
+(def x 1)
+x => 1 ; Variable binding
+
+(defun x () 1)
+#'x => #[function] ; Function binding
+")
   (:rationale
-   (paragraph "")))
+   (paragraph "Classic Lisp, with the difference that Qua treats the "
+   (hyper '(manual . concept-variable-namespace)) " and " (hyper
+   '(manual . concept-function-namespace)) " uniformly.")))
 
 (define-manual-concept (manual . concept-compound-form)
   (:title "Compound Form")
   (:content
-   (paragraph ""))
+   (paragraph "A " (hyper '(manual . concept-list)) " (other
+   than " (hyper '(manual . const-nil)) ") used as a "
+   (hyper '(manual . concept-form)) " is called a compound form."))
   (:example "")
   (:rationale
    (paragraph "")))
@@ -618,8 +630,9 @@ x => 1
 (define-section (manual . sec-environments)
   (:title "Environments")
   (:child
-   (hyper '(manual . concept-definiend))
    (hyper '(manual . class-environment))
+   (hyper '(manual . concept-definiend))
+   (hyper '(manual . concept-binding))
    (hyper '(manual . op-def))
    (hyper '(manual . concept-constant-variable))
    (hyper '(manual . op-defconstant))
@@ -633,6 +646,14 @@ x => 1
 
 (define-manual-concept (manual . concept-definiend)
   (:title "Definiend")
+  (:content
+   (paragraph ""))
+  (:example "")
+  (:rationale
+   (paragraph "")))
+
+(define-manual-concept (manual . concept-binding)
+  (:title "Binding")
   (:content
    (paragraph ""))
   (:example "")
