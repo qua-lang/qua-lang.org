@@ -447,12 +447,50 @@ x => 1 ; Variable binding
 (define-manual-concept (manual . concept-compound-form)
   (:title "Compound Form")
   (:content
-   (paragraph "A " (hyper '(manual . concept-list)) " (other
-   than " (hyper '(manual . const-nil)) ") used as a "
-   (hyper '(manual . concept-form)) " is called a compound form."))
-  (:example "")
+   (paragraph "A " (hyper '(manual . class-cons)) " used as a "
+   (hyper '(manual . concept-form)) " is called a compound form.")
+   (paragraph "If the " (hyper '(manual . op-car)) " of the compound
+   form is a " (hyper '(manual . class-symbol)) ", it gets looked up
+   in the " (hyper '(manual . concept-function-namespace)) ".")
+   (paragraph "Otherwise, the " (hyper '(manual . op-car)) "
+   gets " (hyper '(manual . sec-evaluation) "evaluated") " normally.")
+   (paragraph "In either case, the resulting value must be an " (hyper
+   '(manual . concept-operator)) ", or an error is signalled.")
+   (paragraph "Finally, the " (hyper '(manual . op-cdr)) " of the
+   compound form is passed as " (hyper '(manual . concept-operand)) "
+   to the operator, and the resulting " (hyper '(manual
+   . concept-value)) " is returned."))
+  (:example ";;; Symbol as first element:
+
+;; Even though + is a variable symbol, it gets turned into a function 
+;; symbol and then looked up.
+(+ 1 2) => 3
+
+;; It is also possible to specify a function symbol as first element
+;; explicitly and write it like this:
+(#'+ 1 2) => 3
+
+;;; Non-symbol as first element
+
+;; The LAMBDA gets evaluated normally and then receives (1 2) as operand
+((lambda (x y) (+ x y)) 1 2) => 3
+
+;; Unlike Common Lisp, and like Kernel and Scheme, Qua allows any 
+;; expression as the first element of a compound form, not only LAMBDA
+;; expressions:
+(defun my-function-returning-function ()
+  (lambda (x y) (+ x y)))
+((my-function-returning-function) 1 2) => 3
+")
   (:rationale
-   (paragraph "")))
+   (paragraph "Evaluation of compound forms in Qua can be viewed as a
+   mix of the evaluation rules of Common Lisp on the one hand, and
+   Kernel and Scheme on the other.  Like Common Lisp, Qua treats
+   symbols used as the first element of a compound form specially, by
+   looking them up in the " (hyper '(manual
+   . concept-function-namespace))".  But like Kernel and Scheme, Qua
+   places no restrictions on non-symbols used as the first element,
+   leading to slightly more expressivity.")))
 
 (define-manual-concept (manual . concept-operator)
   (:title "Operator")

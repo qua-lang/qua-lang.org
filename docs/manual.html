@@ -110,8 +110,39 @@ x =&gt; 1 ; Variable binding
 
 (defun x () 1)
 #&#39;x =&gt; #[function] ; Function binding
-</pre><h4>Rationale:</h4><div><p>Classic Lisp, with the difference that Qua treats the <a href="manual.html#concept-variable-namespace" style="text-transform: lowercase">Variable Namespace</a> and <a href="manual.html#concept-function-namespace" style="text-transform: lowercase">Function Namespace</a> uniformly.</p></div></div><div><h3 class="operator-title"><a id="concept-compound-form">Compound Form <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p>A <a href="manual.html#concept-list" style="text-transform: lowercase">List</a> (other
-   than <a href="manual.html#const-nil" style="text-transform: lowercase"><strong>#NIL</strong></a>) used as a <a href="manual.html#concept-form" style="text-transform: lowercase">Form</a> is called a compound form.</p></div><h4>Examples:</h4><pre></pre><h4>Rationale:</h4><div><p></p></div></div><div><h3 class="operator-title"><a id="concept-operator">Operator <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p></p></div><h4>Examples:</h4><pre></pre><h4>Rationale:</h4><div><p></p></div></div><div><h3 class="operator-title"><a id="concept-special-operator">Special Operator <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p></p></div><h4>Examples:</h4><pre></pre><h4>Rationale:</h4><div><p></p></div></div><div><h3 class="operator-title"><a id="concept-primitive-operator">Primitive Operator <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p></p></div><h4>Examples:</h4><pre></pre><h4>Rationale:</h4><div><p></p></div></div><div><h3 class="operator-title"><a id="concept-parameter">Parameter <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p></p></div><h4>Examples:</h4><pre></pre><h4>Rationale:</h4><div><p></p></div></div><div><h3 class="operator-title"><a id="concept-environment-parameter">Environment Parameter <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p></p></div><h4>Examples:</h4><pre></pre><h4>Rationale:</h4><div><p></p></div></div><div><h3 class="operator-title"><a id="concept-operand">Operand <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p></p></div><h4>Examples:</h4><pre></pre><h4>Rationale:</h4><div><p></p></div></div><div><h3 class="operator-title"><a id="concept-argument">Argument <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p></p></div><h4>Examples:</h4><pre></pre><h4>Rationale:</h4><div><p></p></div></div><div><h3 class="operator-title"><a id="concept-value">Value <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p></p></div><h4>Examples:</h4><pre></pre><h4>Rationale:</h4><div><p></p></div></div><div><h3 class="operator-title"><a id="class-fexpr">FEXPR <em> (Class)</em></a></h3><div></div><h4>Description:</h4><div><p>Fexprs are the fundamental building block of
+</pre><h4>Rationale:</h4><div><p>Classic Lisp, with the difference that Qua treats the <a href="manual.html#concept-variable-namespace" style="text-transform: lowercase">Variable Namespace</a> and <a href="manual.html#concept-function-namespace" style="text-transform: lowercase">Function Namespace</a> uniformly.</p></div></div><div><h3 class="operator-title"><a id="concept-compound-form">Compound Form <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p>A <a href="manual.html#class-cons" style="text-transform: lowercase">CONS</a> used as a <a href="manual.html#concept-form" style="text-transform: lowercase">Form</a> is called a compound form.</p><p>If the <a href="manual.html#op-car" style="text-transform: lowercase"><strong>CAR</strong></a> of the compound
+   form is a <a href="manual.html#class-symbol" style="text-transform: lowercase">SYMBOL</a>, it gets looked up
+   in the <a href="manual.html#concept-function-namespace" style="text-transform: lowercase">Function Namespace</a>.</p><p>Otherwise, the <a href="manual.html#op-car" style="text-transform: lowercase"><strong>CAR</strong></a>
+   gets <a href="manual.html#sec-evaluation">evaluated</a> normally.</p><p>In either case, the resulting value must be an <a href="manual.html#concept-operator" style="text-transform: lowercase">Operator</a>, or an error is signalled.</p><p>Finally, the <a href="manual.html#op-cdr" style="text-transform: lowercase"><strong>CDR</strong></a> of the
+   compound form is passed as <a href="manual.html#concept-operand" style="text-transform: lowercase">Operand</a>
+   to the operator, and the resulting <a href="manual.html#concept-value" style="text-transform: lowercase">Value</a> is returned.</p></div><h4>Examples:</h4><pre>;;; Symbol as first element:
+
+;; Even though + is a variable symbol, it gets turned into a function 
+;; symbol and then looked up.
+(+ 1 2) =&gt; 3
+
+;; It is also possible to specify a function symbol as first element
+;; explicitly and write it like this:
+(#&#39;+ 1 2) =&gt; 3
+
+;;; Non-symbol as first element
+
+;; The LAMBDA gets evaluated normally and then receives (1 2) as operand
+((lambda (x y) (+ x y)) 1 2) =&gt; 3
+
+;; Unlike Common Lisp, and like Kernel and Scheme, Qua allows any 
+;; expression as the first element of a compound form, not only LAMBDA
+;; expressions:
+(defun my-function-returning-function ()
+  (lambda (x y) (+ x y)))
+((my-function-returning-function) 1 2) =&gt; 3
+</pre><h4>Rationale:</h4><div><p>Evaluation of compound forms in Qua can be viewed as a
+   mix of the evaluation rules of Common Lisp on the one hand, and
+   Kernel and Scheme on the other.  Like Common Lisp, Qua treats
+   symbols used as the first element of a compound form specially, by
+   looking them up in the <a href="manual.html#concept-function-namespace" style="text-transform: lowercase">Function Namespace</a>.  But like Kernel and Scheme, Qua
+   places no restrictions on non-symbols used as the first element,
+   leading to slightly more expressivity.</p></div></div><div><h3 class="operator-title"><a id="concept-operator">Operator <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p></p></div><h4>Examples:</h4><pre></pre><h4>Rationale:</h4><div><p></p></div></div><div><h3 class="operator-title"><a id="concept-special-operator">Special Operator <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p></p></div><h4>Examples:</h4><pre></pre><h4>Rationale:</h4><div><p></p></div></div><div><h3 class="operator-title"><a id="concept-primitive-operator">Primitive Operator <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p></p></div><h4>Examples:</h4><pre></pre><h4>Rationale:</h4><div><p></p></div></div><div><h3 class="operator-title"><a id="concept-parameter">Parameter <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p></p></div><h4>Examples:</h4><pre></pre><h4>Rationale:</h4><div><p></p></div></div><div><h3 class="operator-title"><a id="concept-environment-parameter">Environment Parameter <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p></p></div><h4>Examples:</h4><pre></pre><h4>Rationale:</h4><div><p></p></div></div><div><h3 class="operator-title"><a id="concept-operand">Operand <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p></p></div><h4>Examples:</h4><pre></pre><h4>Rationale:</h4><div><p></p></div></div><div><h3 class="operator-title"><a id="concept-argument">Argument <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p></p></div><h4>Examples:</h4><pre></pre><h4>Rationale:</h4><div><p></p></div></div><div><h3 class="operator-title"><a id="concept-value">Value <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p></p></div><h4>Examples:</h4><pre></pre><h4>Rationale:</h4><div><p></p></div></div><div><h3 class="operator-title"><a id="class-fexpr">FEXPR <em> (Class)</em></a></h3><div></div><h4>Description:</h4><div><p>Fexprs are the fundamental building block of
    computation in Qua.  A fexpr is conceptually like a <a href="manual.html#class-function">function</a>, but it does not evaluate
    its arguments, and receives the lexical environment in which it is
    called as a parameter.</p></div><h4>Examples:</h4><pre>;; A very simple fexpr that simply returns its single operand,
