@@ -234,7 +234,7 @@
   (:content
    (paragraph
     "The usual syntax for preventing " (hyper '(manual
-    . concept-evaluation) "evaluation") " of a " (hyper '(manual
+    . sec-evaluation) "evaluation") " of a " (hyper '(manual
     . concept-form) "form") ", syntactic sugar for " (hyper '(manual
     . op-quote)) "."))
   (:example "'foo => foo
@@ -317,8 +317,13 @@ $window => #[js-object]
 
 (define-section (manual . sec-evaluation)
   (:title "Evaluation")
+  (:content
+   (paragraph "Evaluation is the process of turning a " (hyper
+   '(manual . concept-form) "form") " into a " (hyper '(manual
+   . concept-value) "value") ".  Evaluation happens either implicitly,
+   e.g. at the REPL, or explicitly, under programmer control via "
+   (hyper '(manual . op-eval)) "."))
   (:child
-   (hyper '(manual . concept-evaluation))
    (hyper '(manual . concept-form))
    (hyper '(manual . concept-self-evaluating-form))
    (hyper '(manual . concept-constant))
@@ -353,21 +358,8 @@ $window => #[js-object]
    (hyper '(manual . class-ign))
    (hyper '(manual . const-ign))))
 
-(define-manual-concept (manual . concept-evaluation)
-  (:title "Evaluation")
-  (:content
-   (paragraph "Evaluation is the process of turning a " (hyper
-   '(manual . concept-form) "form") " into a " (hyper '(manual
-   . concept-value) "value") ".  Evaluation happens either implicitly,
-   e.g. at the REPL, or explicitly, under programmer control via "
-   (hyper '(manual . op-eval)) "."))
-  (:example
-   "12 => 12
 
-(eval '(+ 1 2) (the-environment)) => 3")
-  (:rationale (paragraph "Classic Lisp.")))
-
-   (define-manual-concept (manual . concept-form)
+(define-manual-concept (manual . concept-form)
   (:title "Form")
   (:content
    (paragraph
@@ -375,8 +367,8 @@ $window => #[js-object]
   evaluated.  It is either a " (hyper '(manual
   . concept-self-evaluating-form) "self-evaluating form") ", a "
   (hyper '(manual . concept-reference-form) "reference
-  form") " (symbol), or a "
-  (hyper '(manual . concept-compound-form) "compound form") " (list)."))
+  form") ", or a "
+  (hyper '(manual . concept-compound-form) "compound form") "."))
   (:example ";; Self-evaluating forms:
 #t => #t
 12 => 12
@@ -402,7 +394,7 @@ x => 1
     (hyper '(manual . class-number) "numbers") ", and " 
     (hyper '(manual . concept-keyword-namespace) "keyword symbols")
     " are said to be ``self-evaluating'', that is, they simply "
-    (hyper '(manual . concept-evaluation) "evaluate") " to themselves."))
+    (hyper '(manual . sec-evaluation) "evaluate") " to themselves."))
     (:example "#t => #t
 12 => 12
 \"foo\" => \"foo\"
