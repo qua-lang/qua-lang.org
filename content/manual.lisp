@@ -479,7 +479,7 @@ x => 1 ; Variable binding
 ;; explicitly and write it like this:
 (#'+ 1 2) => 3
 
-;;; Non-symbol as first element
+;;; Non-symbol as first element:
 
 ;; The LAMBDA gets evaluated normally and then receives (1 2) as operand
 ((lambda (x y) (+ x y)) 1 2) => 3
@@ -504,18 +504,46 @@ x => 1 ; Variable binding
 (define-manual-concept (manual . concept-operator)
   (:title "Operator")
   (:content
-   (paragraph ""))
-  (:example "")
+   (paragraph "All computation in Qua is performed by operators.  All
+   operators have in common that they receive an " (hyper '(manual
+   . concept-operand)) " (or a list of operands) and return a " (hyper
+   '(manual . concept-value)) ".")
+   (paragraph "Operators can be classified as "
+              (hyper '(manual . concept-special-operator) "special operators") ", "
+              (hyper '(manual . concept-primitive-operator) "primitive operators") ", "
+              (hyper '(manual . class-fexpr) "fexprs") ", "
+              (hyper '(manual . concept-macro) "macros") ", and "
+              (hyper '(manual . class-function) "functions") "."))
+  (:example ";; + evaluates to a function operator.
+;; It receives the list (1 2 3 4) as operand(s).
+;; It returns the value 10.
+(+ 1 2 3 4) => 10")
   (:rationale
-   (paragraph "")))
+   (paragraph "Qua operators are what Kernel calls combiners.  I just
+   couldn't get myself to use this word, so I chose operator instead,
+   since this term is used in Common Lisp for a similar concept.")))
 
 (define-manual-concept (manual . concept-special-operator)
   (:title "Special Operator")
   (:content
-   (paragraph ""))
-  (:example "")
+   (paragraph "A special operator is any " (hyper '(manual
+   . concept-operator)) " that, unlike a " (hyper '(manual
+   . class-function)) ", uses special rules to determine what parts of
+   its " (hyper '(manual . concept-operand) "operand(s)") " are "
+   (hyper '(manual . sec-evaluation) "evaluated") ".")
+   (paragraph "Special operators may be "
+              (hyper '(manual . concept-primitive-operator) "primitive operators") ", "
+              (hyper '(manual . class-fexpr) "fexprs") ", or "
+              (hyper '(manual . concept-macro) "macros") "."))
+  (:example ";; IF is a special operator.  In this case,
+;; the form (* 3 3) is never evaluated.
+(if #t (* 2 2) (* 3 3)) => 4")
   (:rationale
-   (paragraph "")))
+   (paragraph "Qua uses the term special operator to mean any operator
+   with special evaluation rules.  The reason is that users need not
+   be aware of how a special operator is implemented, be it as a
+   fexpr, macro, or primitive, only that it has special evaluation
+   rules.")))
 
 (define-manual-concept (manual . concept-primitive-operator)
   (:title "Primitive Operator")
