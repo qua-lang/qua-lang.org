@@ -148,6 +148,7 @@
        (tt () (node-field 'syntax))))
 
 (associate-template +qua-hub-manual-syntax+ 'syntax qua-hub-manual-syntax-syntax-template)
+(associate-template +qua-hub-manual-naming-convention+ 'syntax qua-hub-manual-syntax-syntax-template)
 
 (deftemplate qua-hub-manual-default-syntax-template
   (div ()))
@@ -174,6 +175,7 @@
 (associate-template +qua-hub-manual-constant+ 'default qua-hub-manual-operator-template-medium)
 (associate-template +qua-hub-manual-class+ 'default qua-hub-manual-operator-template-medium)
 (associate-template +qua-hub-manual-concept+ 'default qua-hub-manual-operator-template-medium)
+(associate-template +qua-hub-manual-naming-convention+ 'default qua-hub-manual-operator-template-medium)
 
 (deftemplate qua-hub-item-template-manual-toc
   (li ()

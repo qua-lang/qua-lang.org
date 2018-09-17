@@ -26,6 +26,7 @@
 (define-node-type +qua-hub-manual-page+ +qua-hub-page+)
 (define-node-type +qua-hub-manual-operator+ +qua-hub-item+)
 (define-node-type +qua-hub-manual-syntax+ +qua-hub-item+)
+(define-node-type +qua-hub-manual-naming-convention+ +qua-hub-item+)
 (define-node-type +qua-hub-manual-constant+ +qua-hub-item+)
 (define-node-type +qua-hub-manual-class+ +qua-hub-item+)
 (define-node-type +qua-hub-manual-concept+ +qua-hub-item+)
@@ -73,6 +74,11 @@
 (defmacro define-manual-syntax (id . body)
   (list* #'defnode id +qua-hub-manual-syntax+
          '(:type-name "Syntax")
+         body))
+
+(defmacro define-manual-naming-convention (id . body)
+  (list* #'defnode id +qua-hub-manual-naming-convention+
+         '(:type-name "Naming Convention")
          body))
 
 (defmacro define-manual-special (id . body)

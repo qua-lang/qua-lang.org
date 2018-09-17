@@ -165,12 +165,13 @@
    Lisps, it makes sense to keep the familiar syntax for referring to
    functions.")))
 
-(define-manual-syntax (manual . stx-dynamic-variable)
-  (:title "Dynamic Variable Syntax")
+(define-manual-naming-convention (manual . stx-dynamic-variable)
+  (:title "Dynamic Variable Naming Convention")
   (:syntax "*dynamic-name*")
   (:content
    (paragraph
-    "Dynamic variable names are wrapped in ``*'' by convention."))
+    "Names of " (hyper '(manual . class-dynamic) "dynamic
+    variables") " are wrapped in ``*'' by convention."))
   (:example
    "*standard-output*")
   (:rationale
@@ -178,28 +179,30 @@
    use prefixes like ``current-'' for dynamic variable names to
    distinguish them from local variables.")))
 
-(define-manual-syntax (manual . stx-constant-variable)
-  (:title "Constant Variable Syntax")
+(define-manual-naming-convention (manual . stx-constant-variable)
+  (:title "Constant Variable Naming Convention")
   (:syntax "+constant-name+")
   (:content
    (paragraph
-    "Constant variable names are wrapped in ``+'' by convention.  This
-    should be used for global variables that are never reassigned, and
-    that are bound to objects whose contents are immutable."))
+    "Names of " (hyper '(manual . concept-constant-variable) "constant
+    variables") " are wrapped in ``+'' by convention.  This should be
+    used for global variables that are never reassigned, and that are
+    bound to objects whose contents are immutable."))
   (:example
    "(defconstant +my-constant+ 23)")
   (:rationale
    (paragraph "Common Lisp convention.")))
 
-(define-manual-syntax (manual . stx-global-variable)
-  (:title "Global Variable Syntax")
+(define-manual-naming-convention (manual . stx-global-variable)
+  (:title "Global Variable Naming Convention")
   (:syntax "-global-name-")
   (:content
    (paragraph
-    "Global variable names are wrapped in ``-'' by convention.  This
-    should be used for global variables that are reassigned, like a
-    global counter, or that are bound to objects whose contents are
-    mutated, like a global hash table."))
+    "Names of " (hyper '(manual . concept-global-variable) "global
+    variables") " are wrapped in ``-'' by convention.  This should be
+    used for global variables that are reassigned, like a global
+    counter, or that are bound to objects whose contents are mutated,
+    like a global hash table."))
   (:example "(def -my-global-hash-table- (js-object))")
   (:rationale
    (paragraph "It seems like a good idea to syntactically distinguish
@@ -668,11 +671,12 @@ x => 1 ; Variable binding
 (define-section (manual . sec-environments)
   (:title "Environments")
   (:child
-   (hyper '(manual . class-environment))
    (hyper '(manual . concept-definiend))
    (hyper '(manual . concept-binding))
-   (hyper '(manual . op-def))
+   (hyper '(manual . concept-global-variable))
    (hyper '(manual . concept-constant-variable))
+   (hyper '(manual . class-environment))
+   (hyper '(manual . op-def))
    (hyper '(manual . op-defconstant))
    (hyper '(manual . op-setq))
    (hyper '(manual . op-let))
@@ -692,6 +696,14 @@ x => 1 ; Variable binding
 
 (define-manual-concept (manual . concept-binding)
   (:title "Binding")
+  (:content
+   (paragraph ""))
+  (:example "")
+  (:rationale
+   (paragraph "")))
+
+(define-manual-concept (manual . concept-global-variable)
+  (:title "Global Variable")
   (:content
    (paragraph ""))
   (:example "")
@@ -1228,9 +1240,13 @@ foo => 12
 (define-section (manual . sec-dynamic)
   (:title "Dynamic Variables")
   (:child
+   (hyper '(manual . class-dynamic))
    (hyper '(manual . op-defdynamic))
    (hyper '(manual . op-dynamic-bind))
    (hyper '(manual . op-dynamic))))
+
+(define-manual-class (manual . class-dynamic)
+  (:title "DYNAMIC"))
 
 (define-manual-special (manual . op-defdynamic)
   (:title "DEFDYNAMIC")
