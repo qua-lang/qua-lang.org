@@ -86,9 +86,9 @@
 (associate-template +tcmplr-node+ 'inline-titled qua-hub-inline-titled-template)
 
 (deftemplate qua-hub-concept-inline-template
-  (a (:href (node-link) :style "font-style: italic") (node-field 'title)))
+  (a (:href (node-link)) (node-field 'title)))
 (deftemplate qua-hub-concept-inline-titled-template
-  (a (:href (node-link) :style "font-style: italic") (anchor-title)))
+  (a (:href (node-link)) (anchor-title)))
 
 (associate-template +qua-hub-manual-concept+ 'inline qua-hub-concept-inline-template)
 (associate-template +qua-hub-manual-concept+ 'inline-titled qua-hub-concept-inline-titled-template)
@@ -179,10 +179,8 @@
   (li ()
       (a (:href (node-link))
          (strong () (node-field 'title)))
-      " "
       (tt ()
-          (node-field 'syntax))
-      " "
+          " " (node-field 'syntax) " ")
       (em ()
           "(" (node-field 'type-name) ")")))
 
@@ -192,7 +190,7 @@
   (li ()
       (a (:href (node-link))
          (strong () (em () (node-field 'title))))
-      " "
+      (tt () " ")
       (em ()
           "(" (node-field 'type-name) ")")))
 

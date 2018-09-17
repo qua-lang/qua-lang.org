@@ -60,7 +60,8 @@
    (hyper '(manual . stx-global-variable))
    (hyper '(manual . stx-js-global))
    (hyper '(manual . stx-js-property))
-   (hyper '(manual . stx-js-method))))
+   (hyper '(manual . stx-js-method))
+   (hyper '(manual . stx-line-comment))))
 
 (define-manual-syntax (manual . stx-string)
   (:title "String Syntax")
@@ -300,6 +301,19 @@ $window => #[js-object]
 (map @toString (list 1 2 3)) => (\"1\" \"2\" \"3\")")
   (:rationale
    (paragraph "See rationale for " (hyper '(manual . stx-js-global)) ".")))
+
+(define-manual-syntax (manual . stx-line-comment)
+  (:title "Line Comment Syntax")
+  (:syntax "; comment")
+  (:content
+   (paragraph
+    "Syntax for comments until the end of the line."))
+  (:example
+   "; this is a comment
+
+;;; this is also a comment")
+  (:rationale (paragraph "Classic Lisp.")))
+
 
 (define-section (manual . sec-evaluation)
   (:title "Evaluation")
