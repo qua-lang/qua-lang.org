@@ -162,8 +162,9 @@
   (:rationale
    (paragraph "While Qua handles " (hyper '(manual
    . concept-namespace) "namespaces") " differently than existing
-   Lisps, it makes sense to keep the familiar syntax for referring to
-   functions.")))
+   Lisps, it makes sense to keep the familiar syntax for referring to "
+   (hyper '(manual . class-function) "functions") ", and more
+   generally, " (hyper '(manual . concept-operator) "operators") ".")))
 
 (define-manual-naming-convention (manual . stx-dynamic-variable)
   (:title "Dynamic Variable Naming Convention")
@@ -177,7 +178,8 @@
   (:rationale
    (paragraph "Using special prefixes and suffixes prevents having to
    use prefixes like ``current-'' for dynamic variable names to
-   distinguish them from local variables.")))
+   distinguish them from local " (hyper '(manual
+   . concept-variable) "variables") ".")))
 
 (define-manual-naming-convention (manual . stx-constant-variable)
   (:title "Constant Variable Naming Convention")
@@ -186,8 +188,9 @@
    (paragraph
     "Names of " (hyper '(manual . concept-constant-variable) "constant
     variables") " are wrapped in ``+'' by convention.  This should be
-    used for global variables that are never reassigned, and that are
-    bound to objects whose contents are immutable."))
+    used for " (hyper '(manual . concept-variable) "variables") " that
+    are never reassigned, and that are bound to objects whose contents
+    are immutable."))
   (:example
    "(defconstant +my-constant+ 23)")
   (:rationale
@@ -200,9 +203,9 @@
    (paragraph
     "Names of " (hyper '(manual . concept-global-variable) "global
     variables") " are wrapped in ``-'' by convention.  This should be
-    used for global variables that are reassigned, like a global
-    counter, or that are bound to objects whose contents are mutated,
-    like a global hash table."))
+    used for " (hyper '(manual . concept-variable) "variables") " that
+    are reassigned, like a global counter, or that are bound to
+    objects whose contents are mutated, like a global hash table."))
   (:example "(def -my-global-hash-table- (js-object))")
   (:rationale
    (paragraph "It seems like a good idea to syntactically distinguish
@@ -257,11 +260,13 @@
     variable.  This is syntactic sugar for " (hyper '(manual
     . op-js-global)) "."))
   (:example
-   ";; Used to access global variables ...
+   ";; Access global JavaScript variables:
 $window => #[js-object]
-;; ... and call global JS functions:
+
+;; Call global JS functions:
 ($alert \"Hello world!\") => #void
 
+;; Update global JavaScript variables:
 (setf $SOME_JS_VARIABLE 12) => 12")
   (:rationale
    (paragraph "Qua needs convenient access to JS globals, so it seems
@@ -408,11 +413,12 @@ x => 1 ; Identifier form
   (:content
    (paragraph "A constant is a built-in " (hyper '(manual
    . class-object)) " that is a " (hyper '(manual
-   . concept-self-evaluating-form)) ".  It is
-   not possible for the Qua programmer to define new constants.
-   Constants are distinct from " (hyper '(manual
-   . concept-constant-variable) "constant variables") ", which are
-   simply variables that are (hopefully) never modified.")
+   . concept-self-evaluating-form)) ".  It is not possible for the Qua
+   programmer to define new constants.  Constants are distinct
+   from " (hyper '(manual . concept-constant-variable) "constant
+   variables") ", which are simply " (hyper '(manual
+   . concept-variable) "variables") " that are (hopefully) never
+   modified.")
   (paragraph "Core Qua has the following constants: "
              (hyper '(manual . const-nil)) ", "
              (hyper '(manual . const-t)) ", "
@@ -673,6 +679,7 @@ x => 1 ; Variable binding
   (:child
    (hyper '(manual . concept-definiend))
    (hyper '(manual . concept-binding))
+   (hyper '(manual . concept-variable))
    (hyper '(manual . concept-global-variable))
    (hyper '(manual . concept-constant-variable))
    (hyper '(manual . class-environment))
@@ -688,6 +695,14 @@ x => 1 ; Variable binding
 
 (define-manual-concept (manual . concept-definiend)
   (:title "Definiend")
+  (:content
+   (paragraph ""))
+  (:example "")
+  (:rationale
+   (paragraph "")))
+
+(define-manual-concept (manual . concept-variable)
+  (:title "Variable")
   (:content
    (paragraph ""))
   (:example "")
@@ -956,12 +971,12 @@ x => 1 ; Variable binding
 (define-section (manual . sec-symbols)
   (:title "Symbols")
   (:child
-   (hyper '(manual . class-symbol))
    (hyper '(manual . concept-namespace))
    (hyper '(manual . concept-variable-namespace))
    (hyper '(manual . concept-function-namespace))
    (hyper '(manual . concept-keyword-namespace))
    (hyper '(manual . concept-type-namespace))
+   (hyper '(manual . class-symbol))
    (hyper '(manual . op-make-symbol))
    (hyper '(manual . op-symbol-name))
    (hyper '(manual . op-function-symbol))
