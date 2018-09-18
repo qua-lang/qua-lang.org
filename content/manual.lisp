@@ -339,7 +339,7 @@ $window => #[js-object]
    (hyper '(manual . concept-compound-form))
    (hyper '(manual . concept-operator))
    (hyper '(manual . concept-special-operator))
-   (hyper '(manual . concept-primitive-operator))
+   (hyper '(manual . concept-built-in-operator))
    (hyper '(manual . concept-parameter))
    (hyper '(manual . concept-environment-parameter))
    (hyper '(manual . concept-operand))
@@ -510,10 +510,13 @@ x => 1 ; Variable binding
    '(manual . concept-value)) ".")
    (paragraph "Operators can be classified as "
               (hyper '(manual . concept-special-operator) "special operators") ", "
-              (hyper '(manual . concept-primitive-operator) "primitive operators") ", "
+              (hyper '(manual . concept-built-in-operator) "built-in operators") ", "
               (hyper '(manual . class-fexpr) "fexprs") ", "
               (hyper '(manual . concept-macro) "macros") ", and "
-              (hyper '(manual . class-function) "functions") "."))
+              (hyper '(manual . class-function) "functions") ".  Note
+              that this classification is overlapping, e.g. an
+              operator may be a special operator and a built-in
+              operator."))
   (:example ";; + evaluates to a function operator.
 ;; It receives the list (1 2 3 4) as operand(s).
 ;; It returns the value 10.
@@ -532,7 +535,7 @@ x => 1 ; Variable binding
    its " (hyper '(manual . concept-operand) "operand(s)") " are "
    (hyper '(manual . sec-evaluation) "evaluated") ".")
    (paragraph "Special operators may be "
-              (hyper '(manual . concept-primitive-operator) "primitive operators") ", "
+              (hyper '(manual . concept-built-in-operator) "built-in operators") ", "
               (hyper '(manual . class-fexpr) "fexprs") ", or "
               (hyper '(manual . concept-macro) "macros") "."))
   (:example ";; IF is a special operator.  In this case,
@@ -542,16 +545,23 @@ x => 1 ; Variable binding
    (paragraph "Qua uses the term special operator to mean any operator
    with special evaluation rules.  The reason is that users need not
    be aware of how a special operator is implemented, be it as a
-   fexpr, macro, or primitive, only that it has special evaluation
+   fexpr, macro, or built-in, only that it has special evaluation
    rules.")))
 
-(define-manual-concept (manual . concept-primitive-operator)
-  (:title "Primitive Operator")
+(define-manual-concept (manual . concept-built-in-operator)
+  (:title "Built-in Operator")
   (:content
-   (paragraph ""))
-  (:example "")
+   (paragraph "A built-in operator is any " (hyper '(manual
+   . concept-operator)) " that is not implemented in Qua itself, but
+   in the underlying virtual machine.  Built-in operators may be "
+   (hyper '(manual . concept-special-operator) "special operators") " or "
+   (hyper '(manual . class-function) "functions") ".  Built-in
+   operators are not accessible to the programmer."))
+  (:example ";; No example.  Built-ins are not directly accessible.")
   (:rationale
-   (paragraph "")))
+   (paragraph "Built-ins are only documented in this manual because
+   they may appear in stack traces, since they are used in the
+   implementation of Qua.")))
 
 (define-manual-concept (manual . concept-parameter)
   (:title "Parameter")
