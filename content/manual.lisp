@@ -481,7 +481,7 @@ x => 1 ; Variable binding
 
 ;;; Non-symbol as first element:
 
-;; The LAMBDA gets evaluated normally and then receives (1 2) as operand
+;; The LAMBDA gets evaluated normally and then receives (1 2) as operands
 ((lambda (x y) (+ x y)) 1 2) => 3
 
 ;; Unlike Common Lisp, and like Kernel and Scheme, Qua allows any 
@@ -505,9 +505,9 @@ x => 1 ; Variable binding
   (:title "Operator")
   (:content
    (paragraph "All computation in Qua is performed by operators.  All
-   operators have in common that they receive an " (hyper '(manual
-   . concept-operand)) " (or a list of operands) and return a " (hyper
-   '(manual . concept-value)) ".")
+   operators have in common that they receive " (hyper '(manual
+   . concept-operand) "operands") " and return a " (hyper '(manual
+   . concept-value)) ".")
    (paragraph "Operators can be classified as "
               (hyper '(manual . concept-special-operator) "special operators") ", "
               (hyper '(manual . concept-built-in-operator) "built-in operators") ", "
@@ -518,7 +518,7 @@ x => 1 ; Variable binding
               operator may be a special operator and a built-in
               operator."))
   (:example ";; + evaluates to a function operator.
-;; It receives the list (1 2 3 4) as operand(s).
+;; It receives the list (1 2 3 4) as operands.
 ;; It returns the value 10.
 (+ 1 2 3 4) => 10")
   (:rationale
@@ -531,8 +531,8 @@ x => 1 ; Variable binding
   (:content
    (paragraph "A special operator is any " (hyper '(manual
    . concept-operator)) " that, unlike a " (hyper '(manual
-   . class-function)) ", uses special rules to determine what parts of
-   its " (hyper '(manual . concept-operand) "operand(s)") " are "
+   . class-function)) ", uses special rules to determine which of
+   its " (hyper '(manual . concept-operand) "operands") " are "
    (hyper '(manual . sec-evaluation) "evaluated") ".")
    (paragraph "Special operators may be "
               (hyper '(manual . concept-built-in-operator) "built-in operators") ", "
@@ -582,10 +582,31 @@ x => 1 ; Variable binding
 (define-manual-concept (manual . concept-operand)
   (:title "Operand")
   (:content
-   (paragraph ""))
-  (:example "")
+   (paragraph "The operands are the data passed as input to
+   an " (hyper '(manual . concept-operator)) ".  If the operator is a "
+   (hyper '(manual . concept-special-operator)) ", the operands are
+   passed to it unevaluated.  If the operator is a "
+   (hyper '(manual . class-function)) ", then each operand is " 
+   (hyper '(manual . sec-evaluation) "evaluated") ", and the result is
+   called an " (hyper '(manual . concept-argument)) "."))
+  (:example ";; A fexpr that receives two unevaluated operands and
+;; evaluates them explicitly:
+(deffexpr a-fexpr (op1 op2) env
+  (* (eval op1 env) (eval op2 env)))
+(a-fexpr (+ 1 1) (+ 2 2)) => 8
+
+;; A function that does the same thing -- its operands
+;; are automatically evaluated:
+(defun a-function (arg1 arg2)
+  (* arg1 arg2))
+(a-function (+ 1 1) (+ 2 2)) => 8
+
+;; Unlike most Lisps, and like Kernel, Qua doesn't actually
+;; require the operands of an operator to be a list.
+;; Here we pass a single number as operand to a fexpr:
+((vau x #ign x) . 1) => 1")
   (:rationale
-   (paragraph "")))
+   (paragraph "See " (hyper '(ref . kernel)))))
 
 (define-manual-concept (manual . concept-argument)
   (:title "Argument")
