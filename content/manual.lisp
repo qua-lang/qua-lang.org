@@ -340,10 +340,10 @@ $window => #[js-object]
    (hyper '(manual . concept-operator))
    (hyper '(manual . concept-special-operator))
    (hyper '(manual . concept-built-in-operator))
-   (hyper '(manual . concept-parameter))
-   (hyper '(manual . concept-environment-parameter))
    (hyper '(manual . concept-operand))
    (hyper '(manual . concept-argument))
+   (hyper '(manual . concept-parameter))
+   (hyper '(manual . concept-environment-parameter))
    (hyper '(manual . concept-value))
    (hyper '(manual . class-fexpr))
    (hyper '(manual . op-vau))
@@ -475,8 +475,9 @@ x => 1 ; Variable binding
 ;; symbol and then looked up.
 (+ 1 2) => 3
 
-;; It is also possible to specify a function symbol as first element
-;; explicitly and write it like this:
+;; It is also possible, although never done in practice,
+;; to specify a function symbol as first element explicitly
+;; and write it like this:
 (#'+ 1 2) => 3
 
 ;;; Non-symbol as first element:
@@ -563,22 +564,6 @@ x => 1 ; Variable binding
    they may appear in stack traces, since they are used in the
    implementation of Qua.")))
 
-(define-manual-concept (manual . concept-parameter)
-  (:title "Parameter")
-  (:content
-   (paragraph ""))
-  (:example "")
-  (:rationale
-   (paragraph "")))
-
-(define-manual-concept (manual . concept-environment-parameter)
-  (:title "Environment Parameter")
-  (:content
-   (paragraph ""))
-  (:example "")
-  (:rationale
-   (paragraph "")))
-
 (define-manual-concept (manual . concept-operand)
   (:title "Operand")
   (:content
@@ -596,7 +581,7 @@ x => 1 ; Variable binding
 (a-fexpr (+ 1 1) (+ 2 2)) => 8
 
 ;; A function that does the same thing -- its operands
-;; are automatically evaluated:
+;; are automatically evaluated to arguments:
 (defun a-function (arg1 arg2)
   (* arg1 arg2))
 (a-function (+ 1 1) (+ 2 2)) => 8
@@ -606,10 +591,78 @@ x => 1 ; Variable binding
 ;; Here we pass a single number as operand to a fexpr:
 ((vau x #ign x) . 1) => 1")
   (:rationale
-   (paragraph "See " (hyper '(ref . kernel)))))
+   (paragraph "See " (hyper '(ref . kernel)) ".")))
 
 (define-manual-concept (manual . concept-argument)
   (:title "Argument")
+  (:content
+   (paragraph "An argument is the result of " (hyper '(manual
+   . sec-evaluation) "evaluating") " an " (hyper '(manual
+   . concept-operand)) "."))
+  (:example ";; Operands to a function are automatically evaluated to arguments.
+;; Here (+ 1 1) and (+ 2 2) are the operands to the * function.  They
+;; are evaluated to the arguments 2 and 4 before being passed to the
+;; function.
+(* (+ 1 1) (+ 2 2)) => 8")
+  (:rationale
+   (paragraph "See " (hyper '(ref . kernel)) ".")))
+
+(define-manual-concept (manual . concept-parameter)
+  (:title "Parameter")
+  (:content
+   (paragraph "Parameters are the means by which " (hyper '(manual
+   . concept-operator) "operators") " receive and assign names to " (hyper
+   '(manual . concept-operand) "operands")
+   " and " (hyper '(manual . concept-argument) "arguments") " passed
+   to them.")
+   (paragraph "If a parameter is a " (hyper '(manual
+   . class-symbol)) ", the operand or argument is bound to 
+   the name of the symbol within the body of the operator.")
+   (paragraph "If a parameter is a " (hyper '(manual . class-cons)) ",
+   the " (hyper '(manual . op-car)) " and " (hyper '(manual
+   . op-cdr)) " are recursively treated as parameters, giving rise to
+   so-called parameter trees (see example below). These allow
+   destructuring of operands and arguments that are lists.")
+   (paragraph "If a parameter is " (hyper '(manual . const-nil)) "
+   there must be no more arguments, or an error is signalled.")
+   (paragraph "If a parameter is " (hyper '(manual . const-ign)) "
+   its corresponding argument is ignored (not bound to a name)."))
+  (:example ";; A function that binds its whole argument list to a single name:
+(defun return-args-list args
+  args)
+(return-args-list 1 2 3 4) => (1 2 3 4)
+(return-args-list) => ()
+
+;; A function that binds the first two arguments to the names A and B,
+;; and the rest of the arguments to the name C:
+(defun rest-args (a b . c)
+  (list a b c))
+(rest-args 1 2 3 4) => (1 2 (3 4))
+(rest-args 1 2) => (1 2 ())
+
+;; A function that allows no arguments:
+(defun no-args () 1)
+(no-args) => 1
+;; Same thing as:
+(defun no-args #nil 1)
+
+;; It is also possible to deeply destructure operands and arguments by
+;; means of parameter trees.  Here, A gets bound to the first
+;; argument, 1.  B gets bound to the first element of the second
+;; argument (which is a list), 2.  C gets bound to the rest of the
+;; second argument, (3 4).
+(defun destructure (a (b . c))
+  (list a b c))
+(destructure 1 '(2 3 4)) => (1 2 (3 4))
+
+;; A function that ignores everything past the first argument:
+(defun ignore (a . #ign) a)
+(ignore 1 2 3 4) => 1")
+  (:rationale
+   (paragraph "See " (hyper '(ref . kernel)) ".")))
+
+(define-manual-concept (manual . concept-environment-parameter)
+  (:title "Environment Parameter")
   (:content
    (paragraph ""))
   (:example "")
