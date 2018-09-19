@@ -642,7 +642,7 @@ x => 1 ; Variable binding
 (rest-args 1 2) => (1 2 ())
 
 ;; A function that allows no arguments (in other words, the operand
-must be #NIL):
+;; must be #NIL):
 (defun no-args () 1)
 (no-args) => 1
 ;; Same thing as:
@@ -697,7 +697,8 @@ must be #NIL):
    (paragraph (term "Value") " is the term for any " (hyper '(manual
    . class-object)) " that is the result of the " (hyper '(manual
    . sec-evaluation) "evaluation") " of a " (hyper '(manual
-   . concept-form)) " or ."))
+   . concept-form)) " or that is the value of a " (hyper '(manual
+   . concept-binding)) "."))
   (:example ";; The form (+ 1 1) evaluates to the value 2:
 (+ 1 1) => 2")
   (:rationale
