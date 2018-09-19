@@ -705,7 +705,10 @@ x => 1 ; Variable binding
    . concept-form)) " or that is the value of a " (hyper '(manual
    . concept-binding)) "."))
   (:example ";; The form (+ 1 1) evaluates to the value 2:
-(+ 1 1) => 2")
+(+ 1 1) => 2
+
+(def x 1)
+x => 1 ; the variable X is bound to the value 1")
   (:rationale
    (paragraph "Classic Lisp.")))
 
