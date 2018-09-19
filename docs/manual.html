@@ -90,7 +90,9 @@ $window =&gt; #[js-object]
 ;;; this is also a comment</pre><h4>Rationale:</h4><div><p>Classic Lisp.</p></div></div></div><div><a id="sec-evaluation"><h2>Evaluation</h2></a><p><span class="term">Evaluation</span> is the process of turning
    a <a href="manual.html#concept-form" style="text-transform: lowercase">Form</a> into a <a href="manual.html#concept-value" style="text-transform: lowercase">Value</a>.  Evaluation happens either implicitly, e.g. at
    the REPL, or explicitly, under programmer control via <a href="manual.html#op-eval" style="text-transform: lowercase"><strong>EVAL</strong></a>.</p><div><h3 class="operator-title"><a id="concept-form">Form <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p>A <span class="term">form</span> is any <a href="manual.html#class-object" style="text-transform: lowercase">OBJECT</a>
-  meant to be evaluated.  It is either a <a href="manual.html#concept-self-evaluating-form" style="text-transform: lowercase">Self-Evaluating Form</a>, an <a href="manual.html#concept-identifier-form" style="text-transform: lowercase">Identifier Form</a>, or a <a href="manual.html#concept-compound-form" style="text-transform: lowercase">Compound Form</a>.</p></div><h4>Examples:</h4><pre>;; Self-evaluating forms:
+  meant to be <a href="manual.html#sec-evaluation">evaluated</a>.  It
+  is either a <a href="manual.html#concept-self-evaluating-form" style="text-transform: lowercase">Self-Evaluating Form</a>,
+  an <a href="manual.html#concept-identifier-form" style="text-transform: lowercase">Identifier Form</a>, or a <a href="manual.html#concept-compound-form" style="text-transform: lowercase">Compound Form</a>.</p></div><h4>Examples:</h4><pre>;; Self-evaluating forms:
 #t =&gt; #t
 12 =&gt; 12
 &quot;foo&quot; =&gt; &quot;foo&quot;
@@ -211,8 +213,8 @@ x =&gt; 1 ; Variable binding
    the <a href="manual.html#op-car" style="text-transform: lowercase"><strong>CAR</strong></a> and <a href="manual.html#op-cdr" style="text-transform: lowercase"><strong>CDR</strong></a> are recursively treated as parameters, giving rise to
    so-called <span class="term">parameter trees</span> (see example below). These
    allow destructuring of <a href="manual.html#concept-operand">operand trees</a>.</p><p>If a parameter is <a href="manual.html#const-nil" style="text-transform: lowercase"><strong>#NIL</strong></a>,
-              the operand must also be <a href="manual.html#const-nil" style="text-transform: lowercase"><strong>#NIL</strong></a> or an error is signalled.</p><p>If a parameter is <a href="manual.html#const-ign" style="text-transform: lowercase"><strong>#IGN</strong></a> its
-   operand or argument is ignored (not <a href="manual.html#concept-binding">bound</a> to a name).</p></div><h4>Examples:</h4><pre>;; A function that binds its whole argument list to a single name:
+              the operand must also be <a href="manual.html#const-nil" style="text-transform: lowercase"><strong>#NIL</strong></a> or an error is signalled.</p><p>If a parameter is <a href="manual.html#const-ign" style="text-transform: lowercase"><strong>#IGN</strong></a>,
+   the operand is ignored (not <a href="manual.html#concept-binding">bound</a> to a name).</p></div><h4>Examples:</h4><pre>;; A function that binds its whole argument list to a single name:
 (defun return-args-list args
   args)
 (return-args-list 1 2 3 4) =&gt; (1 2 3 4)

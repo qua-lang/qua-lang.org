@@ -373,8 +373,9 @@ $window => #[js-object]
   (:content
    (paragraph
     "A " (term "form") " is any " (hyper '(manual . class-object)) "
-  meant to be evaluated.  It is either a " (hyper '(manual
-  . concept-self-evaluating-form)) ", an "
+  meant to be " (hyper '(manual . sec-evaluation) "evaluated") ".  It
+  is either a " (hyper '(manual . concept-self-evaluating-form)) ",
+  an "
   (hyper '(manual . concept-identifier-form)) ", or a "
   (hyper '(manual . concept-compound-form)) "."))
   (:example ";; Self-evaluating forms:
@@ -631,8 +632,8 @@ x => 1 ; Variable binding
    (paragraph "If a parameter is " (hyper '(manual . const-nil)) ",
               the operand must also be " (hyper '(manual
               . const-nil)) " or an error is signalled.")
-   (paragraph "If a parameter is " (hyper '(manual . const-ign)) " its
-   operand or argument is ignored (not " (hyper '(manual
+   (paragraph "If a parameter is " (hyper '(manual . const-ign)) ",
+   the operand is ignored (not " (hyper '(manual
    . concept-binding) "bound") " to a name)."))
   (:example ";; A function that binds its whole argument list to a single name:
 (defun return-args-list args
