@@ -167,9 +167,8 @@ x =&gt; 1 ; Variable binding
 ;; the form (* 3 3) is never evaluated.
 (if #t (* 2 2) (* 3 3)) =&gt; 4</pre><h4>Rationale:</h4><div><p>Qua uses the term special operator to mean any operator
    with special evaluation rules.  The reason is that users need not
-   be aware of how a special operator is implemented, be it as a
-   fexpr or macro only that it has special evaluation
-   rules.</p></div></div><div><h3 class="operator-title"><a id="concept-operand">Operand <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p>The <span class="term">operands</span> are the data passed as input to
+   be aware of how a special operator is implemented, be it as a fexpr
+   or macro, only that it has special evaluation rules.</p></div></div><div><h3 class="operator-title"><a id="concept-operand">Operand <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p>The <span class="term">operands</span> are the data passed as input to
    an <a href="manual.html#concept-operator" style="text-transform: lowercase">Operator</a>.  If the operator is a <a href="manual.html#concept-special-operator" style="text-transform: lowercase">Special Operator</a>, the operands are
    passed to it unevaluated.  If the operator is a <a href="manual.html#class-function" style="text-transform: lowercase">FUNCTION</a>, then each operand is <a href="manual.html#sec-evaluation">evaluated</a>, and the result is
    called an <a href="manual.html#concept-argument" style="text-transform: lowercase">Argument</a>.</p><p>While the operands passed to a function must be
@@ -201,12 +200,13 @@ x =&gt; 1 ; Variable binding
 ;; parameter tree (x ((y))):
 (deffexpr weird (x ((y))) #ign
   (+ x y))
-(weird 1 ((2))) =&gt; 3</pre><h4>Rationale:</h4><div><p>See <span class="ref-inline">[<a href="https://web.cs.wpi.edu/~jshutt/kernel.html">The Kernel Programming Language</a>]</span>.</p></div></div><div><h3 class="operator-title"><a id="concept-argument">Argument <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p>An <span class="term">argument</span> is the result of <a href="manual.html#sec-evaluation">evaluating</a> an <a href="manual.html#concept-operand" style="text-transform: lowercase">Operand</a>.</p></div><h4>Examples:</h4><pre>;; Operands to a function are automatically evaluated to arguments.
+(weird 1 ((2))) =&gt; 3</pre><h4>Rationale:</h4><div><p>See <span class="ref-inline">[<a href="https://web.cs.wpi.edu/~jshutt/kernel.html">The Kernel Programming Language</a>]</span>.</p></div></div><div><h3 class="operator-title"><a id="concept-argument">Argument <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p>An <span class="term">argument</span> is the result of <a href="manual.html#sec-evaluation">evaluating</a> an <a href="manual.html#concept-operand" style="text-transform: lowercase">Operand</a>.</p><p>Since arguments are simply evaluated operands, we
+   sometimes refer to them as operands.</p></div><h4>Examples:</h4><pre>;; Operands to a function are automatically evaluated to arguments.
 ;; Here (+ 1 1) and (+ 2 2) are the operands to the * function.  They
 ;; are evaluated to the arguments 2 and 4 before being passed to the
 ;; function.
 (* (+ 1 1) (+ 2 2)) =&gt; 8</pre><h4>Rationale:</h4><div><p>See <span class="ref-inline">[<a href="https://web.cs.wpi.edu/~jshutt/kernel.html">The Kernel Programming Language</a>]</span>.</p></div></div><div><h3 class="operator-title"><a id="concept-parameter">Parameter <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p><span class="term">Parameters</span> are the means by which <a href="manual.html#concept-operator">operators</a> receive and assign names to <a href="manual.html#concept-operand">operands</a> and <a href="manual.html#concept-argument">arguments</a> passed
-   to them.</p><p>If a parameter is a <a href="manual.html#class-symbol" style="text-transform: lowercase">SYMBOL</a>, the operand or argument is <a href="manual.html#concept-binding">bound</a> to the name of the symbol within the
+   to them.</p><p>If a parameter is a <a href="manual.html#class-symbol" style="text-transform: lowercase">SYMBOL</a>, the operand is <a href="manual.html#concept-binding">bound</a> to the name of the symbol within the
    body of the operator.</p><p>If a parameter is a <a href="manual.html#class-cons" style="text-transform: lowercase">CONS</a>,
    the <a href="manual.html#op-car" style="text-transform: lowercase"><strong>CAR</strong></a> and <a href="manual.html#op-cdr" style="text-transform: lowercase"><strong>CDR</strong></a> are recursively treated as parameters, giving rise to
    so-called <span class="term">parameter trees</span> (see example below). These
@@ -261,7 +261,10 @@ x =&gt; 1 ; Variable binding
 (deffexpr other-fexpr () #ign
   12)
 (other-fexpr) =&gt; 12</pre><h4>Rationale:</h4><div><p>See <span class="ref-inline">[<a href="https://web.cs.wpi.edu/~jshutt/kernel.html">The Kernel Programming Language</a>]</span>.</p></div></div><div><h3 class="operator-title"><a id="concept-value">Value <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p><span class="term">Value</span> is the term for any <a href="manual.html#class-object" style="text-transform: lowercase">OBJECT</a> that is the result of the <a href="manual.html#sec-evaluation">evaluation</a> of a <a href="manual.html#concept-form" style="text-transform: lowercase">Form</a> or that is the value of a <a href="manual.html#concept-binding" style="text-transform: lowercase">Binding</a>.</p></div><h4>Examples:</h4><pre>;; The form (+ 1 1) evaluates to the value 2:
-(+ 1 1) =&gt; 2</pre><h4>Rationale:</h4><div><p>Classic Lisp.</p></div></div><div><h3 class="operator-title"><a id="class-fexpr">FEXPR <em> (Class)</em></a></h3><div></div><h4>Description:</h4><div><p>Fexprs are the fundamental building block of
+(+ 1 1) =&gt; 2
+
+(def x 1)
+x =&gt; 1 ; the variable X is bound to the value 1</pre><h4>Rationale:</h4><div><p>Classic Lisp.</p></div></div><div><h3 class="operator-title"><a id="class-fexpr">FEXPR <em> (Class)</em></a></h3><div></div><h4>Description:</h4><div><p>Fexprs are the fundamental building block of
    computation in Qua.  A fexpr is conceptually like a <a href="manual.html#class-function">function</a>, but it does not evaluate
    its arguments, and receives the lexical environment in which it is
    called as a parameter.</p></div><h4>Examples:</h4><pre>;; A very simple fexpr that simply returns its single operand,

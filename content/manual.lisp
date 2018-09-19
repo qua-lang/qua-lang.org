@@ -545,9 +545,8 @@ x => 1 ; Variable binding
   (:rationale
    (paragraph "Qua uses the term special operator to mean any operator
    with special evaluation rules.  The reason is that users need not
-   be aware of how a special operator is implemented, be it as a
-   fexpr or macro only that it has special evaluation
-   rules.")))
+   be aware of how a special operator is implemented, be it as a fexpr
+   or macro, only that it has special evaluation rules.")))
 
 (define-manual-concept (manual . concept-operand)
   (:title "Operand")
@@ -600,7 +599,9 @@ x => 1 ; Variable binding
   (:content
    (paragraph "An " (term "argument") " is the result of " (hyper
    '(manual . sec-evaluation) "evaluating") " an " (hyper '(manual
-   . concept-operand)) "."))
+   . concept-operand)) ".")
+   (paragraph "Since arguments are simply evaluated operands, we
+   sometimes refer to them as operands."))
   (:example ";; Operands to a function are automatically evaluated to arguments.
 ;; Here (+ 1 1) and (+ 2 2) are the operands to the * function.  They
 ;; are evaluated to the arguments 2 and 4 before being passed to the
@@ -618,7 +619,7 @@ x => 1 ; Variable binding
    " and " (hyper '(manual . concept-argument) "arguments") " passed
    to them.")
    (paragraph "If a parameter is a " (hyper '(manual
-   . class-symbol)) ", the operand or argument is " (hyper '(manual
+   . class-symbol)) ", the operand is " (hyper '(manual
    . concept-binding) "bound") " to the name of the symbol within the
    body of the operator.")
    (paragraph "If a parameter is a " (hyper '(manual . class-cons)) ",
