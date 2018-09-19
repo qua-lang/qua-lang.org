@@ -189,8 +189,9 @@
     "Names of " (hyper '(manual . concept-constant-variable) "constant
     variables") " are wrapped in ``+'' by convention.  This should be
     used for " (hyper '(manual . concept-variable) "variables") " that
-    are never reassigned, and that are bound to objects whose contents
-    are immutable."))
+    are never reassigned, and that are " (hyper '(manual
+    . concept-binding) "bound") " to objects whose contents are
+    immutable."))
   (:example
    "(defconstant +my-constant+ 23)")
   (:rationale
@@ -204,8 +205,9 @@
     "Names of " (hyper '(manual . concept-global-variable) "global
     variables") " are wrapped in ``-'' by convention.  This should be
     used for " (hyper '(manual . concept-variable) "variables") " that
-    are reassigned, like a global counter, or that are bound to
-    objects whose contents are mutated, like a global hash table."))
+    are reassigned, like a global counter, or that are " (hyper
+    '(manual . concept-binding) "bound") " to objects whose contents
+    are mutated, like a global hash table."))
   (:example "(def -my-global-hash-table- (js-object))")
   (:rationale
    (paragraph "It seems like a good idea to syntactically distinguish
@@ -441,7 +443,8 @@ x => 1 ; Identifier form
               (hyper '(manual . sec-evaluation) "evaluates") " to the
               value of the " (hyper '(manual . concept-binding)) "
               identified by the symbol.  An error is signaled if the
-              symbol is unbound."))
+              symbol is " (hyper '(manual
+              . concept-binding) "unbound") "."))
   (:example "
 (def x 1)
 x => 1 ; Variable binding
@@ -615,8 +618,9 @@ x => 1 ; Variable binding
    " and " (hyper '(manual . concept-argument) "arguments") " passed
    to them.")
    (paragraph "If a parameter is a " (hyper '(manual
-   . class-symbol)) ", the operand or argument is bound to 
-   the name of the symbol within the body of the operator.")
+   . class-symbol)) ", the operand or argument is " (hyper '(manual
+   . concept-binding) "bound") " to the name of the symbol within the
+   body of the operator.")
    (paragraph "If a parameter is a " (hyper '(manual . class-cons)) ",
    the " (hyper '(manual . op-car)) " and " (hyper '(manual
    . op-cdr)) " are recursively treated as parameters, giving rise to
@@ -626,8 +630,9 @@ x => 1 ; Variable binding
    (paragraph "If a parameter is " (hyper '(manual . const-nil)) ",
               the operand must also be " (hyper '(manual
               . const-nil)) " or an error is signalled.")
-   (paragraph "If a parameter is " (hyper '(manual . const-ign)) "
-   its operand or argument is ignored (not bound to a name)."))
+   (paragraph "If a parameter is " (hyper '(manual . const-ign)) " its
+   operand or argument is ignored (not " (hyper '(manual
+   . concept-binding) "bound") " to a name)."))
   (:example ";; A function that binds its whole argument list to a single name:
 (defun return-args-list args
   args)

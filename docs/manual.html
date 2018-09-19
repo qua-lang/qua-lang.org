@@ -53,12 +53,12 @@
    distinguish them from local <a href="manual.html#concept-variable">variables</a>.</p></div></div><div><h3 class="operator-title"><a id="stx-constant-variable">Constant Variable Naming Convention <em> (Naming Convention)</em></a></h3><div><h4>Syntax:</h4><tt>+constant-name+</tt></div><h4>Description:</h4><div><p>Names of <a href="manual.html#concept-constant-variable">constant
     variables</a> are wrapped in ``+&#39;&#39; by convention.  This should be
     used for <a href="manual.html#concept-variable">variables</a> that
-    are never reassigned, and that are bound to objects whose contents
-    are immutable.</p></div><h4>Examples:</h4><pre>(defconstant +my-constant+ 23)</pre><h4>Rationale:</h4><div><p>Common Lisp convention.</p></div></div><div><h3 class="operator-title"><a id="stx-global-variable">Global Variable Naming Convention <em> (Naming Convention)</em></a></h3><div><h4>Syntax:</h4><tt>-global-name-</tt></div><h4>Description:</h4><div><p>Names of <a href="manual.html#concept-global-variable">global
+    are never reassigned, and that are <a href="manual.html#concept-binding">bound</a> to objects whose contents are
+    immutable.</p></div><h4>Examples:</h4><pre>(defconstant +my-constant+ 23)</pre><h4>Rationale:</h4><div><p>Common Lisp convention.</p></div></div><div><h3 class="operator-title"><a id="stx-global-variable">Global Variable Naming Convention <em> (Naming Convention)</em></a></h3><div><h4>Syntax:</h4><tt>-global-name-</tt></div><h4>Description:</h4><div><p>Names of <a href="manual.html#concept-global-variable">global
     variables</a> are wrapped in ``-&#39;&#39; by convention.  This should be
     used for <a href="manual.html#concept-variable">variables</a> that
-    are reassigned, like a global counter, or that are bound to
-    objects whose contents are mutated, like a global hash table.</p></div><h4>Examples:</h4><pre>(def -my-global-hash-table- (js-object))</pre><h4>Rationale:</h4><div><p>It seems like a good idea to syntactically distinguish
+    are reassigned, like a global counter, or that are <a href="manual.html#concept-binding">bound</a> to objects whose contents
+    are mutated, like a global hash table.</p></div><h4>Examples:</h4><pre>(def -my-global-hash-table- (js-object))</pre><h4>Rationale:</h4><div><p>It seems like a good idea to syntactically distinguish
    global variables, analogous to dynamic variables.</p></div></div><div><h3 class="operator-title"><a id="stx-js-global">JS Global Variable Syntax <em> (Syntax)</em></a></h3><div><h4>Syntax:</h4><tt>$variable</tt></div><h4>Description:</h4><div><p>Syntax for accessing a JavaScript global variable or function.
     Can be used with <a href="manual.html#op-setf" style="text-transform: lowercase"><strong>SETF</strong></a> to update the
     variable.  This is syntactic sugar for <a href="manual.html#op-js-global" style="text-transform: lowercase"><strong>JS-GLOBAL</strong></a>.</p></div><h4>Examples:</h4><pre>;; Access global JavaScript variables:
@@ -114,7 +114,7 @@ x =&gt; 1 ; Identifier form
               an <span class="term">identifier form</span> and <a href="manual.html#sec-evaluation">evaluates</a> to the
               value of the <a href="manual.html#concept-binding" style="text-transform: lowercase">Binding</a>
               identified by the symbol.  An error is signaled if the
-              symbol is unbound.</p></div><h4>Examples:</h4><pre>
+              symbol is <a href="manual.html#concept-binding">unbound</a>.</p></div><h4>Examples:</h4><pre>
 (def x 1)
 x =&gt; 1 ; Variable binding
 
@@ -206,13 +206,13 @@ x =&gt; 1 ; Variable binding
 ;; are evaluated to the arguments 2 and 4 before being passed to the
 ;; function.
 (* (+ 1 1) (+ 2 2)) =&gt; 8</pre><h4>Rationale:</h4><div><p>See <span class="ref-inline">[<a href="https://web.cs.wpi.edu/~jshutt/kernel.html">The Kernel Programming Language</a>]</span>.</p></div></div><div><h3 class="operator-title"><a id="concept-parameter">Parameter <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p><span class="term">Parameters</span> are the means by which <a href="manual.html#concept-operator">operators</a> receive and assign names to <a href="manual.html#concept-operand">operands</a> and <a href="manual.html#concept-argument">arguments</a> passed
-   to them.</p><p>If a parameter is a <a href="manual.html#class-symbol" style="text-transform: lowercase">SYMBOL</a>, the operand or argument is bound to 
-   the name of the symbol within the body of the operator.</p><p>If a parameter is a <a href="manual.html#class-cons" style="text-transform: lowercase">CONS</a>,
+   to them.</p><p>If a parameter is a <a href="manual.html#class-symbol" style="text-transform: lowercase">SYMBOL</a>, the operand or argument is <a href="manual.html#concept-binding">bound</a> to the name of the symbol within the
+   body of the operator.</p><p>If a parameter is a <a href="manual.html#class-cons" style="text-transform: lowercase">CONS</a>,
    the <a href="manual.html#op-car" style="text-transform: lowercase"><strong>CAR</strong></a> and <a href="manual.html#op-cdr" style="text-transform: lowercase"><strong>CDR</strong></a> are recursively treated as parameters, giving rise to
    so-called <span class="term">parameter trees</span> (see example below). These
    allow destructuring of <a href="manual.html#concept-operand">operand trees</a>.</p><p>If a parameter is <a href="manual.html#const-nil" style="text-transform: lowercase"><strong>#NIL</strong></a>,
-              the operand must also be <a href="manual.html#const-nil" style="text-transform: lowercase"><strong>#NIL</strong></a> or an error is signalled.</p><p>If a parameter is <a href="manual.html#const-ign" style="text-transform: lowercase"><strong>#IGN</strong></a>
-   its operand or argument is ignored (not bound to a name).</p></div><h4>Examples:</h4><pre>;; A function that binds its whole argument list to a single name:
+              the operand must also be <a href="manual.html#const-nil" style="text-transform: lowercase"><strong>#NIL</strong></a> or an error is signalled.</p><p>If a parameter is <a href="manual.html#const-ign" style="text-transform: lowercase"><strong>#IGN</strong></a> its
+   operand or argument is ignored (not <a href="manual.html#concept-binding">bound</a> to a name).</p></div><h4>Examples:</h4><pre>;; A function that binds its whole argument list to a single name:
 (defun return-args-list args
   args)
 (return-args-list 1 2 3 4) =&gt; (1 2 3 4)
@@ -226,7 +226,7 @@ x =&gt; 1 ; Variable binding
 (rest-args 1 2) =&gt; (1 2 ())
 
 ;; A function that allows no arguments (in other words, the operand
-must be #NIL):
+;; must be #NIL):
 (defun no-args () 1)
 (no-args) =&gt; 1
 ;; Same thing as:
@@ -260,7 +260,7 @@ must be #NIL):
 ;; The environment parameter can be ignored if unneeded:
 (deffexpr other-fexpr () #ign
   12)
-(other-fexpr) =&gt; 12</pre><h4>Rationale:</h4><div><p>See <span class="ref-inline">[<a href="https://web.cs.wpi.edu/~jshutt/kernel.html">The Kernel Programming Language</a>]</span>.</p></div></div><div><h3 class="operator-title"><a id="concept-value">Value <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p><span class="term">Value</span> is the term for any <a href="manual.html#class-object" style="text-transform: lowercase">OBJECT</a> that is the result of the <a href="manual.html#sec-evaluation">evaluation</a> of a <a href="manual.html#concept-form" style="text-transform: lowercase">Form</a> or .</p></div><h4>Examples:</h4><pre>;; The form (+ 1 1) evaluates to the value 2:
+(other-fexpr) =&gt; 12</pre><h4>Rationale:</h4><div><p>See <span class="ref-inline">[<a href="https://web.cs.wpi.edu/~jshutt/kernel.html">The Kernel Programming Language</a>]</span>.</p></div></div><div><h3 class="operator-title"><a id="concept-value">Value <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p><span class="term">Value</span> is the term for any <a href="manual.html#class-object" style="text-transform: lowercase">OBJECT</a> that is the result of the <a href="manual.html#sec-evaluation">evaluation</a> of a <a href="manual.html#concept-form" style="text-transform: lowercase">Form</a> or that is the value of a <a href="manual.html#concept-binding" style="text-transform: lowercase">Binding</a>.</p></div><h4>Examples:</h4><pre>;; The form (+ 1 1) evaluates to the value 2:
 (+ 1 1) =&gt; 2</pre><h4>Rationale:</h4><div><p>Classic Lisp.</p></div></div><div><h3 class="operator-title"><a id="class-fexpr">FEXPR <em> (Class)</em></a></h3><div></div><h4>Description:</h4><div><p>Fexprs are the fundamental building block of
    computation in Qua.  A fexpr is conceptually like a <a href="manual.html#class-function">function</a>, but it does not evaluate
    its arguments, and receives the lexical environment in which it is
