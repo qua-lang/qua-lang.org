@@ -87,9 +87,10 @@ $window =&gt; #[js-object]
 ;; do things like:
 (map @toString (list 1 2 3)) =&gt; (&quot;1&quot; &quot;2&quot; &quot;3&quot;)</pre><h4>Rationale:</h4><div><p>See rationale for <a href="manual.html#stx-js-global">JS Global Variable Syntax</a>.</p></div></div><div><h3 class="operator-title"><a id="stx-line-comment">Line Comment Syntax <em> (Syntax)</em></a></h3><div><h4>Syntax:</h4><tt>; comment</tt></div><h4>Description:</h4><div><p>Syntax for comments until the end of the line.</p></div><h4>Examples:</h4><pre>; this is a comment
 
-;;; this is also a comment</pre><h4>Rationale:</h4><div><p>Classic Lisp.</p></div></div></div><div><a id="sec-evaluation"><h2>Evaluation</h2></a><p>Evaluation is the process of turning a <a href="manual.html#concept-form" style="text-transform: lowercase">Form</a> into a <a href="manual.html#concept-value" style="text-transform: lowercase">Value</a>.  Evaluation happens either implicitly,
-   e.g. at the REPL, or explicitly, under programmer control via <a href="manual.html#op-eval" style="text-transform: lowercase"><strong>EVAL</strong></a>.</p><div><h3 class="operator-title"><a id="concept-form">Form <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p>A form is any <a href="manual.html#class-object" style="text-transform: lowercase">OBJECT</a> meant to be
-  evaluated.  It is either a <a href="manual.html#concept-self-evaluating-form" style="text-transform: lowercase">Self-Evaluating Form</a>, an <a href="manual.html#concept-identifier-form" style="text-transform: lowercase">Identifier Form</a>, or a <a href="manual.html#concept-compound-form" style="text-transform: lowercase">Compound Form</a>.</p></div><h4>Examples:</h4><pre>;; Self-evaluating forms:
+;;; this is also a comment</pre><h4>Rationale:</h4><div><p>Classic Lisp.</p></div></div></div><div><a id="sec-evaluation"><h2>Evaluation</h2></a><p><span class="term">Evaluation</span> is the process of turning
+   a <a href="manual.html#concept-form" style="text-transform: lowercase">Form</a> into a <a href="manual.html#concept-value" style="text-transform: lowercase">Value</a>.  Evaluation happens either implicitly, e.g. at
+   the REPL, or explicitly, under programmer control via <a href="manual.html#op-eval" style="text-transform: lowercase"><strong>EVAL</strong></a>.</p><div><h3 class="operator-title"><a id="concept-form">Form <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p>A <span class="term">form</span> is any <a href="manual.html#class-object" style="text-transform: lowercase">OBJECT</a>
+  meant to be evaluated.  It is either a <a href="manual.html#concept-self-evaluating-form" style="text-transform: lowercase">Self-Evaluating Form</a>, an <a href="manual.html#concept-identifier-form" style="text-transform: lowercase">Identifier Form</a>, or a <a href="manual.html#concept-compound-form" style="text-transform: lowercase">Compound Form</a>.</p></div><h4>Examples:</h4><pre>;; Self-evaluating forms:
 #t =&gt; #t
 12 =&gt; 12
 &quot;foo&quot; =&gt; &quot;foo&quot;
@@ -100,15 +101,17 @@ x =&gt; 1 ; Identifier form
 
 ;; Compound forms:
 (+ 1 2) =&gt; 3
-(if #t 1 2) =&gt; 1</pre><h4>Rationale:</h4><div><p>Classic Lisp.</p></div></div><div><h3 class="operator-title"><a id="concept-self-evaluating-form">Self-Evaluating Form <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p><a href="manual.html#class-object">Objects</a> like <a href="manual.html#concept-constant">constants</a>, <a href="manual.html#class-string">strings</a>, <a href="manual.html#class-number">numbers</a>, and <a href="manual.html#concept-keyword-namespace">keyword symbols</a> are said to be ``self-evaluating&#39;&#39;, that is, they simply <a href="manual.html#sec-evaluation">evaluate</a> to themselves.</p></div><h4>Examples:</h4><pre>#t =&gt; #t
+(if #t 1 2) =&gt; 1</pre><h4>Rationale:</h4><div><p>Classic Lisp.</p></div></div><div><h3 class="operator-title"><a id="concept-self-evaluating-form">Self-Evaluating Form <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p><a href="manual.html#class-object">Objects</a> like <a href="manual.html#concept-constant">constants</a>, <a href="manual.html#class-string">strings</a>, <a href="manual.html#class-number">numbers</a>, and <a href="manual.html#concept-keyword-namespace">keyword symbols</a> are said to be <span class="term">self-evaluating forms</span>, that is, they
+    simply <a href="manual.html#sec-evaluation">evaluate</a> to themselves.</p></div><h4>Examples:</h4><pre>#t =&gt; #t
 12 =&gt; 12
 &quot;foo&quot; =&gt; &quot;foo&quot;
-:key =&gt; :key</pre><h4>Rationale:</h4><div><p>Classic Lisp.</p></div></div><div><h3 class="operator-title"><a id="concept-constant">Constant <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p>A constant is a built-in <a href="manual.html#class-object" style="text-transform: lowercase">OBJECT</a> that is a <a href="manual.html#concept-self-evaluating-form" style="text-transform: lowercase">Self-Evaluating Form</a>.  It is not possible for the Qua
+:key =&gt; :key</pre><h4>Rationale:</h4><div><p>Classic Lisp.</p></div></div><div><h3 class="operator-title"><a id="concept-constant">Constant <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p>A <span class="term">constant</span> is a built-in <a href="manual.html#class-object" style="text-transform: lowercase">OBJECT</a> that is a <a href="manual.html#concept-self-evaluating-form" style="text-transform: lowercase">Self-Evaluating Form</a>.  It is not possible for the Qua
    programmer to define new constants.  Constants are distinct
    from <a href="manual.html#concept-constant-variable">constant
    variables</a>, which are simply <a href="manual.html#concept-variable">variables</a> that are (hopefully) never
    modified.</p><p>Core Qua has the following constants: <a href="manual.html#const-nil" style="text-transform: lowercase"><strong>#NIL</strong></a>, <a href="manual.html#const-t" style="text-transform: lowercase"><strong>#T</strong></a>, <a href="manual.html#const-f" style="text-transform: lowercase"><strong>#F</strong></a>, <a href="manual.html#const-void" style="text-transform: lowercase"><strong>#VOID</strong></a>, and <a href="manual.html#const-ign" style="text-transform: lowercase"><strong>#IGN</strong></a>. In addition, there are <a href="manual.html#const-null" style="text-transform: lowercase"><strong>#NULL</strong></a> and <a href="manual.html#const-undefined" style="text-transform: lowercase"><strong>#UNDEFINED</strong></a> from JavaScript.</p></div><h4>Examples:</h4><pre>#t =&gt; #t
-#void =&gt; #void</pre><h4>Rationale:</h4><div><p>Classic Lisp.</p></div></div><div><h3 class="operator-title"><a id="concept-identifier-form">Identifier Form <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p>A <a href="manual.html#class-symbol" style="text-transform: lowercase">SYMBOL</a> used as a <a href="manual.html#concept-form" style="text-transform: lowercase">Form</a> is called an identifier form and <a href="manual.html#sec-evaluation">evaluates</a> to the
+#void =&gt; #void</pre><h4>Rationale:</h4><div><p>Classic Lisp.</p></div></div><div><h3 class="operator-title"><a id="concept-identifier-form">Identifier Form <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p>A <a href="manual.html#class-symbol" style="text-transform: lowercase">SYMBOL</a> used as a <a href="manual.html#concept-form" style="text-transform: lowercase">Form</a> is called
+              an <span class="term">identifier form</span> and <a href="manual.html#sec-evaluation">evaluates</a> to the
               value of the <a href="manual.html#concept-binding" style="text-transform: lowercase">Binding</a>
               identified by the symbol.  An error is signaled if the
               symbol is unbound.</p></div><h4>Examples:</h4><pre>
@@ -117,7 +120,8 @@ x =&gt; 1 ; Variable binding
 
 (defun x () 1)
 #&#39;x =&gt; #[function] ; Function binding
-</pre><h4>Rationale:</h4><div><p>Classic Lisp, with the difference that Qua treats the <a href="manual.html#concept-variable-namespace" style="text-transform: lowercase">Variable Namespace</a> and <a href="manual.html#concept-function-namespace" style="text-transform: lowercase">Function Namespace</a> uniformly.</p></div></div><div><h3 class="operator-title"><a id="concept-compound-form">Compound Form <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p>A <a href="manual.html#class-cons" style="text-transform: lowercase">CONS</a> used as a <a href="manual.html#concept-form" style="text-transform: lowercase">Form</a> is called a compound form.</p><p>If the <a href="manual.html#op-car" style="text-transform: lowercase"><strong>CAR</strong></a> of the compound
+</pre><h4>Rationale:</h4><div><p>Classic Lisp, with the difference that Qua treats the <a href="manual.html#concept-variable-namespace" style="text-transform: lowercase">Variable Namespace</a> and <a href="manual.html#concept-function-namespace" style="text-transform: lowercase">Function Namespace</a> uniformly.</p></div></div><div><h3 class="operator-title"><a id="concept-compound-form">Compound Form <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p>A <a href="manual.html#class-cons" style="text-transform: lowercase">CONS</a> used as a <a href="manual.html#concept-form" style="text-transform: lowercase">Form</a> is called a <span class="term">compound
+   form</span>.</p><p>If the <a href="manual.html#op-car" style="text-transform: lowercase"><strong>CAR</strong></a> of the compound
    form is a <a href="manual.html#class-symbol" style="text-transform: lowercase">SYMBOL</a>, it gets looked up
    in the <a href="manual.html#concept-function-namespace" style="text-transform: lowercase">Function Namespace</a>.</p><p>Otherwise, the <a href="manual.html#op-car" style="text-transform: lowercase"><strong>CAR</strong></a>
    gets <a href="manual.html#sec-evaluation">evaluated</a> normally.</p><p>In either case, the resulting value must be an <a href="manual.html#concept-operator" style="text-transform: lowercase">Operator</a>, or an error is signalled.</p><p>Finally, the <a href="manual.html#op-cdr" style="text-transform: lowercase"><strong>CDR</strong></a> of the
@@ -150,20 +154,22 @@ x =&gt; 1 ; Variable binding
    symbols used as the first element of a compound form specially, by
    looking them up in the <a href="manual.html#concept-function-namespace" style="text-transform: lowercase">Function Namespace</a>.  But like Kernel and Scheme, Qua
    places no restrictions on non-symbols used as the first element,
-   leading to slightly more expressivity.</p></div></div><div><h3 class="operator-title"><a id="concept-operator">Operator <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p>All computation in Qua is performed by operators.  All
-   operators have in common that they receive <a href="manual.html#concept-operand">operands</a> and return a <a href="manual.html#concept-value" style="text-transform: lowercase">Value</a>.</p><p>Operators can be classified as <a href="manual.html#concept-special-operator">special operators</a> (<a href="manual.html#class-fexpr">fexprs</a> and <a href="manual.html#concept-macro">macros</a>) and <a href="manual.html#class-function">functions</a>.</p></div><h4>Examples:</h4><pre>;; + evaluates to a function operator.
+   leading to slightly more expressivity.</p></div></div><div><h3 class="operator-title"><a id="concept-operator">Operator <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p>All computation in Qua is performed
+   by <span class="term">operators</span>.  All operators have in common that they
+   receive <a href="manual.html#concept-operand">operands</a> and
+   return a <a href="manual.html#concept-value" style="text-transform: lowercase">Value</a>.</p><p>Operators can be classified as <a href="manual.html#concept-special-operator">special operators</a> (<a href="manual.html#class-fexpr">fexprs</a> and <a href="manual.html#concept-macro">macros</a>) and <a href="manual.html#class-function">functions</a>.</p></div><h4>Examples:</h4><pre>;; + evaluates to a function operator.
 ;; It receives the list (1 2 3 4) as operands.
 ;; It returns the value 10.
 (+ 1 2 3 4) =&gt; 10</pre><h4>Rationale:</h4><div><p>Qua operators are what Kernel calls combiners.  I just
    couldn&#39;t get myself to use this word, so I chose operator instead,
-   since this term is used in Common Lisp for a similar concept.</p></div></div><div><h3 class="operator-title"><a id="concept-special-operator">Special Operator <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p>A special operator is an <a href="manual.html#concept-operator" style="text-transform: lowercase">Operator</a> that, unlike a <a href="manual.html#class-function" style="text-transform: lowercase">FUNCTION</a>, uses special rules to determine which of
+   since this term is used in Common Lisp for a similar concept.</p></div></div><div><h3 class="operator-title"><a id="concept-special-operator">Special Operator <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p>A <span class="term">special operator</span> is an <a href="manual.html#concept-operator" style="text-transform: lowercase">Operator</a> that, unlike a <a href="manual.html#class-function" style="text-transform: lowercase">FUNCTION</a>, uses special rules to determine which of
    its <a href="manual.html#concept-operand">operands</a> are <a href="manual.html#sec-evaluation">evaluated</a>.</p><p>Special operators may be <a href="manual.html#class-fexpr">fexprs</a> or <a href="manual.html#concept-macro">macros</a>.</p></div><h4>Examples:</h4><pre>;; IF is a special operator.  In this case,
 ;; the form (* 3 3) is never evaluated.
 (if #t (* 2 2) (* 3 3)) =&gt; 4</pre><h4>Rationale:</h4><div><p>Qua uses the term special operator to mean any operator
    with special evaluation rules.  The reason is that users need not
    be aware of how a special operator is implemented, be it as a
    fexpr or macro only that it has special evaluation
-   rules.</p></div></div><div><h3 class="operator-title"><a id="concept-operand">Operand <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p>The operands are the data passed as input to
+   rules.</p></div></div><div><h3 class="operator-title"><a id="concept-operand">Operand <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p>The <span class="term">operands</span> are the data passed as input to
    an <a href="manual.html#concept-operator" style="text-transform: lowercase">Operator</a>.  If the operator is a <a href="manual.html#concept-special-operator" style="text-transform: lowercase">Special Operator</a>, the operands are
    passed to it unevaluated.  If the operator is a <a href="manual.html#class-function" style="text-transform: lowercase">FUNCTION</a>, then each operand is <a href="manual.html#sec-evaluation">evaluated</a>, and the result is
    called an <a href="manual.html#concept-argument" style="text-transform: lowercase">Argument</a>.</p></div><h4>Examples:</h4><pre>;; A fexpr that receives two unevaluated operands and
@@ -181,15 +187,15 @@ x =&gt; 1 ; Variable binding
 ;; Unlike most Lisps, and like Kernel, Qua doesn&#39;t actually
 ;; require the operands of an operator to be a list.
 ;; Here we pass a single number as operand to a fexpr:
-((vau x #ign x) . 1) =&gt; 1</pre><h4>Rationale:</h4><div><p>See <span class="ref-inline">[<a href="https://web.cs.wpi.edu/~jshutt/kernel.html">The Kernel Programming Language</a>]</span>.</p></div></div><div><h3 class="operator-title"><a id="concept-argument">Argument <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p>An argument is the result of <a href="manual.html#sec-evaluation">evaluating</a> an <a href="manual.html#concept-operand" style="text-transform: lowercase">Operand</a>.</p></div><h4>Examples:</h4><pre>;; Operands to a function are automatically evaluated to arguments.
+((vau x #ign x) . 1) =&gt; 1</pre><h4>Rationale:</h4><div><p>See <span class="ref-inline">[<a href="https://web.cs.wpi.edu/~jshutt/kernel.html">The Kernel Programming Language</a>]</span>.</p></div></div><div><h3 class="operator-title"><a id="concept-argument">Argument <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p>An <span class="term">argument</span> is the result of <a href="manual.html#sec-evaluation">evaluating</a> an <a href="manual.html#concept-operand" style="text-transform: lowercase">Operand</a>.</p></div><h4>Examples:</h4><pre>;; Operands to a function are automatically evaluated to arguments.
 ;; Here (+ 1 1) and (+ 2 2) are the operands to the * function.  They
 ;; are evaluated to the arguments 2 and 4 before being passed to the
 ;; function.
-(* (+ 1 1) (+ 2 2)) =&gt; 8</pre><h4>Rationale:</h4><div><p>See <span class="ref-inline">[<a href="https://web.cs.wpi.edu/~jshutt/kernel.html">The Kernel Programming Language</a>]</span>.</p></div></div><div><h3 class="operator-title"><a id="concept-parameter">Parameter <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p>Parameters are the means by which <a href="manual.html#concept-operator">operators</a> receive and assign names to <a href="manual.html#concept-operand">operands</a> and <a href="manual.html#concept-argument">arguments</a> passed
+(* (+ 1 1) (+ 2 2)) =&gt; 8</pre><h4>Rationale:</h4><div><p>See <span class="ref-inline">[<a href="https://web.cs.wpi.edu/~jshutt/kernel.html">The Kernel Programming Language</a>]</span>.</p></div></div><div><h3 class="operator-title"><a id="concept-parameter">Parameter <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p><span class="term">Parameters</span> are the means by which <a href="manual.html#concept-operator">operators</a> receive and assign names to <a href="manual.html#concept-operand">operands</a> and <a href="manual.html#concept-argument">arguments</a> passed
    to them.</p><p>If a parameter is a <a href="manual.html#class-symbol" style="text-transform: lowercase">SYMBOL</a>, the operand or argument is bound to 
    the name of the symbol within the body of the operator.</p><p>If a parameter is a <a href="manual.html#class-cons" style="text-transform: lowercase">CONS</a>,
    the <a href="manual.html#op-car" style="text-transform: lowercase"><strong>CAR</strong></a> and <a href="manual.html#op-cdr" style="text-transform: lowercase"><strong>CDR</strong></a> are recursively treated as parameters, giving rise to
-   so-called parameter trees (see example below). These allow
+   so-called <span class="term">parameter trees</span> (see example below). These allow
    destructuring of operands and arguments that are lists.</p><p>If a parameter is <a href="manual.html#const-nil" style="text-transform: lowercase"><strong>#NIL</strong></a>
    there must be no more arguments, or an error is signalled.</p><p>If a parameter is <a href="manual.html#const-ign" style="text-transform: lowercase"><strong>#IGN</strong></a>
    its corresponding argument is ignored (not bound to a name).</p></div><h4>Examples:</h4><pre>;; A function that binds its whole argument list to a single name:
@@ -222,7 +228,25 @@ x =&gt; 1 ; Variable binding
 
 ;; A function that ignores everything past the first argument:
 (defun ignore (a . #ign) a)
-(ignore 1 2 3 4) =&gt; 1</pre><h4>Rationale:</h4><div><p>See <span class="ref-inline">[<a href="https://web.cs.wpi.edu/~jshutt/kernel.html">The Kernel Programming Language</a>]</span>.</p></div></div><div><h3 class="operator-title"><a id="concept-environment-parameter">Environment Parameter <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p></p></div><h4>Examples:</h4><pre></pre><h4>Rationale:</h4><div><p></p></div></div><div><h3 class="operator-title"><a id="concept-value">Value <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p></p></div><h4>Examples:</h4><pre></pre><h4>Rationale:</h4><div><p></p></div></div><div><h3 class="operator-title"><a id="class-fexpr">FEXPR <em> (Class)</em></a></h3><div></div><h4>Description:</h4><div><p>Fexprs are the fundamental building block of
+(ignore 1 2 3 4) =&gt; 1</pre><h4>Rationale:</h4><div><p>See <span class="ref-inline">[<a href="https://web.cs.wpi.edu/~jshutt/kernel.html">The Kernel Programming Language</a>]</span>.</p></div></div><div><h3 class="operator-title"><a id="concept-environment-parameter">Environment Parameter <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p>In addition to ordinary <a href="manual.html#concept-parameter">parameters</a>, <a href="manual.html#class-fexpr">fexprs</a> have a special
+   parameter, called <span class="term">environment parameter</span>, through which they
+   receive the <a href="manual.html#class-environment" style="text-transform: lowercase">ENVIRONMENT</a> in which they are called.</p></div><h4>Examples:</h4><pre>;; A fexpr that returns the value that the variable X has
+;; in the environment in which the fexpr is called (here the 
+;; environment parameter is called ENV but it could be called
+;; anything):
+(deffexpr lookup-x-in-environment () env
+  (eval &#39;x env))
+
+(def x 1)
+(lookup-x-in-environment) =&gt; 1
+(let ((x 2))
+  (lookup-x-in-environment)) =&gt; 2
+
+;; The environment parameter can be ignored if unneeded:
+(deffexpr other-fexpr () #ign
+  12)
+(other-fexpr) =&gt; 12</pre><h4>Rationale:</h4><div><p>See <span class="ref-inline">[<a href="https://web.cs.wpi.edu/~jshutt/kernel.html">The Kernel Programming Language</a>]</span>.</p></div></div><div><h3 class="operator-title"><a id="concept-value">Value <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p><span class="term">Value</span> is the term for any <a href="manual.html#class-object" style="text-transform: lowercase">OBJECT</a> that is the result of the <a href="manual.html#sec-evaluation">evaluation</a> of a <a href="manual.html#concept-form" style="text-transform: lowercase">Form</a> or .</p></div><h4>Examples:</h4><pre>;; The form (+ 1 1) evaluates to the value 2:
+(+ 1 1) =&gt; 2</pre><h4>Rationale:</h4><div><p>Classic Lisp.</p></div></div><div><h3 class="operator-title"><a id="class-fexpr">FEXPR <em> (Class)</em></a></h3><div></div><h4>Description:</h4><div><p>Fexprs are the fundamental building block of
    computation in Qua.  A fexpr is conceptually like a <a href="manual.html#class-function">function</a>, but it does not evaluate
    its arguments, and receives the lexical environment in which it is
    called as a parameter.</p></div><h4>Examples:</h4><pre>;; A very simple fexpr that simply returns its single operand,

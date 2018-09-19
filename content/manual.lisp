@@ -326,10 +326,10 @@ $window => #[js-object]
 (define-section (manual . sec-evaluation)
   (:title "Evaluation")
   (:content
-   (paragraph "Evaluation is the process of turning a " (hyper
-   '(manual . concept-form)) " into a " (hyper '(manual
-   . concept-value)) ".  Evaluation happens either implicitly,
-   e.g. at the REPL, or explicitly, under programmer control via "
+   (paragraph (term "Evaluation") " is the process of turning
+   a " (hyper '(manual . concept-form)) " into a " (hyper '(manual
+   . concept-value)) ".  Evaluation happens either implicitly, e.g. at
+   the REPL, or explicitly, under programmer control via "
    (hyper '(manual . op-eval)) "."))
   (:child
    (hyper '(manual . concept-form))
@@ -370,8 +370,8 @@ $window => #[js-object]
   (:title "Form")
   (:content
    (paragraph
-    "A form is any " (hyper '(manual . class-object)) " meant to be
-  evaluated.  It is either a " (hyper '(manual
+    "A " (term "form") " is any " (hyper '(manual . class-object)) "
+  meant to be evaluated.  It is either a " (hyper '(manual
   . concept-self-evaluating-form)) ", an "
   (hyper '(manual . concept-identifier-form)) ", or a "
   (hyper '(manual . concept-compound-form)) "."))
@@ -398,7 +398,8 @@ x => 1 ; Identifier form
     (hyper '(manual . class-string) "strings") ", " 
     (hyper '(manual . class-number) "numbers") ", and " 
     (hyper '(manual . concept-keyword-namespace) "keyword symbols")
-    " are said to be ``self-evaluating'', that is, they simply "
+    " are said to be " (term "self-evaluating forms") ", that is, they
+    simply "
     (hyper '(manual . sec-evaluation) "evaluate") " to themselves."))
     (:example "#t => #t
 12 => 12
@@ -410,7 +411,7 @@ x => 1 ; Identifier form
 (define-manual-concept (manual . concept-constant)
   (:title "Constant")
   (:content
-   (paragraph "A constant is a built-in " (hyper '(manual
+   (paragraph "A " (term "constant") " is a built-in " (hyper '(manual
    . class-object)) " that is a " (hyper '(manual
    . concept-self-evaluating-form)) ".  It is not possible for the Qua
    programmer to define new constants.  Constants are distinct
@@ -435,7 +436,8 @@ x => 1 ; Identifier form
   (:title "Identifier Form")
   (:content
    (paragraph "A " (hyper '(manual . class-symbol)) " used as a "
-              (hyper '(manual . concept-form)) " is called an identifier form and "
+              (hyper '(manual . concept-form)) " is called
+              an " (term "identifier form") " and "
               (hyper '(manual . sec-evaluation) "evaluates") " to the
               value of the " (hyper '(manual . concept-binding)) "
               identified by the symbol.  An error is signaled if the
@@ -456,7 +458,8 @@ x => 1 ; Variable binding
   (:title "Compound Form")
   (:content
    (paragraph "A " (hyper '(manual . class-cons)) " used as a "
-   (hyper '(manual . concept-form)) " is called a compound form.")
+   (hyper '(manual . concept-form)) " is called a " (term "compound
+   form") ".")
    (paragraph "If the " (hyper '(manual . op-car)) " of the compound
    form is a " (hyper '(manual . class-symbol)) ", it gets looked up
    in the " (hyper '(manual . concept-function-namespace)) ".")
@@ -504,10 +507,10 @@ x => 1 ; Variable binding
 (define-manual-concept (manual . concept-operator)
   (:title "Operator")
   (:content
-   (paragraph "All computation in Qua is performed by operators.  All
-   operators have in common that they receive " (hyper '(manual
-   . concept-operand) "operands") " and return a " (hyper '(manual
-   . concept-value)) ".")
+   (paragraph "All computation in Qua is performed
+   by " (term "operators") ".  All operators have in common that they
+   receive " (hyper '(manual . concept-operand) "operands") " and
+   return a " (hyper '(manual . concept-value)) ".")
    (paragraph "Operators can be classified as "
               (hyper '(manual . concept-special-operator) "special operators") " ("
               (hyper '(manual . class-fexpr) "fexprs") " and "
@@ -525,7 +528,7 @@ x => 1 ; Variable binding
 (define-manual-concept (manual . concept-special-operator)
   (:title "Special Operator")
   (:content
-   (paragraph "A special operator is an " (hyper '(manual
+   (paragraph "A " (term "special operator") " is an " (hyper '(manual
    . concept-operator)) " that, unlike a " (hyper '(manual
    . class-function)) ", uses special rules to determine which of
    its " (hyper '(manual . concept-operand) "operands") " are "
@@ -546,7 +549,7 @@ x => 1 ; Variable binding
 (define-manual-concept (manual . concept-operand)
   (:title "Operand")
   (:content
-   (paragraph "The operands are the data passed as input to
+   (paragraph "The " (term "operands") " are the data passed as input to
    an " (hyper '(manual . concept-operator)) ".  If the operator is a "
    (hyper '(manual . concept-special-operator)) ", the operands are
    passed to it unevaluated.  If the operator is a "
@@ -575,8 +578,8 @@ x => 1 ; Variable binding
 (define-manual-concept (manual . concept-argument)
   (:title "Argument")
   (:content
-   (paragraph "An argument is the result of " (hyper '(manual
-   . sec-evaluation) "evaluating") " an " (hyper '(manual
+   (paragraph "An " (term "argument") " is the result of " (hyper
+   '(manual . sec-evaluation) "evaluating") " an " (hyper '(manual
    . concept-operand)) "."))
   (:example ";; Operands to a function are automatically evaluated to arguments.
 ;; Here (+ 1 1) and (+ 2 2) are the operands to the * function.  They
@@ -589,7 +592,7 @@ x => 1 ; Variable binding
 (define-manual-concept (manual . concept-parameter)
   (:title "Parameter")
   (:content
-   (paragraph "Parameters are the means by which " (hyper '(manual
+   (paragraph (term "Parameters") " are the means by which " (hyper '(manual
    . concept-operator) "operators") " receive and assign names to " (hyper
    '(manual . concept-operand) "operands")
    " and " (hyper '(manual . concept-argument) "arguments") " passed
@@ -600,7 +603,7 @@ x => 1 ; Variable binding
    (paragraph "If a parameter is a " (hyper '(manual . class-cons)) ",
    the " (hyper '(manual . op-car)) " and " (hyper '(manual
    . op-cdr)) " are recursively treated as parameters, giving rise to
-   so-called parameter trees (see example below). These allow
+   so-called " (term "parameter trees") " (see example below). These allow
    destructuring of operands and arguments that are lists.")
    (paragraph "If a parameter is " (hyper '(manual . const-nil)) "
    there must be no more arguments, or an error is signalled.")
@@ -643,18 +646,42 @@ x => 1 ; Variable binding
 (define-manual-concept (manual . concept-environment-parameter)
   (:title "Environment Parameter")
   (:content
-   (paragraph ""))
-  (:example "")
+   (paragraph "In addition to ordinary " (hyper '(manual
+   . concept-parameter) "parameters") ", "
+   (hyper '(manual . class-fexpr) "fexprs") " have a special
+   parameter, called " (term "environment parameter") ", through which they
+   receive the "
+   (hyper '(manual . class-environment)) " in which they are called."))
+  (:example ";; A fexpr that returns the value that the variable X has
+;; in the environment in which the fexpr is called (here the 
+;; environment parameter is called ENV but it could be called
+;; anything):
+(deffexpr lookup-x-in-environment () env
+  (eval 'x env))
+
+(def x 1)
+(lookup-x-in-environment) => 1
+(let ((x 2))
+  (lookup-x-in-environment)) => 2
+
+;; The environment parameter can be ignored if unneeded:
+(deffexpr other-fexpr () #ign
+  12)
+(other-fexpr) => 12")
   (:rationale
-   (paragraph "")))
+   (paragraph "See " (hyper '(ref . kernel)) ".")))
 
 (define-manual-concept (manual . concept-value)
   (:title "Value")
   (:content
-   (paragraph ""))
-  (:example "")
+   (paragraph (term "Value") " is the term for any " (hyper '(manual
+   . class-object)) " that is the result of the " (hyper '(manual
+   . sec-evaluation) "evaluation") " of a " (hyper '(manual
+   . concept-form)) " or ."))
+  (:example ";; The form (+ 1 1) evaluates to the value 2:
+(+ 1 1) => 2")
   (:rationale
-   (paragraph "")))
+   (paragraph "Classic Lisp.")))
 
 (define-manual-class (manual . class-fexpr)
   (:title "FEXPR")

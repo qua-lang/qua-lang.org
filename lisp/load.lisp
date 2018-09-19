@@ -21,6 +21,7 @@
 (define-node-type +qua-hub-item+)
 (define-node-type +qua-hub-paragraph+)
 (define-node-type +qua-hub-weblink+)
+(define-node-type +qua-hub-term+)
 (define-node-type +qua-hub-code-sample+)
 (define-node-type +qua-hub-main-page+ +qua-hub-page+)
 (define-node-type +qua-hub-manual-page+ +qua-hub-page+)
@@ -35,6 +36,9 @@
 ;;; Convenience macros
 (defmacro weblink props ;; title, url
   (list* #'node +qua-hub-weblink+ props))
+
+(defmacro term text
+  (list #'node +qua-hub-term+ (list* :text text)))
 
 (defmacro paragraph text
   (list #'node +qua-hub-paragraph+ (list* :text text)))

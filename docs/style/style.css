@@ -9,6 +9,7 @@ pre, tt, code, .navbar { font-family: 'Source Code Pro', monospace; }
 .stats th, .stats td { font-size: 90%; }
 .stats td { font-style: italic; }
 .stats-header { border-bottom: 3px double black; }
+.term { font-weight: bold; }
 
 @media screen and (min-width: 900px) {
     .stats { float: right;  }

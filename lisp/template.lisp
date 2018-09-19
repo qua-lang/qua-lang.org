@@ -203,6 +203,12 @@
 
 (associate-template +qua-hub-paragraph+ 'default qua-hub-paragraph-template-medium)
 
+(deftemplate qua-hub-term-template
+  (span (:class "term") (node-field 'text)))
+
+(associate-template +qua-hub-term+ 'inline qua-hub-term-template)
+(associate-template +qua-hub-term+ 'default qua-hub-term-template)
+
 (deftemplate qua-hub-code-sample-template-medium
   (pre () (node-field 'text)))
 
