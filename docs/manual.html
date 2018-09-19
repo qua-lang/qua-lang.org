@@ -172,7 +172,13 @@ x =&gt; 1 ; Variable binding
    rules.</p></div></div><div><h3 class="operator-title"><a id="concept-operand">Operand <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p>The <span class="term">operands</span> are the data passed as input to
    an <a href="manual.html#concept-operator" style="text-transform: lowercase">Operator</a>.  If the operator is a <a href="manual.html#concept-special-operator" style="text-transform: lowercase">Special Operator</a>, the operands are
    passed to it unevaluated.  If the operator is a <a href="manual.html#class-function" style="text-transform: lowercase">FUNCTION</a>, then each operand is <a href="manual.html#sec-evaluation">evaluated</a>, and the result is
-   called an <a href="manual.html#concept-argument" style="text-transform: lowercase">Argument</a>.</p></div><h4>Examples:</h4><pre>;; A fexpr that receives two unevaluated operands and
+   called an <a href="manual.html#concept-argument" style="text-transform: lowercase">Argument</a>.</p><p>While the operands passed to a function must be
+   a <a href="manual.html#concept-list" style="text-transform: lowercase">List</a>, there is no such
+   requirement for special operators: they simply receive the <a href="manual.html#op-cdr" style="text-transform: lowercase"><strong>CDR</strong></a> of the <a href="manual.html#concept-compound-form" style="text-transform: lowercase">Compound Form</a>.  In the most general case of the
+   operands consisting of nested forms, we therefore speak
+   of <span class="term">operand trees</span>.  An operand tree is matched against
+   the operator&#39;s <a href="manual.html#concept-parameter">parameter
+   tree</a>.</p></div><h4>Examples:</h4><pre>;; A fexpr that receives two unevaluated operands and
 ;; evaluates them explicitly:
 (deffexpr a-fexpr (op1 op2) env
   (* (eval op1 env) (eval op2 env)))
@@ -184,10 +190,18 @@ x =&gt; 1 ; Variable binding
   (* arg1 arg2))
 (a-function (+ 1 1) (+ 2 2)) =&gt; 8
 
-;; Unlike most Lisps, and like Kernel, Qua doesn&#39;t actually
-;; require the operands of an operator to be a list.
-;; Here we pass a single number as operand to a fexpr:
-((vau x #ign x) . 1) =&gt; 1</pre><h4>Rationale:</h4><div><p>See <span class="ref-inline">[<a href="https://web.cs.wpi.edu/~jshutt/kernel.html">The Kernel Programming Language</a>]</span>.</p></div></div><div><h3 class="operator-title"><a id="concept-argument">Argument <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p>An <span class="term">argument</span> is the result of <a href="manual.html#sec-evaluation">evaluating</a> an <a href="manual.html#concept-operand" style="text-transform: lowercase">Operand</a>.</p></div><h4>Examples:</h4><pre>;; Operands to a function are automatically evaluated to arguments.
+;; Unlike most Lisps, and like Kernel, Qua doesn&#39;t actually require
+;; the operands of an operator to be a list.  While usually it is a
+;; list, it is still worthwhile to point this out because it is a
+;; fundamental feature of Kernel-like languages.  Here we pass a single
+;; number as operand to a fexpr:
+((vau x #ign x) . 1) =&gt; 1
+
+;; A fexpr that destructures its operand tree (1 ((2))) using the
+;; parameter tree (x ((y))):
+(deffexpr weird (x ((y))) #ign
+  (+ x y))
+(weird 1 ((2))) =&gt; 3</pre><h4>Rationale:</h4><div><p>See <span class="ref-inline">[<a href="https://web.cs.wpi.edu/~jshutt/kernel.html">The Kernel Programming Language</a>]</span>.</p></div></div><div><h3 class="operator-title"><a id="concept-argument">Argument <em> (Concept)</em></a></h3><div></div><h4>Description:</h4><div><p>An <span class="term">argument</span> is the result of <a href="manual.html#sec-evaluation">evaluating</a> an <a href="manual.html#concept-operand" style="text-transform: lowercase">Operand</a>.</p></div><h4>Examples:</h4><pre>;; Operands to a function are automatically evaluated to arguments.
 ;; Here (+ 1 1) and (+ 2 2) are the operands to the * function.  They
 ;; are evaluated to the arguments 2 and 4 before being passed to the
 ;; function.
@@ -195,10 +209,10 @@ x =&gt; 1 ; Variable binding
    to them.</p><p>If a parameter is a <a href="manual.html#class-symbol" style="text-transform: lowercase">SYMBOL</a>, the operand or argument is bound to 
    the name of the symbol within the body of the operator.</p><p>If a parameter is a <a href="manual.html#class-cons" style="text-transform: lowercase">CONS</a>,
    the <a href="manual.html#op-car" style="text-transform: lowercase"><strong>CAR</strong></a> and <a href="manual.html#op-cdr" style="text-transform: lowercase"><strong>CDR</strong></a> are recursively treated as parameters, giving rise to
-   so-called <span class="term">parameter trees</span> (see example below). These allow
-   destructuring of operands and arguments that are lists.</p><p>If a parameter is <a href="manual.html#const-nil" style="text-transform: lowercase"><strong>#NIL</strong></a>
-   there must be no more arguments, or an error is signalled.</p><p>If a parameter is <a href="manual.html#const-ign" style="text-transform: lowercase"><strong>#IGN</strong></a>
-   its corresponding argument is ignored (not bound to a name).</p></div><h4>Examples:</h4><pre>;; A function that binds its whole argument list to a single name:
+   so-called <span class="term">parameter trees</span> (see example below). These
+   allow destructuring of <a href="manual.html#concept-operand">operand trees</a>.</p><p>If a parameter is <a href="manual.html#const-nil" style="text-transform: lowercase"><strong>#NIL</strong></a>,
+              the operand must also be <a href="manual.html#const-nil" style="text-transform: lowercase"><strong>#NIL</strong></a> or an error is signalled.</p><p>If a parameter is <a href="manual.html#const-ign" style="text-transform: lowercase"><strong>#IGN</strong></a>
+   its operand or argument is ignored (not bound to a name).</p></div><h4>Examples:</h4><pre>;; A function that binds its whole argument list to a single name:
 (defun return-args-list args
   args)
 (return-args-list 1 2 3 4) =&gt; (1 2 3 4)
@@ -211,7 +225,8 @@ x =&gt; 1 ; Variable binding
 (rest-args 1 2 3 4) =&gt; (1 2 (3 4))
 (rest-args 1 2) =&gt; (1 2 ())
 
-;; A function that allows no arguments:
+;; A function that allows no arguments (in other words, the operand
+must be #NIL):
 (defun no-args () 1)
 (no-args) =&gt; 1
 ;; Same thing as:

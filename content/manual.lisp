@@ -555,7 +555,16 @@ x => 1 ; Variable binding
    passed to it unevaluated.  If the operator is a "
    (hyper '(manual . class-function)) ", then each operand is " 
    (hyper '(manual . sec-evaluation) "evaluated") ", and the result is
-   called an " (hyper '(manual . concept-argument)) "."))
+   called an " (hyper '(manual . concept-argument)) ".")
+   (paragraph "While the operands passed to a function must be
+   a " (hyper '(manual . concept-list)) ", there is no such
+   requirement for special operators: they simply receive the " (hyper
+   '(manual . op-cdr)) " of the " (hyper '(manual
+   . concept-compound-form)) ".  In the most general case of the
+   operands consisting of nested forms, we therefore speak
+   of " (term "operand trees") ".  An operand tree is matched against
+   the operator's " (hyper '(manual . concept-parameter) "parameter
+   tree") "."))
   (:example ";; A fexpr that receives two unevaluated operands and
 ;; evaluates them explicitly:
 (deffexpr a-fexpr (op1 op2) env
@@ -568,10 +577,18 @@ x => 1 ; Variable binding
   (* arg1 arg2))
 (a-function (+ 1 1) (+ 2 2)) => 8
 
-;; Unlike most Lisps, and like Kernel, Qua doesn't actually
-;; require the operands of an operator to be a list.
-;; Here we pass a single number as operand to a fexpr:
-((vau x #ign x) . 1) => 1")
+;; Unlike most Lisps, and like Kernel, Qua doesn't actually require
+;; the operands of an operator to be a list.  While usually it is a
+;; list, it is still worthwhile to point this out because it is a
+;; fundamental feature of Kernel-like languages.  Here we pass a single
+;; number as operand to a fexpr:
+((vau x #ign x) . 1) => 1
+
+;; A fexpr that destructures its operand tree (1 ((2))) using the
+;; parameter tree (x ((y))):
+(deffexpr weird (x ((y))) #ign
+  (+ x y))
+(weird 1 ((2))) => 3")
   (:rationale
    (paragraph "See " (hyper '(ref . kernel)) ".")))
 
@@ -603,12 +620,14 @@ x => 1 ; Variable binding
    (paragraph "If a parameter is a " (hyper '(manual . class-cons)) ",
    the " (hyper '(manual . op-car)) " and " (hyper '(manual
    . op-cdr)) " are recursively treated as parameters, giving rise to
-   so-called " (term "parameter trees") " (see example below). These allow
-   destructuring of operands and arguments that are lists.")
-   (paragraph "If a parameter is " (hyper '(manual . const-nil)) "
-   there must be no more arguments, or an error is signalled.")
+   so-called " (term "parameter trees") " (see example below). These
+   allow destructuring of " (hyper '(manual
+   . concept-operand) "operand trees") ".")
+   (paragraph "If a parameter is " (hyper '(manual . const-nil)) ",
+              the operand must also be " (hyper '(manual
+              . const-nil)) " or an error is signalled.")
    (paragraph "If a parameter is " (hyper '(manual . const-ign)) "
-   its corresponding argument is ignored (not bound to a name)."))
+   its operand or argument is ignored (not bound to a name)."))
   (:example ";; A function that binds its whole argument list to a single name:
 (defun return-args-list args
   args)
@@ -622,7 +641,8 @@ x => 1 ; Variable binding
 (rest-args 1 2 3 4) => (1 2 (3 4))
 (rest-args 1 2) => (1 2 ())
 
-;; A function that allows no arguments:
+;; A function that allows no arguments (in other words, the operand
+must be #NIL):
 (defun no-args () 1)
 (no-args) => 1
 ;; Same thing as:
