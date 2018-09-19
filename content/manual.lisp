@@ -717,23 +717,44 @@ x => 1 ; the variable X is bound to the value 1")
 (define-manual-class (manual . class-fexpr)
   (:title "FEXPR")
   (:content
-   (paragraph "Fexprs are the fundamental building block of
-   computation in Qua.  A fexpr is conceptually like a " (hyper
-   '(manual . class-function) "function") ", but it does not evaluate
-   its arguments, and receives the lexical environment in which it is
-   called as a parameter."))
+   (paragraph
+    (term "Fexprs") " are the most fundamental type of
+    user-definable " (hyper '(manual . concept-operator)) " in Qua:
+    both " (hyper '(manual . class-function) "functions") " and "
+    (hyper '(manual . concept-macro) "macros") " are derived from
+    them.")
+   (paragraph
+    "A fexpr receives its " (hyper '(manual
+    . concept-operand) "operands") " as " (hyper '(manual
+    . sec-evaluation) "unevaluated") " " (hyper '(manual
+    . concept-form) "forms") " and has to explicitly use " (hyper
+    '(manual . op-eval)) " on them if evaluation is desired.")
+   (paragraph "In addition to an ordinary " (hyper '(manual
+   . concept-parameter) "parameter tree") ", a fexpr also has an " 
+   (hyper '(manual . concept-environment-parameter)) " through which
+   it receives the " (hyper '(manual . class-environment)) " in which
+   it is called."))
   (:example
    ";; A very simple fexpr that simply returns its single operand,
 ;; analogous to QUOTE:
-(deffexpr my-quote (anything) #ign anything)
+(deffexpr my-quote (operand) #ign
+  operand)
 (my-quote (1 2 3)) => (1 2 3)
 
-;; A fexpr that takes no parameters and returns the environment
-;; in which it is called:
-(deffexpr my-current-environment () env env)
+;; A fexpr that has no ordinary parameter, but makes use of the
+;; environment parameter and returns it, analogous to THE-ENVIRONMENT:
+(deffexpr my-current-environment () env
+  env)
 (let ((x 1))
   (def current-env (my-current-environment))
-  (eval 'x current-env)) => 1")
+  (eval 'x current-env)) => 1
+
+;; How WHEN could be defined as a fexpr:
+(deffexpr my-when (test . body) env
+  (eval (list #'if test (list* #'progn body) #void) env))
+
+(my-when (eql #t #t) 1 2 3) => 3
+(my-when (eql #t #f) 1 2 3) => #void")
   (:rationale (paragraph "See " (hyper '(ref . kernel)) ".")))
 
 (define-manual-special (manual . op-vau)
