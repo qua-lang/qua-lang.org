@@ -760,6 +760,19 @@ x => 1 ; the variable X is bound to the value 1")
 (define-manual-special (manual . op-vau)
   (:title "VAU")
   (:syntax "parameter-tree environment-parameter form* => fexpr")
+  (:operands
+   (operand
+    (:name "parameter-tree")
+    (:description "A " (hyper '(manual . concept-parameter) "parameter tree") "."))
+   (operand
+    (:name "environment-parameter")
+    (:description "An " (hyper '(manual . concept-environment-parameter)) "."))
+   (operand
+    (:name "form")
+    (:description "A " (hyper '(manual . concept-form)) "."))
+   (operand
+    (:name "fexpr")
+    (:description "A " (hyper '(manual . class-fexpr)) ".")))
   (:content
    (paragraph (hyper '(manual . op-vau)) " is the constructor of "
               (hyper '(manual . class-fexpr) "fexprs") ", analogous to how "

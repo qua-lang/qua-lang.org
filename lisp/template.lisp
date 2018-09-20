@@ -105,6 +105,11 @@
 
 (associate-template +qua-hub-weblink+ 'inline qua-hub-weblink-inline-template)
 
+(deftemplate qua-hub-operand-template
+  (p () (tt () (node-field 'name)) "---" (node-field 'description)))
+
+(associate-template +qua-hub-operand+ 'default qua-hub-operand-template)
+
 ;;;; Section templates
 
 (deftemplate qua-hub-section-template-medium
@@ -131,7 +136,9 @@
        (tt ()
            (strong (:style "text-transform: lowercase") (node-field 'title))
            " "
-           (node-field 'syntax))))
+           (node-field 'syntax))
+       (h4 () "Operands and Value:")
+       (node-field 'operands 'default)))
 
 (associate-template +qua-hub-manual-operator+ 'syntax qua-hub-manual-operator-syntax-template)
 
@@ -208,6 +215,12 @@
 
 (associate-template +qua-hub-term+ 'inline qua-hub-term-template)
 (associate-template +qua-hub-term+ 'default qua-hub-term-template)
+
+(deftemplate qua-hub-param-template
+  (tt (:class "param") (node-field 'text)))
+
+(associate-template +qua-hub-param+ 'inline qua-hub-param-template)
+(associate-template +qua-hub-param+ 'default qua-hub-param-template)
 
 (deftemplate qua-hub-code-sample-template-medium
   (pre () (node-field 'text)))
