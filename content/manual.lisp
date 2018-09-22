@@ -791,7 +791,7 @@ x => 1 ; the variable X is bound to the value 1")
 
 (define-manual-special (manual . op-deffexpr)
   (:title "DEFFEXPR")
-  (:syntax "name operand-tree environment-parameter form* => name")
+  (:syntax "name parameter-tree environment-parameter form* => name")
   (:operands
    (operand
     (:name "name")
@@ -941,11 +941,11 @@ x => 1 ; the variable X is bound to the value 1")
 
 (define-manual-special (manual . op-macro)
   (:title "MACRO")
-  (:syntax "operand-tree form* => macro"))
+  (:syntax "parameter-tree form* => macro"))
 
 (define-manual-special (manual . op-defmacro)
   (:title "DEFMACRO")
-  (:syntax "name operand-tree form* => macro"))
+  (:syntax "name parameter-tree form* => macro"))
 
 (define-manual-class (manual . class-void)
   (:title "VOID"))
