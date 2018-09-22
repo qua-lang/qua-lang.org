@@ -834,7 +834,7 @@ x => 1 ; the variable X is bound to the value 1")
    ";; A simple function defined using LAMBDA:
 ((lambda (x y) (+ x y)) 1 2) => 3
 
-;; LAMBDA is merely a shorthand for wrapping a FEXPR to induce
+;; LAMBDA is merely a shorthand for wrapping a fexpr to induce
 ;; argument evaluation.  The above is operationally equivalent to:
 ((wrap (vau (x y) #ign (+ x y))) 1 2) => 1 3")
   (:rationale (paragraph "See " (hyper '(ref . kernel)) ".")))
@@ -925,12 +925,40 @@ x => 1 ; the variable X is bound to the value 1")
 
 ;; LAMBDA allows destructuring of its arguments with parameter trees:
 ((lambda ((val1 . #ign) (val2 . #ign)) (+ val1 val2))
- (list 1 2 3) (list 10 20 30)) => 11")
-  (:rationale (paragraph "See " (hyper '(ref . kernel)) ".")))
+ (list 1 2 3) (list 10 20 30)) => 11
+
+((lambda args args) 1 2 3) => (1 2 3)
+
+((lambda (first second . rest) (list first second rest)) 1 2 3 4) => (1 2 (3 4))
+")
+  (:rationale (paragraph "Classic Lisp, with the addition of destructuring.")))
 
 (define-manual-special (manual . op-defun)
   (:title "DEFUN")
-  (:syntax "name parameter-tree form* => function"))
+  (:syntax "name parameter-tree form* => name")
+  (:operands
+   (operand
+    (:name "name")
+    (:description "A " (hyper '(manual . class-symbol)) "."))
+   (operand
+    (:name "parameter-tree")
+    (:description "A " (hyper '(manual . concept-parameter) "parameter tree") "."))
+   (operand
+    (:name "form")
+    (:description "A " (hyper '(manual . concept-form)) ".")))
+  (:content
+   (paragraph (hyper '(manual . op-defun)) " defines a named  "
+              (hyper '(manual . class-function)) "."))
+  (:example
+   "(defun foo (arg1 arg2)
+  (+ arg1 arg2))
+
+(foo (+ 1 1) (+ 2 2)) => 6
+
+;; Like LAMBDA, DEFUN allows destructuring:
+(defun bar (((a b))) (+ a b))
+(bar '((1 2))) => 3")
+  (:rationale (paragraph "Classic Lisp, with the addition of destructuring.")))
 
 (define-manual-special (manual . op-function)
   (:title "FUNCTION")
