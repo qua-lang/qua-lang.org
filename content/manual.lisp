@@ -1160,11 +1160,36 @@ x => 1 ; the variable X is bound to the value 1")
   (:rationale (paragraph "Mix of Classic Lisp and Kernel.")))
 
 (define-manual-class (manual . class-void)
-  (:title "VOID"))
+  (:title "VOID")
+  (:content
+   (paragraph
+    (hyper '(manual . class-void)) " is the "
+    (hyper '(manual . class-class)) " of the "
+    (hyper '(manual . concept-constant)) " "
+    (hyper '(manual . const-void)) "."))
+  (:example "#void => #void")
+  (:rationale (paragraph "See "(hyper '(manual . const-void)) ".")))
 
 (define-manual-constant (manual . const-void)
   (:title "#VOID")
-  (:syntax "#void"))
+  (:syntax "#void")
+  (:content
+   (paragraph
+    (hyper '(manual . const-void)) " is a "
+    (hyper '(manual . concept-constant)) " that is used when a "
+    (hyper '(manual . concept-form)) " has no interesting "
+    (hyper '(manual . concept-value)) ".  It is the only "
+    (hyper '(manual . class-object)) " of "
+    (hyper '(manual . class-class)) " "
+    (hyper '(manual . class-void)) "."))
+  (:example
+   ";; An empty PROGN returns #VOID and so does WHEN when the test is false:
+(progn) => #void
+
+(when #f 1 2 3) => #void")
+  (:rationale (paragraph "I think reusing " (hyper '(manual . const-nil)) " or "
+(hyper '(manual . const-f)) " for this purpose would be silly,
+although you can try to change my mind.")))
 
 (define-manual-class (manual . class-ign)
   (:title "IGN"))
@@ -1276,6 +1301,7 @@ x => 1 ; the variable X is bound to the value 1")
 (define-section (manual . sec-objects)
   (:title "Objects")
   (:child
+   (hyper '(manual . class-class))
    (hyper '(manual . class-object))
    (hyper '(manual . op-defstruct))
    (hyper '(manual . op-make-instance))
@@ -1293,6 +1319,9 @@ x => 1 ; the variable X is bound to the value 1")
 
 (define-manual-class (manual . class-object)
   (:title "OBJECT"))
+
+(define-manual-class (manual . class-class)
+  (:title "CLASS"))
 
 (define-manual-special (manual . op-defstruct)
   (:title "DEFSTRUCT")
