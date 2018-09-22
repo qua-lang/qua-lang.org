@@ -879,7 +879,29 @@ x => 1 ; the variable X is bound to the value 1")
 
 (define-manual-function (manual . op-unwrap)
   (:title "UNWRAP")
-  (:syntax "function => fexpr"))
+  (:syntax "function => operator")
+  (:operands
+   (operand
+    (:name "function")
+    (:description "A " (hyper '(manual . class-function)) "."))
+   (operand
+    (:name "operator")
+    (:description "An " (hyper '(manual . concept-operator)) ".")))
+  (:content
+   (paragraph
+    (hyper '(manual . op-unwrap)) " extracts the " (hyper '(manual
+    . concept-operator)) " underlying a " (hyper '(manual
+    . class-function)) "."))
+  (:example ";; Every function has an underlying operator. We can extract the
+;; operator underlying the * function and call it directly:
+(def #'times-operator (unwrap #'*))
+(times-operator 2 4) => 8
+
+;; Note that the following would not work, because the underlying
+;; operator is a fexpr and does not evaluate its arguments (that's
+;; what the wrapper does, and we have removed it):
+(times-operator (+ 1 1) (+ 2 2))")
+  (:rationale (paragraph "See " (hyper '(ref . kernel)) ".")))
 
 (define-manual-special (manual . op-lambda)
   (:title "LAMBDA")
