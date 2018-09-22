@@ -841,7 +841,41 @@ x => 1 ; the variable X is bound to the value 1")
 
 (define-manual-function (manual . op-wrap)
   (:title "WRAP")
-  (:syntax "fexpr => function"))
+  (:syntax "operator => function")
+  (:operands
+   (operand
+    (:name "operator")
+    (:description "An " (hyper '(manual . concept-operator)) "."))
+   (operand
+    (:name "function")
+    (:description "A " (hyper '(manual . class-function)) ".")))
+  (:content
+   (paragraph (hyper '(manual . op-wrap)) " constructs a " (hyper
+   '(manual . class-function)) " given an underlying "
+   (hyper '(manual . concept-operator)) ", usually a " (hyper '(manual
+   . class-fexpr)) ". All Qua functions are created by " (hyper
+   '(manual . op-wrap)) ".  So functions can be viewed
+   as " (term "wrappers") " that induce " (hyper '(manual
+   . concept-argument) "argument") " " (hyper '(manual
+   . sec-evaluation) "evaluation") " for their underlying, wrapped
+   fexpr."))
+  (:example
+   ";; A simple QUOTE like-fexpr:
+(def #'my-quote (vau (operand) #ign operand))
+;; It returns its operands unevaluated:
+(my-quote (+ 1 2)) => (+ 1 2))
+
+;; We can WRAP the fexpr inside a function:
+(def #'my-wrapped-quote (wrap #'my-quote))
+;; The resulting function evaluates the operand, and passes it to MY-QUOTE:
+(my-wrapped-quote (+ 1 2)) => 3
+
+;; While usually not done, WRAP can be applied multiple times:
+(def foo 12)
+(my-quote 'foo) => 'foo
+((wrap #'my-quote) 'foo) => foo
+((wrap (wrap #'my-quote)) 'foo) => 12")
+  (:rationale (paragraph "See " (hyper '(ref . kernel)) ".")))
 
 (define-manual-function (manual . op-unwrap)
   (:title "UNWRAP")
