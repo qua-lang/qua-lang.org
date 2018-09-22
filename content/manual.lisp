@@ -1061,7 +1061,22 @@ x => 1 ; the variable X is bound to the value 1")
 
 (define-manual-special (manual . op-quote)
   (:title "QUOTE")
-  (:syntax "form => form"))
+  (:syntax "form => form")
+  (:operands
+   (operand
+    (:name "form")
+    (:description "A " (hyper '(manual . concept-form)) ".")))
+  (:content
+   (paragraph
+    (hyper '(manual . op-quote)) " prevents " (hyper '(manual
+    . sec-evaluation) "evaluation") " of its " (hyper '(manual
+    . concept-operand)) "."))
+  (:example
+"(quote (+ 1 2)) => (+ 1 2)
+
+;; This is the same as:
+'(+ 1 2) => (+ 1 2)")
+  (:rationale (paragraph "Classic Lisp.")))
 
 (define-manual-concept (manual . concept-macro)
   (:title "Macro")
