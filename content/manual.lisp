@@ -1192,12 +1192,37 @@ x => 1 ; the variable X is bound to the value 1")
 although you can try to change my mind.")))
 
 (define-manual-class (manual . class-ign)
-  (:title "IGN"))
+  (:title "IGN")
+  (:content
+   (paragraph
+    (hyper '(manual . class-ign)) " is the "
+    (hyper '(manual . class-class)) " of the "
+    (hyper '(manual . concept-constant)) " "
+    (hyper '(manual . const-ign)) "."))
+  (:example "#ign => #ign")
+  (:rationale (paragraph "See "(hyper '(manual . const-ign)) ".")))
 
 (define-manual-constant (manual . const-ign)
   (:title "#IGN")
-  (:syntax "#ign"))
+  (:syntax "#ign")
+  (:content
+   (paragraph
+    (hyper '(manual . const-ign)) " is a "
+    (hyper '(manual . concept-constant)) " that is used in "
+    (hyper '(manual . concept-parameter) "parameter trees") " to ignore an "
+    (hyper '(manual . concept-operand)) ".  It is the only "
+    (hyper '(manual . class-object)) " of "
+    (hyper '(manual . class-class)) " "
+    (hyper '(manual . class-ign)) "."))
+  (:example ";; A function that doesn't care what its arguments are:
+(defun idc #ign 33)
+(idc) => 33
+(idc 'foo 'bar) => 33
 
+;; Ignoring some arguments:
+(defun ignore-second-argument (first #ign third) (+ first third))
+(ignore-second-argument 1 2 3) => 4")
+  (:rationale (paragraph "See " (hyper '(ref . kernel)) ".")))
 
 (define-section (manual . sec-environments)
   (:title "Environments")
