@@ -777,15 +777,56 @@ x => 1 ; the variable X is bound to the value 1")
    (paragraph (hyper '(manual . op-vau)) " is the constructor of "
               (hyper '(manual . class-fexpr) "fexprs") ", analogous to how "
               (hyper '(manual . op-lambda)) " is the constructor of "
-              (hyper '(manual . class-function) "functions") "."))
+              (hyper '(manual . class-function) "functions") ".")
+   (paragraph "It creates a new fexpr with the given " (hyper '(manual
+   . concept-parameter) "parameter tree") ", " (hyper '(manual
+   . concept-environment-parameter)) ", and body " (hyper '(manual
+   . concept-form) "forms") " and returns it."))
   (:example
-   "(def #'my-fexpr (vau (arg) #ign (+ arg 12)))
-(my-fexpr 12) => 24")
+   ";; Create a simple fexpr that explicitly evaluates its operands:
+(def #'my-fexpr (vau (op1 op2) env 
+                  (* (eval op1 env) (eval op2 env))))
+(my-fexpr (+ 1 1) (+ 2 2)) => 8
+
+;; This is roughly equivalent to the following LAMBDA:
+(def #'my-function (lambda (arg1 arg2) (* arg1 arg2)))
+(my-function (+ 1 1) (+ 2 2)) => 8")
   (:rationale (paragraph "See " (hyper '(ref . kernel)) ".")))
 
 (define-manual-special (manual . op-deffexpr)
   (:title "DEFFEXPR")
-  (:syntax "name operand-tree environment-parameter form* => fexpr"))
+  (:syntax "name operand-tree environment-parameter form* => name")
+  (:operands
+   (operand
+    (:name "name")
+    (:description "A " (hyper '(manual . class-symbol)) "."))
+   (operand
+    (:name "parameter-tree")
+    (:description "A " (hyper '(manual . concept-parameter) "parameter tree") "."))
+   (operand
+    (:name "environment-parameter")
+    (:description "An " (hyper '(manual . concept-environment-parameter)) "."))
+   (operand
+    (:name "form")
+    (:description "A " (hyper '(manual . concept-form)) ".")))
+  (:content
+   (paragraph (hyper '(manual . op-deffexpr)) " defines a named  "
+              (hyper '(manual . class-fexpr)) ", analogous to how "
+              (hyper '(manual . op-defun)) " defines a named "
+              (hyper '(manual . class-function)) "."))
+  (:example 
+   ";; Define a simple fexpr that explicitly evaluates its operands:
+(deffexpr my-fexpr (op1 op2) env 
+  (* (eval op1 env) (eval op2 env)))
+(my-fexpr (+ 1 1) (+ 2 2)) => 8
+
+;; This is roughly equivalent to the following DEFUN:
+(defun my-function (arg1 arg2)
+  (* arg1 arg2))
+(my-function (+ 1 1) (+ 2 2)) => 8")
+  (:rationale (paragraph "While Kernel has no analogue to " (hyper
+  '(manual . op-deffexpr)) ", Qua has it for symmetry with " (hyper
+  '(manual . op-defun)) ".")))
 
 (define-manual-class (manual . class-function)
   (:title "FUNCTION"))
