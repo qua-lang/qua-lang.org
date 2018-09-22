@@ -905,7 +905,28 @@ x => 1 ; the variable X is bound to the value 1")
 
 (define-manual-special (manual . op-lambda)
   (:title "LAMBDA")
-  (:syntax "parameter-tree form* => function"))
+  (:syntax "parameter-tree form* => function")
+  (:operands
+   (operand
+    (:name "parameter-tree")
+    (:description "A " (hyper '(manual . concept-parameter) "parameter tree") "."))
+   (operand
+    (:name "form")
+    (:description "A " (hyper '(manual . concept-form)) "."))
+   (operand
+    (:name "function")
+    (:description "A " (hyper '(manual . class-function)) ".")))
+  (:content
+   (paragraph
+    (hyper '(manual . op-lambda)) " creates a new anonymous "
+    (hyper '(manual . class-function)) "."))
+  (:example
+   "((lambda (x y) (+ x y)) 1 2) => 3
+
+;; LAMBDA allows destructuring of its arguments with parameter trees:
+((lambda ((val1 . #ign) (val2 . #ign)) (+ val1 val2))
+ (list 1 2 3) (list 10 20 30)) => 11")
+  (:rationale (paragraph "See " (hyper '(ref . kernel)) ".")))
 
 (define-manual-special (manual . op-defun)
   (:title "DEFUN")
