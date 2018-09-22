@@ -984,15 +984,80 @@ x => 1 ; the variable X is bound to the value 1")
 
 (define-manual-function (manual . op-eval)
   (:title "EVAL")
-  (:syntax "form environment => result"))
-
+  (:syntax "form environment => result")
+  (:operands
+   (operand
+    (:name "form")
+    (:description "A " (hyper '(manual . concept-form)) "."))
+   (operand
+    (:name "environment")
+    (:description "An " (hyper '(manual . class-environment)) "."))
+   (operand
+    (:name "result")
+    (:description "A " (hyper '(manual . concept-value)) ".")))
+  (:content
+   (paragraph
+    (hyper '(manual . op-eval)) " " (hyper '(manual
+    . sec-evaluation) "evaluates") " a " (hyper '(manual
+    . concept-form)) " in an " (hyper '(manual . class-environment)) "."))
+  (:example
+"(def a 1)
+(def b 2)
+(eval '(+ a b) (the-environment)) => 3")
+  (:rationale (paragraph "Classic Lisp.")))
+  
 (define-manual-function (manual . op-apply)
   (:title "APPLY")
-  (:syntax "function arguments => result"))
+  (:syntax "function arguments => result")
+  (:operands
+   (operand
+    (:name "function")
+    (:description "A " (hyper '(manual . class-function)) "."))
+   (operand
+    (:name "arguments")
+    (:description "A " (hyper '(manual . concept-list)) "."))
+   (operand
+    (:name "result")
+    (:description "A " (hyper '(manual . concept-value)) ".")))
+  (:content
+   (paragraph
+    (hyper '(manual . op-apply)) " applies a " (hyper '(manual
+    . class-function)) " to a " (hyper '(manual . concept-list)) " of " 
+    (hyper '(manual . concept-argument) "arguments") "."))
+  (:example
+"(apply #'+ (list 1 2 3)) => 6")
+  (:rationale (paragraph "Classic Lisp.")))
 
-(define-manual-special (manual . op-funcall)
+(define-manual-function (manual . op-funcall)
   (:title "FUNCALL")
-  (:syntax "function argument* => result"))
+  (:syntax "function argument* => result")
+  (:operands
+   (operand
+    (:name "function")
+    (:description "A " (hyper '(manual . class-function)) "."))
+   (operand
+    (:name "argument")
+    (:description "An " (hyper '(manual . concept-argument)) "."))
+   (operand
+    (:name "result")
+    (:description "A " (hyper '(manual . concept-value)) ".")))
+  (:content
+   (paragraph
+    (hyper '(manual . op-funcall)) " calls a " (hyper '(manual
+    . class-function)) " with the supplied " (hyper '(manual
+    . concept-argument) "arguments") "."))
+  (:example
+"(funcall #'+ 1 2 3) => 6
+
+;; FUNCALL is less needed in Qua than in Common Lisp because Qua
+;; allows arbitrary expressions in the operator position of a 
+;; compound form:
+(defun function-returning-function () (lambda (x y) (+ x y)))
+;; The following two expressions are equivalent in Qua, but the former
+;; is preferred for readability:
+(funcall (function-returning-function) 1 2) => 3
+((function-returning-function) 1 2) => 3")
+  (:rationale (paragraph "Classic Lisp.")))
 
 (define-manual-special (manual . op-quote)
   (:title "QUOTE")
