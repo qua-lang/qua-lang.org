@@ -1081,18 +1081,83 @@ x => 1 ; the variable X is bound to the value 1")
 (define-manual-concept (manual . concept-macro)
   (:title "Macro")
   (:content
-   (paragraph ""))
-  (:example "")
+   (paragraph "A " (term "macro") " is a " (hyper '(manual
+   . concept-special-operator)) " that works by producing a "
+   (hyper '(manual . concept-form)) ", called
+   the " (term "expansion") ", which gets " (hyper '(manual
+   . sec-evaluation) "evaluated") " in place of the original macro
+   form.")
+   (paragraph
+    "Macros can be viewed as a restricted subset of "
+    (hyper '(manual . class-fexpr) "fexprs")
+    " that, instead of directly performing a computation, produce a
+    form that performs the computation."))
+  (:example ";; How WHEN could be implemented in terms of IF:
+(defmacro my-when (test . body)
+  (list #'if test (list* #'progn body) #void))
+
+(my-when (eql #t #t) 1 2 3) => 3
+
+;; The above call to MY-WHEN is equivalent to the following expansion:
+(if (eql #t #t) (progn 1 2 3) #void) => 3")
   (:rationale
-   (paragraph "")))
+   (paragraph "For many simpler metaprogramming tasks, macros are more
+   comfortable to write than fexprs, and an implementation may cache
+   the macro expansion after the first use.")))
 
 (define-manual-special (manual . op-macro)
   (:title "MACRO")
-  (:syntax "parameter-tree form* => macro"))
+  (:syntax "parameter-tree form* => macro")
+  (:operands
+   (operand
+    (:name "parameter-tree")
+    (:description "A " (hyper '(manual . concept-parameter) "parameter tree") "."))
+   (operand
+    (:name "form")
+    (:description "A " (hyper '(manual . concept-form)) "."))
+   (operand
+    (:name "macro")
+    (:description "A " (hyper '(manual . concept-macro)) ".")))
+  (:content
+   (paragraph
+    (hyper '(manual . op-macro)) " creates a new anonymous "
+    (hyper '(manual . concept-macro)) "."))
+  (:example
+";; A contrived example: given a number X, the macro expansion
+;; is (+ X 5):
+(map (macro (x) (list #'+ x 5)) '(10 20 30)) => (15 25 35)")
+  (:rationale (paragraph "Anonymous macros are rarely used in
+  practice, so " (hyper '(manual . op-macro)) " is provided mainly for
+  symmetry with " (hyper '(manual . op-vau)) " and " (hyper '(manual
+  . op-lambda)) " and also to underscore the first-class nature of
+  macros in Qua.")))
 
 (define-manual-special (manual . op-defmacro)
   (:title "DEFMACRO")
-  (:syntax "name parameter-tree form* => macro"))
+  (:syntax "name parameter-tree form* => name")
+  (:operands
+   (operand
+    (:name "name")
+    (:description "A " (hyper '(manual . class-symbol)) "."))
+   (operand
+    (:name "parameter-tree")
+    (:description "A " (hyper '(manual . concept-parameter) "parameter tree") "."))
+   (operand
+    (:name "form")
+    (:description "A " (hyper '(manual . concept-form)) ".")))
+  (:content
+   (paragraph
+    (hyper '(manual . op-defmacro)) " defines a named "
+    (hyper '(manual . concept-macro)) "."))
+  (:example
+";; Here's the definition of LAMBDA as a macro from the Qua code:
+(defmacro lambda (params . body)
+  (list #'wrap (list* #'vau params #ign body)))
+
+(lambda (x y) (+ x y))
+;; The above call to LAMBDA therefore has the following expansion:
+(wrap (vau (x y) #ign (+ x y)))")
+  (:rationale (paragraph "Mix of Classic Lisp and Kernel.")))
 
 (define-manual-class (manual . class-void)
   (:title "VOID"))
