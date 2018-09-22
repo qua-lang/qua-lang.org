@@ -962,7 +962,25 @@ x => 1 ; the variable X is bound to the value 1")
 
 (define-manual-special (manual . op-function)
   (:title "FUNCTION")
-  (:syntax "name => function"))
+  (:syntax "name => function")
+  (:operands
+   (operand
+    (:name "name")
+    (:description "A " (hyper '(manual . class-symbol)) "."))
+   (operand
+    (:name "function")
+    (:description "A " (hyper '(manual . class-function)) ".")))
+  (:content
+   (paragraph
+    (hyper '(manual . op-function)) " looks up a "
+    (hyper '(manual . class-function)) " in the " (hyper '(manual
+    . concept-function-namespace)) "."))
+  (:example "(defun foo () 12)
+(function foo) => #[function]
+
+;; This is the same as:
+#'foo => #[function]")
+  (:rationale (paragraph "Classic Lisp.")))
 
 (define-manual-function (manual . op-eval)
   (:title "EVAL")
