@@ -786,11 +786,7 @@ x => 1 ; the variable X is bound to the value 1")
    ";; Create a simple fexpr that explicitly evaluates its operands:
 (def #'my-fexpr (vau (op1 op2) env 
                   (* (eval op1 env) (eval op2 env))))
-(my-fexpr (+ 1 1) (+ 2 2)) => 8
-
-;; This is roughly equivalent to the following LAMBDA:
-(def #'my-function (lambda (arg1 arg2) (* arg1 arg2)))
-(my-function (+ 1 1) (+ 2 2)) => 8")
+(my-fexpr (+ 1 1) (+ 2 2)) => 8")
   (:rationale (paragraph "See " (hyper '(ref . kernel)) ".")))
 
 (define-manual-special (manual . op-deffexpr)
@@ -818,18 +814,30 @@ x => 1 ; the variable X is bound to the value 1")
    ";; Define a simple fexpr that explicitly evaluates its operands:
 (deffexpr my-fexpr (op1 op2) env 
   (* (eval op1 env) (eval op2 env)))
-(my-fexpr (+ 1 1) (+ 2 2)) => 8
-
-;; This is roughly equivalent to the following DEFUN:
-(defun my-function (arg1 arg2)
-  (* arg1 arg2))
-(my-function (+ 1 1) (+ 2 2)) => 8")
+(my-fexpr (+ 1 1) (+ 2 2)) => 8")
   (:rationale (paragraph "While Kernel has no analogue to " (hyper
   '(manual . op-deffexpr)) ", Qua has it for symmetry with " (hyper
   '(manual . op-defun)) ".")))
 
 (define-manual-class (manual . class-function)
-  (:title "FUNCTION"))
+  (:title "FUNCTION")
+  (:content
+   (paragraph
+    "A " (term "function") " is an " (hyper '(manual
+    . concept-operator)) " that always " (hyper '(manual
+    . sec-evaluation) "evaluates") " its " (hyper '(manual
+    . concept-argument) "arguments") ".  Inside each function is
+    actually a " (hyper '(manual . class-fexpr)) " that does the
+    computational work of the function.  Argument evaluation is
+    induced by " (hyper '(manual . op-wrap)) "."))
+  (:example
+   ";; A simple function defined using LAMBDA:
+((lambda (x y) (+ x y)) 1 2) => 3
+
+;; LAMBDA is merely a shorthand for wrapping a FEXPR to induce
+;; argument evaluation.  The above is operationally equivalent to:
+((wrap (vau (x y) #ign (+ x y))) 1 2) => 1 3")
+  (:rationale (paragraph "See " (hyper '(ref . kernel)) ".")))
 
 (define-manual-function (manual . op-wrap)
   (:title "WRAP")
