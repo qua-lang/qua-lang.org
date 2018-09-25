@@ -372,10 +372,10 @@ $window => #[js-object]
   (:title "Form")
   (:content
    (paragraph
-    "A " (term "form") " is any " (hyper '(manual . class-object)) "
-  meant to be " (hyper '(manual . sec-evaluation) "evaluated") ".  It
-  is either a " (hyper '(manual . concept-self-evaluating-form)) ",
-  an "
+    "A " (term "form") " is any " (hyper '(manual
+  . class-object) "object") " meant to be " (hyper '(manual
+  . sec-evaluation) "evaluated") ".  It is either a " (hyper '(manual
+  . concept-self-evaluating-form)) ", an "
   (hyper '(manual . concept-identifier-form)) ", or a "
   (hyper '(manual . concept-compound-form)) "."))
   (:example ";; Self-evaluating forms:
@@ -415,7 +415,7 @@ x => 1 ; Identifier form
   (:title "Constant")
   (:content
    (paragraph "A " (term "constant") " is a built-in " (hyper '(manual
-   . class-object)) " that is a " (hyper '(manual
+   . class-object) "object") " that is a " (hyper '(manual
    . concept-self-evaluating-form)) ".  It is not possible for the Qua
    programmer to define new constants.  Constants are distinct
    from " (hyper '(manual . concept-constant-variable) "constant
@@ -438,7 +438,8 @@ x => 1 ; Identifier form
 (define-manual-concept (manual . concept-identifier-form)
   (:title "Identifier Form")
   (:content
-   (paragraph "A " (hyper '(manual . class-symbol)) " used as a "
+   (paragraph "A " (hyper '(manual . class-symbol) "symbol") " used as
+   a "
               (hyper '(manual . concept-form)) " is called
               an " (term "identifier form") " and "
               (hyper '(manual . sec-evaluation) "evaluates") " to the
@@ -461,16 +462,18 @@ x => 1 ; Variable binding
 (define-manual-concept (manual . concept-compound-form)
   (:title "Compound Form")
   (:content
-   (paragraph "A " (hyper '(manual . class-cons)) " used as a "
+   (paragraph "A " (hyper '(manual . class-cons) "cons") " used as a "
    (hyper '(manual . concept-form)) " is called a " (term "compound
    form") ".")
    (paragraph "If the " (hyper '(manual . op-car)) " of the compound
-   form is a " (hyper '(manual . class-symbol)) ", it gets looked up
-   in the " (hyper '(manual . concept-function-namespace)) ".")
+   form is a " (hyper '(manual . class-symbol) "symbol") ", it gets
+   looked up in the " (hyper '(manual
+   . concept-function-namespace)) ".")
    (paragraph "Otherwise, the " (hyper '(manual . op-car)) "
    gets " (hyper '(manual . sec-evaluation) "evaluated") " normally.")
-   (paragraph "In either case, the resulting value must be an " (hyper
-   '(manual . concept-operator)) ", or an error is signalled.")
+   (paragraph "In either case, the resulting " (hyper '(manual
+   . concept-value)) " must be an " (hyper '(manual
+   . concept-operator)) ", or an error is signalled.")
    (paragraph "Finally, the " (hyper '(manual . op-cdr)) " of the
    compound form is passed as " (hyper '(manual . concept-operand)) "
    to the operator, and the resulting " (hyper '(manual
@@ -534,8 +537,9 @@ x => 1 ; Variable binding
   (:content
    (paragraph "A " (term "special operator") " is an " (hyper '(manual
    . concept-operator)) " that, unlike a " (hyper '(manual
-   . class-function)) ", uses special rules to determine which of
-   its " (hyper '(manual . concept-operand) "operands") " are "
+   . class-function) "function") ", uses special rules to determine
+   which of its " (hyper '(manual . concept-operand) "operands") "
+   are "
    (hyper '(manual . sec-evaluation) "evaluated") ".")
    (paragraph "Special operators may be "
               (hyper '(manual . class-fexpr) "fexprs") " or "
@@ -556,7 +560,8 @@ x => 1 ; Variable binding
    an " (hyper '(manual . concept-operator)) ".  If the operator is a "
    (hyper '(manual . concept-special-operator)) ", the operands are
    passed to it unevaluated.  If the operator is a "
-   (hyper '(manual . class-function)) ", then each operand is " 
+   (hyper '(manual . class-function) "function") ", then each operand
+   is "
    (hyper '(manual . sec-evaluation) "evaluated") ", and the result is
    called an " (hyper '(manual . concept-argument)) ".")
    (paragraph "While the operands passed to a function must be
@@ -620,15 +625,15 @@ x => 1 ; Variable binding
    " and " (hyper '(manual . concept-argument) "arguments") " passed
    to them.")
    (paragraph "If a parameter is a " (hyper '(manual
-   . class-symbol)) ", the operand is " (hyper '(manual
+   . class-symbol) "symbol") ", the operand is " (hyper '(manual
    . concept-binding) "bound") " to the name of the symbol within the
    body of the operator.")
-   (paragraph "If a parameter is a " (hyper '(manual . class-cons)) ",
-   the " (hyper '(manual . op-car)) " and " (hyper '(manual
-   . op-cdr)) " are recursively treated as parameters, giving rise to
-   so-called " (term "parameter trees") " (see example below). These
-   allow destructuring of " (hyper '(manual
-   . concept-operand) "operand trees") ".")
+   (paragraph "If a parameter is a " (hyper '(manual
+   . class-cons) "cons") ", the " (hyper '(manual . op-car)) "
+   and " (hyper '(manual . op-cdr)) " are recursively treated as
+   parameters, giving rise to so-called " (term "parameter
+   trees") " (see example below). These allow destructuring
+   of " (hyper '(manual . concept-operand) "operand trees") ".")
    (paragraph "If a parameter is " (hyper '(manual . const-nil)) ",
               the operand must also be " (hyper '(manual
               . const-nil)) " or an error is signalled.")
@@ -678,7 +683,8 @@ x => 1 ; Variable binding
    (hyper '(manual . class-fexpr) "fexprs") " have a special
    parameter, called " (term "environment parameter") ", through which they
    receive the "
-   (hyper '(manual . class-environment)) " in which they are called."))
+   (hyper '(manual . class-environment) "environment") " in which they
+   are called."))
   (:example ";; A fexpr that returns the value that the variable X has
 ;; in the environment in which the fexpr is called (here the 
 ;; environment parameter is called ENV but it could be called
@@ -702,7 +708,7 @@ x => 1 ; Variable binding
   (:title "Value")
   (:content
    (paragraph (term "Value") " is the term for any " (hyper '(manual
-   . class-object)) " that is the result of the " (hyper '(manual
+   . class-object) "object") " that is the result of the " (hyper '(manual
    . sec-evaluation) "evaluation") " of a " (hyper '(manual
    . concept-form)) " or that is the value of a " (hyper '(manual
    . concept-binding)) "."))
@@ -732,8 +738,8 @@ x => 1 ; the variable X is bound to the value 1")
    (paragraph "In addition to an ordinary " (hyper '(manual
    . concept-parameter) "parameter tree") ", a fexpr also has an " 
    (hyper '(manual . concept-environment-parameter)) " through which
-   it receives the " (hyper '(manual . class-environment)) " in which
-   it is called."))
+   it receives the " (hyper '(manual
+   . class-environment) "environment") " in which it is called."))
   (:example
    ";; A very simple fexpr that simply returns its single operand,
 ;; analogous to QUOTE:
@@ -772,7 +778,7 @@ x => 1 ; the variable X is bound to the value 1")
     (:description "A " (hyper '(manual . concept-form)) "."))
    (operand
     (:name "fexpr")
-    (:description "A " (hyper '(manual . class-fexpr)) ".")))
+    (:description "A " (hyper '(manual . class-fexpr) "fexpr") ".")))
   (:content
    (paragraph (hyper '(manual . op-vau)) " is the constructor of "
               (hyper '(manual . class-fexpr) "fexprs") ", analogous to how "
@@ -795,7 +801,7 @@ x => 1 ; the variable X is bound to the value 1")
   (:operands
    (operand
     (:name "name")
-    (:description "A " (hyper '(manual . class-symbol)) "."))
+    (:description "A " (hyper '(manual . class-symbol) "symbol") "."))
    (operand
     (:name "parameter-tree")
     (:description "A " (hyper '(manual . concept-parameter) "parameter tree") "."))
@@ -807,9 +813,9 @@ x => 1 ; the variable X is bound to the value 1")
     (:description "A " (hyper '(manual . concept-form)) ".")))
   (:content
    (paragraph (hyper '(manual . op-deffexpr)) " defines a named  "
-              (hyper '(manual . class-fexpr)) ", analogous to how "
+              (hyper '(manual . class-fexpr) "fexpr") ", analogous to how "
               (hyper '(manual . op-defun)) " defines a named "
-              (hyper '(manual . class-function)) "."))
+              (hyper '(manual . class-function) "function") "."))
   (:example 
    ";; Define a simple fexpr that explicitly evaluates its operands:
 (deffexpr my-fexpr (op1 op2) env 
@@ -827,8 +833,8 @@ x => 1 ; the variable X is bound to the value 1")
     . concept-operator)) " that always " (hyper '(manual
     . sec-evaluation) "evaluates") " its " (hyper '(manual
     . concept-argument) "arguments") ".  Inside each function is
-    actually a " (hyper '(manual . class-fexpr)) " that does the
-    computational work of the function.  Argument evaluation is
+    actually a " (hyper '(manual . class-fexpr) "fexpr") " that does
+    the computational work of the function.  Argument evaluation is
     induced by " (hyper '(manual . op-wrap)) "."))
   (:example
    ";; A simple function defined using LAMBDA:
@@ -848,12 +854,12 @@ x => 1 ; the variable X is bound to the value 1")
     (:description "An " (hyper '(manual . concept-operator)) "."))
    (operand
     (:name "function")
-    (:description "A " (hyper '(manual . class-function)) ".")))
+    (:description "A " (hyper '(manual . class-function) "function") ".")))
   (:content
    (paragraph (hyper '(manual . op-wrap)) " constructs a " (hyper
-   '(manual . class-function)) " given an underlying "
+   '(manual . class-function) "function") " given an underlying "
    (hyper '(manual . concept-operator)) ", usually a " (hyper '(manual
-   . class-fexpr)) ". All Qua functions are created by " (hyper
+   . class-fexpr) "fexpr") ". All Qua functions are created by " (hyper
    '(manual . op-wrap)) ".  So functions can be viewed
    as " (term "wrappers") " that induce " (hyper '(manual
    . concept-argument) "argument") " " (hyper '(manual
@@ -883,7 +889,7 @@ x => 1 ; the variable X is bound to the value 1")
   (:operands
    (operand
     (:name "function")
-    (:description "A " (hyper '(manual . class-function)) "."))
+    (:description "A " (hyper '(manual . class-function) "function") "."))
    (operand
     (:name "operator")
     (:description "An " (hyper '(manual . concept-operator)) ".")))
@@ -891,7 +897,7 @@ x => 1 ; the variable X is bound to the value 1")
    (paragraph
     (hyper '(manual . op-unwrap)) " extracts the " (hyper '(manual
     . concept-operator)) " underlying a " (hyper '(manual
-    . class-function)) "."))
+    . class-function) "function") "."))
   (:example ";; Every function has an underlying operator. We can extract the
 ;; operator underlying the * function and call it directly:
 (def #'times-operator (unwrap #'*))
@@ -915,11 +921,11 @@ x => 1 ; the variable X is bound to the value 1")
     (:description "A " (hyper '(manual . concept-form)) "."))
    (operand
     (:name "function")
-    (:description "A " (hyper '(manual . class-function)) ".")))
+    (:description "A " (hyper '(manual . class-function) "function") ".")))
   (:content
    (paragraph
     (hyper '(manual . op-lambda)) " creates a new anonymous "
-    (hyper '(manual . class-function)) "."))
+    (hyper '(manual . class-function) "function") "."))
   (:example
    "((lambda (x y) (+ x y)) 1 2) => 3
 
@@ -939,7 +945,7 @@ x => 1 ; the variable X is bound to the value 1")
   (:operands
    (operand
     (:name "name")
-    (:description "A " (hyper '(manual . class-symbol)) "."))
+    (:description "A " (hyper '(manual . class-symbol) "symbol") "."))
    (operand
     (:name "parameter-tree")
     (:description "A " (hyper '(manual . concept-parameter) "parameter tree") "."))
@@ -948,7 +954,7 @@ x => 1 ; the variable X is bound to the value 1")
     (:description "A " (hyper '(manual . concept-form)) ".")))
   (:content
    (paragraph (hyper '(manual . op-defun)) " defines a named  "
-              (hyper '(manual . class-function)) "."))
+              (hyper '(manual . class-function) "function") "."))
   (:example
    "(defun foo (arg1 arg2)
   (+ arg1 arg2))
@@ -966,15 +972,15 @@ x => 1 ; the variable X is bound to the value 1")
   (:operands
    (operand
     (:name "name")
-    (:description "A " (hyper '(manual . class-symbol)) "."))
+    (:description "A " (hyper '(manual . class-symbol) "symbol") "."))
    (operand
     (:name "function")
-    (:description "A " (hyper '(manual . class-function)) ".")))
+    (:description "A " (hyper '(manual . class-function) "function") ".")))
   (:content
    (paragraph
     (hyper '(manual . op-function)) " looks up a "
-    (hyper '(manual . class-function)) " in the " (hyper '(manual
-    . concept-function-namespace)) "."))
+    (hyper '(manual . class-function) "function") " in the " (hyper
+    '(manual . concept-function-namespace)) "."))
   (:example "(defun foo () 12)
 (function foo) => #[function]
 
@@ -991,7 +997,8 @@ x => 1 ; the variable X is bound to the value 1")
     (:description "A " (hyper '(manual . concept-form)) "."))
    (operand
     (:name "environment")
-    (:description "An " (hyper '(manual . class-environment)) "."))
+    (:description "An " (hyper '(manual
+    . class-environment) "environment") "."))
    (operand
     (:name "result")
     (:description "A " (hyper '(manual . concept-value)) ".")))
@@ -999,7 +1006,8 @@ x => 1 ; the variable X is bound to the value 1")
    (paragraph
     (hyper '(manual . op-eval)) " " (hyper '(manual
     . sec-evaluation) "evaluates") " a " (hyper '(manual
-    . concept-form)) " in an " (hyper '(manual . class-environment)) "."))
+    . concept-form)) " in an " (hyper '(manual
+    . class-environment) "environment") "."))
   (:example
 "(def a 1)
 (def b 2)
@@ -1012,7 +1020,8 @@ x => 1 ; the variable X is bound to the value 1")
   (:operands
    (operand
     (:name "function")
-    (:description "A " (hyper '(manual . class-function)) "."))
+    (:description "A " (hyper '(manual
+    . class-function) "function") "."))
    (operand
     (:name "arguments")
     (:description "A " (hyper '(manual . concept-list)) "."))
@@ -1022,7 +1031,8 @@ x => 1 ; the variable X is bound to the value 1")
   (:content
    (paragraph
     (hyper '(manual . op-apply)) " applies a " (hyper '(manual
-    . class-function)) " to a " (hyper '(manual . concept-list)) " of " 
+    . class-function) "function") " to a " (hyper '(manual
+    . concept-list)) " of "
     (hyper '(manual . concept-argument) "arguments") "."))
   (:example
 "(apply #'+ (list 1 2 3)) => 6")
@@ -1034,7 +1044,8 @@ x => 1 ; the variable X is bound to the value 1")
   (:operands
    (operand
     (:name "function")
-    (:description "A " (hyper '(manual . class-function)) "."))
+    (:description "A " (hyper '(manual
+    . class-function) "function") "."))
    (operand
     (:name "argument")
     (:description "An " (hyper '(manual . concept-argument)) "."))
@@ -1044,8 +1055,8 @@ x => 1 ; the variable X is bound to the value 1")
   (:content
    (paragraph
     (hyper '(manual . op-funcall)) " calls a " (hyper '(manual
-    . class-function)) " with the supplied " (hyper '(manual
-    . concept-argument) "arguments") "."))
+    . class-function) "function") " with the supplied " (hyper
+    '(manual . concept-argument) "arguments") "."))
   (:example
 "(funcall #'+ 1 2 3) => 6
 
@@ -1138,7 +1149,7 @@ x => 1 ; the variable X is bound to the value 1")
   (:operands
    (operand
     (:name "name")
-    (:description "A " (hyper '(manual . class-symbol)) "."))
+    (:description "A " (hyper '(manual . class-symbol) "symbol") "."))
    (operand
     (:name "parameter-tree")
     (:description "A " (hyper '(manual . concept-parameter) "parameter tree") "."))
@@ -1164,7 +1175,7 @@ x => 1 ; the variable X is bound to the value 1")
   (:content
    (paragraph
     (hyper '(manual . class-void)) " is the "
-    (hyper '(manual . class-class)) " of the "
+    (hyper '(manual . class-class) "class") " of the "
     (hyper '(manual . concept-constant)) " "
     (hyper '(manual . const-void)) "."))
   (:example "#void => #void")
@@ -1179,8 +1190,8 @@ x => 1 ; the variable X is bound to the value 1")
     (hyper '(manual . concept-constant)) " that is used when a "
     (hyper '(manual . concept-form)) " has no interesting "
     (hyper '(manual . concept-value)) ".  It is the only "
-    (hyper '(manual . class-object)) " of "
-    (hyper '(manual . class-class)) " "
+    (hyper '(manual . class-object) "object") " of "
+    (hyper '(manual . class-class) "class") " "
     (hyper '(manual . class-void)) "."))
   (:example
    ";; An empty PROGN returns #VOID and so does WHEN when the test is false:
@@ -1196,7 +1207,7 @@ although you can try to change my mind.")))
   (:content
    (paragraph
     (hyper '(manual . class-ign)) " is the "
-    (hyper '(manual . class-class)) " of the "
+    (hyper '(manual . class-class) "class") " of the "
     (hyper '(manual . concept-constant)) " "
     (hyper '(manual . const-ign)) "."))
   (:example "#ign => #ign")
@@ -1211,8 +1222,8 @@ although you can try to change my mind.")))
     (hyper '(manual . concept-constant)) " that is used in "
     (hyper '(manual . concept-parameter) "parameter trees") " to ignore an "
     (hyper '(manual . concept-operand)) ".  It is the only "
-    (hyper '(manual . class-object)) " of "
-    (hyper '(manual . class-class)) " "
+    (hyper '(manual . class-object) "object") " of "
+    (hyper '(manual . class-class) "class") " "
     (hyper '(manual . class-ign)) "."))
   (:example ";; A function that doesn't care what its arguments are:
 (defun idc #ign 33)

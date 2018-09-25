@@ -87,16 +87,13 @@
 
 (deftemplate qua-hub-concept-inline-template
   (a (:href (node-link) :style "text-transform: lowercase") (node-field 'title)))
-(deftemplate qua-hub-concept-inline-titled-template
-  (a (:href (node-link)) (anchor-title)))
 
 (associate-template +qua-hub-manual-concept+ 'inline qua-hub-concept-inline-template)
-(associate-template +qua-hub-manual-class+ 'inline qua-hub-concept-inline-template)
-(associate-template +qua-hub-manual-concept+ 'inline-titled qua-hub-concept-inline-titled-template)
 
 (deftemplate qua-hub-op-inline-template
   (a (:href (node-link) :style "text-transform: lowercase") (strong () (node-field 'title))))
 
+(associate-template +qua-hub-manual-class+ 'inline qua-hub-op-inline-template)
 (associate-template +qua-hub-manual-constant+ 'inline qua-hub-op-inline-template)
 (associate-template +qua-hub-manual-operator+ 'inline qua-hub-op-inline-template)
 
